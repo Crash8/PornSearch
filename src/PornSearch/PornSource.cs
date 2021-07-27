@@ -1,8 +1,8 @@
 namespace PornSearch
 {
-    public static class PornSource
+    public enum PornSource
     {
-        public const string Pornhub = "pornhub";
-        public const string XVideo = "xvideo";
+        Pornhub,
+        XVideos
     }
 }
