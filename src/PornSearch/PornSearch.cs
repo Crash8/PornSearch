@@ -8,7 +8,7 @@ namespace PornSearch
             switch (source) {
                 case PornSource.Pornhub: return new PornhubSearchSource();
                 case PornSource.XVideos: return new XVideosSearchSource();
-                default:                 throw new ArgumentException($"Value '{source}' not found", nameof(source));
+                default:                 throw new NotImplementedException();
             }
         }
     }
