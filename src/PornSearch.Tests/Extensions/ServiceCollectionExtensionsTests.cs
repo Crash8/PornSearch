@@ -9,9 +9,7 @@ namespace PornSearch.Tests.Extensions
     {
         [Fact]
         public void ArgumentNullException() {
-            IServiceCollection serviceCollection = null;
-
-            Assert.Throws<ArgumentNullException>(() => serviceCollection.AddPornSearch());
+            Assert.Throws<ArgumentNullException>(() => ((IServiceCollection)null).AddPornSearch());
         }
 
         [Fact]
