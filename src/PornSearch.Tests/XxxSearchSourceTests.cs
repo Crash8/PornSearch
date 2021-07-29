@@ -8,7 +8,7 @@ namespace PornSearch.Tests
     public class XxxSearchSourceTests
     {
         [Theory]
-        [MemberData(nameof(PornSourceData.GetAllSources), MemberType = typeof(PornSourceData))]
+        [ClassData(typeof(PornSourceData))]
         public void GetOrientations(PornSource source) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);

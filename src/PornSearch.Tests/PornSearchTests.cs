@@ -6,7 +6,7 @@ namespace PornSearch.Tests
     public class PornSearchTests
     {
         [Theory]
-        [MemberData(nameof(PornSourceData.GetAllSources), MemberType = typeof(PornSourceData))]
+        [ClassData(typeof(PornSourceData))]
         public void GetSource(PornSource source) {
             PornSearch pornSearch = new PornSearch();
 
