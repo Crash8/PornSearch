@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PornSearch
 {
@@ -10,6 +11,10 @@ namespace PornSearch
                 PornSexOrientation.Gay,
                 PornSexOrientation.Trans
             };
+        }
+
+        public Task<List<PornItemThumb>> SearchAsync(PornSearchFilter searchFilter) {
+            throw new System.NotImplementedException();
         }
     }
 }
