@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PornSearch.Tests.Asserts;
 using PornSearch.Tests.Data;
@@ -10,6 +11,8 @@ namespace PornSearch.Tests
 {
     public class XxxSearchSourceTests
     {
+        private readonly Random _random = new Random();
+
         [Theory]
         [ClassData(typeof(PornSourceData))]
         public void GetOrientations(PornSource source) {
@@ -39,7 +42,7 @@ namespace PornSearch.Tests
         [ClassData(typeof(PornSourceData))]
         public async Task Search_ArgumentException(PornSource source) {
             PornSearch pornSearch = new PornSearch();
-            IPornSearchSource searchSource = pornSearch.GetSource(source);
+            IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
 
             foreach (PornSexOrientation sexOrientation in Enum.GetValues(typeof(PornSexOrientation))) {
                 for (int page = -1; page <= 0; page++) {
@@ -48,7 +51,7 @@ namespace PornSearch.Tests
                         Page = page
                     };
 
-                    await Assert.ThrowsAsync<ArgumentException>(() => searchSource.SearchAsync(searchFilter));
+                    await Assert.ThrowsAsync<ArgumentException>(() => pornSearchSource.SearchAsync(searchFilter));
                 }
             }
         }
@@ -57,9 +60,9 @@ namespace PornSearch.Tests
         [ClassData(typeof(PornSourceData))]
         public async Task Search_ArgumentNullException(PornSource source) {
             PornSearch pornSearch = new PornSearch();
-            IPornSearchSource searchSource = pornSearch.GetSource(source);
+            IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => searchSource.SearchAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => pornSearchSource.SearchAsync(null));
         }
 
         [Theory]
@@ -82,42 +85,79 @@ namespace PornSearch.Tests
 
         [Theory]
         [ClassData(typeof(PornSourceData))]
+        public async Task Search_EmptyFilter(PornSource source) {
+            PornSearch pornSearch = new PornSearch();
+            IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
+            string[] filters = { null, "", "  " };
+
+            foreach (PornSexOrientation sexOrientation in pornSearchSource.GetSexOrientations()) {
+                int page = NextRandomPage();
+                List<List<PornItemThumb>> allItemThumbsBySearch = new List<List<PornItemThumb>>();
+
+                foreach (string filter in filters) {
+                    List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, filter, page, PageSearch.Complete);
+                    allItemThumbsBySearch.Add(itemThumbs);
+
+                    PornItemThumbAssert.CheckAll(itemThumbs, source, filter, sexOrientation);
+                }
+
+                foreach (PornItemThumb item1 in allItemThumbsBySearch.First()) {
+                    foreach (List<PornItemThumb> otherItemThumbs in allItemThumbsBySearch.Skip(1)) {
+                        PornItemThumb item2 = otherItemThumbs.FirstOrDefault(i => i.Id == item1.Id);
+
+                        PornItemThumbAssert.Equal(item1, item2, source);
+                    }
+                }
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(PornSourceData))]
         public async Task Search_OK(PornSource source) {
+            await CheckSearchOn3PagesAsync(source, "Amateur", 1, PageSearch.Complete);
+            await CheckSearchOn3PagesAsync(source, "Teen Anal", 1, PageSearch.Complete);
+            await CheckSearchOn3PagesAsync(source, "Threesome", NextRandomPage(), PageSearch.Complete);
+            await CheckSearchOn3PagesAsync(source, "Blowjob Cumshot Ass", 10000, PageSearch.Empty);
+            await CheckSearchOn3PagesAsync(source, "azertyuiop", 1, PageSearch.Empty);
+        }
+
+        private static async Task CheckSearchOn3PagesAsync(PornSource source, string filter, int pageMin, PageSearch pageSearch) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
 
-            await SearchAsync(source, pornSearchSource, null, 1, 3, PageSearchFill.Complete);
-            await SearchAsync(source, pornSearchSource, "", 1, 3, PageSearchFill.Complete);
-            await SearchAsync(source, pornSearchSource, "  ", 1, 3, PageSearchFill.Complete);
-            await SearchAsync(source, pornSearchSource, "Amateur", 1, 3, PageSearchFill.Complete);
-            await SearchAsync(source, pornSearchSource, "Teen Anal", 1, 3, PageSearchFill.Complete);
-            await SearchAsync(source, pornSearchSource, "Blowjob Cumshot Ass", 10000, 10003, PageSearchFill.Empty);
-            await SearchAsync(source, pornSearchSource, "azertyuiop", 1, 3, PageSearchFill.Empty);
+            foreach (PornSexOrientation sexOrientation in pornSearchSource.GetSexOrientations()) {
+                List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
+
+                for (int page = pageMin; page < pageMin + 3; page++) {
+                    List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, filter, page, pageSearch);
+                    allItemThumbs.AddRange(itemThumbs);
+                }
+
+                PornItemThumbAssert.CheckAll(allItemThumbs, source, filter, sexOrientation);
+            }
         }
 
-        private static async Task SearchAsync(PornSource source, IPornSearchSource searchSource, string filter, int pageMin,
-                                              int pageMax, PageSearchFill pageSearchFill) {
-            List<PornSexOrientation> sexOrientations = searchSource.GetSexOrientations();
-            foreach (PornSexOrientation sexOrientation in Enum.GetValues(typeof(PornSexOrientation))) {
-                if (sexOrientations.Contains(sexOrientation)) {
-                    List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
-                    for (int page = pageMin; page <= pageMax; page++) {
-                        PornSearchFilter searchFilter = new PornSearchFilter {
-                            SexOrientation = sexOrientation,
-                            Filter = filter,
-                            Page = page
-                        };
+        private static async Task<List<PornItemThumb>> SearchAsync(PornSource source, PornSexOrientation sexOrientation,
+                                                                   string filter, int page, PageSearch pageSearch) {
+            PornSearch pornSearch = new PornSearch();
+            IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
 
-                        List<PornItemThumb> itemThumbs = await searchSource.SearchAsync(searchFilter);
-                        allItemThumbs.AddRange(itemThumbs);
+            PornSearchFilter searchFilter = new PornSearchFilter {
+                SexOrientation = sexOrientation,
+                Filter = filter,
+                Page = page
+            };
 
-                        PornItemThumbAssert.Check_NbItem_ByPage(itemThumbs.Count, source, searchFilter, pageSearchFill);
-                        PornItemThumbAssert.Check_All_Unique_Value_ByPage(itemThumbs, source);
-                    }
+            List<PornItemThumb> itemThumbs = await pornSearchSource.SearchAsync(searchFilter);
 
-                    PornItemThumbAssert.CheckAll(allItemThumbs, source, filter, sexOrientation);
-                }
-            }
+            PornItemThumbAssert.Check_NbItem_ByPage(itemThumbs.Count, source, searchFilter, pageSearch);
+            PornItemThumbAssert.Check_All_Unique_Value_ByPage(itemThumbs, source);
+
+            return itemThumbs;
+        }
+
+        private int NextRandomPage() {
+            return _random.Next(200) + 1;
         }
     }
 }

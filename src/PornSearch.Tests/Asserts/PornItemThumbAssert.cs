@@ -12,16 +12,16 @@ namespace PornSearch.Tests.Asserts
     {
         [AssertionMethod]
         public static void Check_NbItem_ByPage(int nbItem, PornSource source, PornSearchFilter searchFilter,
-                                               PageSearchFill pageSearchFill) {
+                                               PageSearch pageSearch) {
             int nbItemMax = GetNbItemMaxByPage(source, searchFilter);
-            switch (pageSearchFill) {
-                case PageSearchFill.Empty:
+            switch (pageSearch) {
+                case PageSearch.Empty:
                     Assert.Equal(0, nbItem);
                     break;
-                case PageSearchFill.Complete:
+                case PageSearch.Complete:
                     Assert.Equal(nbItemMax, nbItem);
                     break;
-                default: throw new ArgumentOutOfRangeException(nameof(pageSearchFill), pageSearchFill, null);
+                default: throw new ArgumentOutOfRangeException(nameof(pageSearch), pageSearch, null);
             }
         }
 
@@ -59,7 +59,7 @@ namespace PornSearch.Tests.Asserts
         private static void Assert_ItemThumb_Id(string id, PornSource source) {
             Assert.NotNull(id);
             if (source == PornSource.Pornhub)
-                Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{9,10})$", id);
+                Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{8,10})$", id);
             else
                 throw new NotImplementedException();
         }
@@ -94,7 +94,7 @@ namespace PornSearch.Tests.Asserts
         private static void Assert_ItemThumb_ThumbnailUrl(string thumbnailUrl, PornSource source) {
             Assert.NotNull(thumbnailUrl);
             if (source == PornSource.Pornhub)
-                Assert.Matches("^https://(c|d|e)i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
+                Assert.Matches("^https://[bcde]i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
             else
                 throw new NotImplementedException();
         }
@@ -148,6 +148,26 @@ namespace PornSearch.Tests.Asserts
             }
             Assert.Equal(items.Select(i => i.Channel.Name).Distinct().Count(),
                          items.Select(i => $"{i.Channel.Id} {i.Channel.Name}").Distinct().Count());
+        }
+
+        public static void Equal(PornItemThumb item1, PornItemThumb item2, PornSource source) {
+            Assert.NotNull(item1);
+            Assert.NotNull(item2);
+
+            Assert.Equal(item1.Id, item2.Id);
+            Assert.Equal(item1.Title, item2.Title);
+            Assert.Equal(item1.Channel.Id, item2.Channel.Id);
+            Assert.Equal(item1.Channel.Name, item2.Channel.Name);
+            if (source == PornSource.Pornhub) {
+                // The 9th character can change value
+                int length = item1.ThumbnailUrl.Length;
+                Assert.Equal(length, item2.ThumbnailUrl.Length);
+                Assert.Equal(item1.ThumbnailUrl.Substring(0, 8), item2.ThumbnailUrl.Substring(0, 8));
+                Assert.Equal(item1.ThumbnailUrl.Substring(9, length - 9), item2.ThumbnailUrl.Substring(9, length - 9));
+            }
+            else {
+                Assert.Equal(item1.ThumbnailUrl, item2.ThumbnailUrl);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace PornSearch.Tests.Enums
 {
-    public enum PageSearchFill
+    public enum PageSearch
     {
         Empty,
         Complete
