@@ -13,22 +13,25 @@ namespace PornSearch.Tests.Asserts
         [AssertionMethod]
         public static void Check_NbItem_ByPage(int nbItem, PornSource source, PornSearchFilter searchFilter,
                                                PageSearch pageSearch) {
-            int nbItemMax = GetNbItemMaxByPage(source, searchFilter);
+            int nbItemMax = GetNbItemMaxByPage(source, searchFilter, pageSearch);
             switch (pageSearch) {
                 case PageSearch.Empty:
                     Assert.Equal(0, nbItem);
                     break;
                 case PageSearch.Complete:
+                case PageSearch.Actor:
                     Assert.Equal(nbItemMax, nbItem);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(pageSearch), pageSearch, null);
             }
         }
 
-        private static int GetNbItemMaxByPage(PornSource source, PornSearchFilter searchFilter) {
+        private static int GetNbItemMaxByPage(PornSource source, PornSearchFilter searchFilter, PageSearch pageSearch) {
             if (source == PornSource.Pornhub) {
                 if (string.IsNullOrWhiteSpace(searchFilter.Filter))
                     return searchFilter.Page == 1 ? 32 : 44;
+                if (pageSearch == PageSearch.Actor && searchFilter.Page == 1)
+                    return 22;
                 return 20;
             }
             throw new NotImplementedException();

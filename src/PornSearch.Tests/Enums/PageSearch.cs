@@ -3,6 +3,7 @@ namespace PornSearch.Tests.Enums
     public enum PageSearch
     {
         Empty,
-        Complete
+        Complete,
+        Actor
     }
 }

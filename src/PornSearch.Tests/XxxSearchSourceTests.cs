@@ -121,6 +121,35 @@ namespace PornSearch.Tests
             await CheckSearchOn3PagesAsync(source, "azertyuiop", 1, PageSearch.Empty);
         }
 
+        [Theory]
+        [ClassData(typeof(PornSourceData))]
+        public async Task Search_SexOrientation(PornSource source) {
+            PornSearch pornSearch = new PornSearch();
+            IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
+            List<PornSexOrientation> sexOrientations = pornSearchSource.GetSexOrientations();
+            Dictionary<PornSexOrientation, string> actors = new Dictionary<PornSexOrientation, string> {
+                { PornSexOrientation.Straight, "Riley Reid" },
+                { PornSexOrientation.Gay, "Cade Maddox" },
+                { PornSexOrientation.Trans, "Daisy Taylor" }
+            };
+
+            foreach ((PornSexOrientation actorSexOrientation, string actor) in actors) {
+                foreach (PornSexOrientation sexOrientation in sexOrientations) {
+                    for (int page = 1; page <= 2; page++) {
+                        List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, actor, 1, PageSearch.Actor);
+
+                        bool sameSexOrientation = actorSexOrientation == sexOrientation;
+                        bool otherwiseStraight = !sexOrientations.Contains(actorSexOrientation)
+                                                 && sexOrientation == PornSexOrientation.Straight;
+                        if (sameSexOrientation || otherwiseStraight)
+                            Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) > itemThumbs.Count / 2);
+                        else
+                            Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) < itemThumbs.Count / 2);
+                    }
+                }
+            }
+        }
+
         private static async Task CheckSearchOn3PagesAsync(PornSource source, string filter, int pageMin, PageSearch pageSearch) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
