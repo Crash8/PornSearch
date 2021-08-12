@@ -136,7 +136,7 @@ namespace PornSearch.Tests
             foreach ((PornSexOrientation actorSexOrientation, string actor) in actors) {
                 foreach (PornSexOrientation sexOrientation in sexOrientations) {
                     for (int page = 1; page <= 2; page++) {
-                        List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, actor, 1, PageSearch.Actor);
+                        List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, actor, page, PageSearch.Actor);
 
                         bool sameSexOrientation = actorSexOrientation == sexOrientation;
                         bool otherwiseStraight = !sexOrientations.Contains(actorSexOrientation)
