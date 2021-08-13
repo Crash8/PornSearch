@@ -29,6 +29,8 @@ namespace PornSearch
                 throw new ArgumentNullException(nameof(searchFilter));
             if (searchFilter.Page <= 0)
                 throw new ArgumentException("Value greater than zero", nameof(searchFilter.Page));
+            if (!GetSexOrientations().Contains(searchFilter.SexOrientation))
+                return null;
             string url = MakeUrl(searchFilter);
             string content = await GetHtmlContentAsync(url);
             return ExtractItemThumb(content);
