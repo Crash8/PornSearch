@@ -80,7 +80,7 @@ namespace PornSearch
                         .Cast<Match>()
                         .Select(m => new PornItemThumb {
                             Id = m.Groups[1].Value,
-                            Title = m.Groups[3].Value,
+                            Title = HttpUtility.HtmlDecode(m.Groups[3].Value),
                             Channel = new PornIdName {
                                 Id = m.Groups[5].Value,
                                 Name = m.Groups[6].Value
