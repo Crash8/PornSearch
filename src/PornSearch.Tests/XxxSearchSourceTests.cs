@@ -144,7 +144,7 @@ namespace PornSearch.Tests
                         if (sameSexOrientation || otherwiseStraight)
                             Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) > itemThumbs.Count / 2);
                         else
-                            Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) < itemThumbs.Count / 2);
+                            Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) <= itemThumbs.Count / 2);
                     }
                 }
             }

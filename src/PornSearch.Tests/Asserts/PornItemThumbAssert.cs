@@ -19,8 +19,11 @@ namespace PornSearch.Tests.Asserts
                     Assert.Equal(0, nbItem);
                     break;
                 case PageSearch.Complete:
-                case PageSearch.Actor:
                     Assert.Equal(nbItemMax, nbItem);
+                    break;
+                case PageSearch.Actor:
+                    Assert.True(nbItem >= 0);
+                    Assert.True(nbItem <= nbItemMax);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(pageSearch), pageSearch, null);
             }
