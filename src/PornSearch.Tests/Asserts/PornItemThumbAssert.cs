@@ -83,7 +83,7 @@ namespace PornSearch.Tests.Asserts
                 // If the search filter is empty, Channel Id may be empty if the video is not available in your country
                 bool isAvailable = !string.IsNullOrWhiteSpace(filter) || !string.IsNullOrEmpty(channelId);
                 if (isAvailable)
-                    Assert.Matches("^/(channels|model|pornstar)/[^/\\s]*$", channelId);
+                    Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
             }
             else {
                 throw new NotImplementedException();
