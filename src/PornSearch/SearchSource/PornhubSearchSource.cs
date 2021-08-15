@@ -76,7 +76,10 @@ namespace PornSearch
                 startIndex = content.IndexOf("<ul id=\"videoCategory\"", StringComparison.Ordinal);
             if (startIndex < 0)
                 throw new Exception("Data not found");
+            int otherStartIndex = content.IndexOf("<ul ", startIndex + 4, StringComparison.Ordinal);
             int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
+            if (endIndex > otherStartIndex)
+                endIndex = content.IndexOf("</ul>", endIndex + 5, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
             return Regex.Matches(contentItems, RegExItemThumb)
                         .Cast<Match>()
