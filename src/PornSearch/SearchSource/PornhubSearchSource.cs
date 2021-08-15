@@ -15,7 +15,7 @@ namespace PornSearch
         private const string RegExItemThumb =
             "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
             + " title=\"(.*?)\"[\\s\\S]*?data-src = \"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
-            + "[\\s\\S]*?<a.*href=\"(.*?)\".*?>(.*?)<";
+            + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
 
         public List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
