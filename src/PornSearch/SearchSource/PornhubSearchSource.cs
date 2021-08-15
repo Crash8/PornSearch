@@ -42,7 +42,7 @@ namespace PornSearch
                 url += "/search";
             List<string> queries = new List<string>();
             if (!string.IsNullOrWhiteSpace(searchFilter.Filter))
-                queries.Add("search=" + Uri.EscapeDataString(searchFilter.Filter.ToLower()).Replace(" ", "+"));
+                queries.Add("search=" + string.Join("+", searchFilter.Filter.Split(' ').Select(Uri.EscapeDataString)).ToLower());
             if (searchFilter.Page > 1)
                 queries.Add("page=" + searchFilter.Page);
             string query = string.Join("&", queries);
