@@ -88,24 +88,26 @@ namespace PornSearch.Tests
         public async Task Search_EmptyFilter(PornSource source) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
+            int[] pages = { 1, 2, NextRandomPage() };
             string[] filters = { null, "", "  " };
 
             foreach (PornSexOrientation sexOrientation in pornSearchSource.GetSexOrientations()) {
-                int page = NextRandomPage();
-                List<List<PornItemThumb>> allItemThumbsBySearch = new List<List<PornItemThumb>>();
+                foreach (int page in pages) {
+                    List<List<PornItemThumb>> allItemThumbsBySearch = new List<List<PornItemThumb>>();
 
-                foreach (string filter in filters) {
-                    List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, filter, page, PageSearch.Complete);
-                    allItemThumbsBySearch.Add(itemThumbs);
+                    foreach (string filter in filters) {
+                        List<PornItemThumb> thumbs = await SearchAsync(source, sexOrientation, filter, page, PageSearch.Complete);
+                        allItemThumbsBySearch.Add(thumbs);
 
-                    PornItemThumbAssert.CheckAll(itemThumbs, source, filter, sexOrientation);
-                }
+                        PornItemThumbAssert.CheckAll(thumbs, source, filter, sexOrientation);
+                    }
 
-                foreach (PornItemThumb item1 in allItemThumbsBySearch.First()) {
-                    foreach (List<PornItemThumb> otherItemThumbs in allItemThumbsBySearch.Skip(1)) {
-                        PornItemThumb item2 = otherItemThumbs.FirstOrDefault(i => i.Id == item1.Id);
+                    foreach (PornItemThumb item1 in allItemThumbsBySearch.First()) {
+                        foreach (List<PornItemThumb> otherItemThumbs in allItemThumbsBySearch.Skip(1)) {
+                            PornItemThumb item2 = otherItemThumbs.FirstOrDefault(i => i.Id == item1.Id);
 
-                        PornItemThumbAssert.Equal(item1, item2, source);
+                            PornItemThumbAssert.Equal(item1, item2, source);
+                        }
                     }
                 }
             }
