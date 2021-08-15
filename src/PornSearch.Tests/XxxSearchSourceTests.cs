@@ -143,10 +143,14 @@ namespace PornSearch.Tests
                         bool sameSexOrientation = actorSexOrientation == sexOrientation;
                         bool otherwiseStraight = !sexOrientations.Contains(actorSexOrientation)
                                                  && sexOrientation == PornSexOrientation.Straight;
-                        if (sameSexOrientation || otherwiseStraight)
+                        if (sameSexOrientation || otherwiseStraight) {
+                            int nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, actor, page, PageSearch.Actor);
+                            Assert.Equal(nbItemMax, itemThumbs.Count);
                             Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) > itemThumbs.Count / 2);
-                        else
+                        }
+                        else {
                             Assert.True(itemThumbs.Count(i => i.Title.Contains(actor)) <= itemThumbs.Count / 2);
+                        }
                     }
                 }
             }
