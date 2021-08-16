@@ -6,12 +6,14 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using Jint;
 
 namespace PornSearch
 {
     public class PornhubSearchSource : IPornSearchSource
     {
         private static readonly HttpClient HttpClient = new HttpClient();
+        private string _cookie;
 
         private const string RegExItemThumb =
             "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
@@ -33,7 +35,7 @@ namespace PornSearch
             if (!GetSexOrientations().Contains(searchFilter.SexOrientation))
                 return null;
             string url = MakeUrl(searchFilter);
-            string content = await GetHtmlContentAsync(url);
+            string content = await GetPageContentAsync(url);
             return ExtractItemThumb(content);
         }
 
@@ -52,9 +54,28 @@ namespace PornSearch
             return url;
         }
 
-        private static async Task<string> GetHtmlContentAsync(string url) {
+        private async Task<string> GetPageContentAsync(string url) {
+            string content = await GetHtmlContentAsync(url);
+            bool hasNeedCookie = Regex.IsMatch(content, "Loading[.]{3}");
+            if (hasNeedCookie) {
+                _cookie = GetCookie(content);
+                content = await GetHtmlContentAsync(url);
+            }
+            return content;
+        }
+
+        private static string GetCookie(string content) {
+            content = content.Substring(content.IndexOf("function leastFactor", StringComparison.Ordinal));
+            content = content.Substring(0, content.IndexOf("//-->", StringComparison.Ordinal));
+            content = content.Replace("document.cookie=", "return ");
+            return new Engine().Execute(content).GetValue("go").Invoke().ToString();
+        }
+
+        private async Task<string> GetHtmlContentAsync(string url) {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url)) {
                 request.Headers.Add("User-Agent", "PornSearch/1.0");
+                request.Headers.Add("Referer", url);
+                request.Headers.Add("Cookie", _cookie);
                 using (HttpResponseMessage response = await HttpClient.SendAsync(request)) {
                     if (response.IsSuccessStatusCode)
                         return await response.Content.ReadAsStringAsync();
