@@ -149,7 +149,6 @@ namespace PornSearch.Tests.Asserts
                 // Tolerance value of the number of videos that can be found on multiple pages (e.g. consecutive pages)
                 int tolerance = source == PornSource.Pornhub ? 1 : 0;
                 Assert.True(items.Count - items.Select(i => i.Id).Distinct().Count() <= tolerance);
-                Assert.True(items.Count - items.Select(i => i.Title).Distinct().Count() <= tolerance);
                 Assert.True(items.Count - items.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
             }
             Assert.Equal(items.Select(i => i.Channel.Name).Distinct().Count(),
