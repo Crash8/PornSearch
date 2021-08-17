@@ -106,7 +106,7 @@ namespace PornSearch.Tests
                         foreach (List<PornItemThumb> otherItemThumbs in allItemThumbsBySearch.Skip(1)) {
                             PornItemThumb item2 = otherItemThumbs.FirstOrDefault(i => i.Id == item1.Id);
 
-                            PornItemThumbAssert.Equal(item1, item2, source);
+                            PornItemThumbAssert.Equal(item1, item2);
                         }
                     }
                 }

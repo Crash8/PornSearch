@@ -36,7 +36,7 @@ namespace PornSearch
                 return null;
             string url = MakeUrl(searchFilter);
             string content = await GetPageContentAsync(url);
-            return ExtractItemThumb(content);
+            return ExtractItemThumbs(content, searchFilter.SexOrientation);
         }
 
         private static string MakeUrl(PornSearchFilter searchFilter) {
@@ -88,7 +88,7 @@ namespace PornSearch
             }
         }
 
-        private static List<PornItemThumb> ExtractItemThumb(string content) {
+        private static List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
             if (content == null)
                 throw new ArgumentNullException(nameof(content));
             if (content == "404" || content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0)
@@ -106,6 +106,8 @@ namespace PornSearch
             return Regex.Matches(contentItems, RegExItemThumb)
                         .Cast<Match>()
                         .Select(m => new PornItemThumb {
+                            Source = PornSource.Pornhub,
+                            SexOrientation = sexOrientation,
                             Id = m.Groups[1].Value,
                             Title = HttpUtility.HtmlDecode(m.Groups[3].Value),
                             Channel = new PornIdName {

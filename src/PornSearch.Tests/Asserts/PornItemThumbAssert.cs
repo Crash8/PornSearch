@@ -45,13 +45,17 @@ namespace PornSearch.Tests.Asserts
                                     PornSexOrientation sexOrientation) {
             Assert.NotNull(items);
             foreach (PornItemThumb item in items)
-                Assert_ItemThumb(item, source, filter);
+                Assert_ItemThumb(item, source, filter, sexOrientation);
             Assert_All_Unique_Value(items, source, filter, sexOrientation);
             Assert_All_Not_Same_Value(items);
         }
 
-        private static void Assert_ItemThumb(PornItemThumb item, PornSource source, string filter) {
+        [AssertionMethod]
+        private static void Assert_ItemThumb(PornItemThumb item, PornSource source, string filter,
+                                             PornSexOrientation sexOrientation) {
             Assert.NotNull(item);
+            Assert.Equal(source, item.Source);
+            Assert.Equal(sexOrientation, item.SexOrientation);
             Assert_ItemThumb_Id(item.Id, source);
             Assert_ItemThumb_Title(item.Title);
             Assert.NotNull(item.Channel);
@@ -155,15 +159,16 @@ namespace PornSearch.Tests.Asserts
                          items.Select(i => $"{i.Channel.Id} {i.Channel.Name}").Distinct().Count());
         }
 
-        public static void Equal(PornItemThumb item1, PornItemThumb item2, PornSource source) {
+        public static void Equal(PornItemThumb item1, PornItemThumb item2) {
             Assert.NotNull(item1);
             Assert.NotNull(item2);
-
+            Assert.Equal(item1.Source, item2.Source);
+            Assert.Equal(item1.SexOrientation, item2.SexOrientation);
             Assert.Equal(item1.Id, item2.Id);
             Assert.Equal(item1.Title, item2.Title);
             Assert.Equal(item1.Channel.Id, item2.Channel.Id);
             Assert.Equal(item1.Channel.Name, item2.Channel.Name);
-            if (source == PornSource.Pornhub) {
+            if (item1.Source == PornSource.Pornhub) {
                 // The 9th character can change value
                 int length = item1.ThumbnailUrl.Length;
                 Assert.Equal(length, item2.ThumbnailUrl.Length);
