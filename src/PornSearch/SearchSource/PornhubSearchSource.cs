@@ -109,7 +109,7 @@ namespace PornSearch
                             Source = PornSource.Pornhub,
                             SexOrientation = sexOrientation,
                             Id = m.Groups[1].Value,
-                            Title = HttpUtility.HtmlDecode(m.Groups[3].Value),
+                            Title = HttpUtility.HtmlDecode(m.Groups[3].Value).Replace("\u00A0", " "),
                             Channel = new PornIdName {
                                 Id = m.Groups[5].Value,
                                 Name = m.Groups[6].Value
