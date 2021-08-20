@@ -158,6 +158,21 @@ namespace PornSearch.Tests
             }
         }
 
+        [Theory]
+        [ClassData(typeof(PornItemThumbData))]
+        public async Task Search_ItemThumb(PornItemThumb itemThumb) {
+            PornSource source = itemThumb.Source;
+            PornSexOrientation sexOrientation = itemThumb.SexOrientation;
+            string filter = itemThumb.Title;
+
+            List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, filter, 1, PageSearch.Partial);
+
+            PornItemThumb itemThumbSearch = itemThumbs.FirstOrDefault(i => i.Id == itemThumb.Id);
+
+            PornItemThumbAssert.CheckAll(itemThumbs, source, filter, sexOrientation);
+            PornItemThumbAssert.Equal(itemThumb, itemThumbSearch);
+        }
+
         private static async Task CheckSearchOn3PagesAsync(PornSource source, string filter, int pageMin, PageSearch pageSearch) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);

@@ -4,6 +4,7 @@ namespace PornSearch.Tests.Enums
     {
         Empty,
         Complete,
-        Actor
+        Actor,
+        Partial
     }
 }
