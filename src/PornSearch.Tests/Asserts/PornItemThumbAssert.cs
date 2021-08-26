@@ -79,6 +79,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(title);
             Assert.True(title.Length > 1);
             Assert.Equal(HttpUtility.HtmlDecode(title), title);
+            Assert.DoesNotContain("\u00A0", title);
         }
 
         [AssertionMethod]

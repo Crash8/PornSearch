@@ -116,6 +116,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(PornSourceData))]
         public async Task Search_OK(PornSource source) {
+            await CheckSearchOn3PagesAsync(source, "", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(source, "Amateur", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(source, "Teen Anal", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(source, "Threesome", NextRandomPage(), PageSearch.Complete);
@@ -137,8 +138,10 @@ namespace PornSearch.Tests
 
             foreach ((PornSexOrientation actorSexOrientation, string actor) in actors) {
                 foreach (PornSexOrientation sexOrientation in sexOrientations) {
+                    List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
                     for (int page = 1; page <= 2; page++) {
                         List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, actor, page, PageSearch.Actor);
+                        allItemThumbs.AddRange(itemThumbs);
 
                         int nbItemActor = itemThumbs.Count(i => i.Title.Contains(actor) || i.Channel.Name == actor);
                         int nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, actor, page, PageSearch.Actor);
@@ -154,6 +157,8 @@ namespace PornSearch.Tests
                             Assert.True(nbItemActor <= itemThumbs.Count / 2);
                         }
                     }
+
+                    PornItemThumbAssert.CheckAll(allItemThumbs, source, actor, sexOrientation);
                 }
             }
         }
