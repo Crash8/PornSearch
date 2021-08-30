@@ -21,7 +21,7 @@ namespace PornSearch.Tests.Asserts
                 case PageSearch.Complete:
                     Assert.Equal(nbItemMax, nbItem);
                     break;
-                case PageSearch.Actor:
+                case PageSearch.Channel:
                 case PageSearch.Partial:
                     Assert.True(nbItem >= 0);
                     Assert.True(nbItem <= nbItemMax);
