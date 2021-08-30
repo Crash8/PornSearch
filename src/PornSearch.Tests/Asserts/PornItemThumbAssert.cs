@@ -34,7 +34,7 @@ namespace PornSearch.Tests.Asserts
             if (source == PornSource.Pornhub) {
                 if (string.IsNullOrWhiteSpace(filter))
                     return page == 1 ? 32 : 44;
-                if (pageSearch == PageSearch.Actor && page == 1)
+                if (pageSearch == PageSearch.Channel && page == 1)
                     return 22;
                 return 20;
             }

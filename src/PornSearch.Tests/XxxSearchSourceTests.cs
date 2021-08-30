@@ -125,41 +125,34 @@ namespace PornSearch.Tests
         }
 
         [Theory]
-        [ClassData(typeof(PornSourceData))]
-        public async Task Search_SexOrientation(PornSource source) {
+        [ClassData(typeof(PornSourceChannelData))]
+        public async Task Search_SexOrientation(PornSource source, string channel, PornSexOrientation channelSexOrientation) {
             PornSearch pornSearch = new PornSearch();
             IPornSearchSource pornSearchSource = pornSearch.GetSource(source);
             List<PornSexOrientation> sexOrientations = pornSearchSource.GetSexOrientations();
-            Dictionary<PornSexOrientation, string> actors = new Dictionary<PornSexOrientation, string> {
-                { PornSexOrientation.Straight, "Riley Reid" },
-                { PornSexOrientation.Gay, "Cade Maddox" },
-                { PornSexOrientation.Trans, "Daisy Taylor" }
-            };
 
-            foreach ((PornSexOrientation actorSexOrientation, string actor) in actors) {
-                foreach (PornSexOrientation sexOrientation in sexOrientations) {
-                    List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
-                    for (int page = 1; page <= 2; page++) {
-                        List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, actor, page, PageSearch.Actor);
-                        allItemThumbs.AddRange(itemThumbs);
+            foreach (PornSexOrientation sexOrientation in sexOrientations) {
+                List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
+                for (int page = 1; page <= 2; page++) {
+                    List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, channel, page, PageSearch.Channel);
+                    allItemThumbs.AddRange(itemThumbs);
 
-                        int nbItemActor = itemThumbs.Count(i => i.Title.Contains(actor) || i.Channel.Name == actor);
-                        int nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, actor, page, PageSearch.Actor);
-                        bool isSameSexOrientation = actorSexOrientation == sexOrientation;
-                        bool otherwiseStraight = !sexOrientations.Contains(actorSexOrientation)
-                                                 && sexOrientation == PornSexOrientation.Straight;
+                    int nbItemActor = itemThumbs.Count(i => i.Title.Contains(channel) || i.Channel.Name == channel);
+                    int nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, channel, page, PageSearch.Channel);
+                    bool isSameSexOrientation = channelSexOrientation == sexOrientation;
+                    bool otherwiseStraight = !sexOrientations.Contains(channelSexOrientation)
+                                             && sexOrientation == PornSexOrientation.Straight;
 
-                        if (isSameSexOrientation || otherwiseStraight) {
-                            Assert.Equal(nbItemMax, itemThumbs.Count);
-                            Assert.True(nbItemActor > itemThumbs.Count / 2);
-                        }
-                        else {
-                            Assert.True(nbItemActor <= itemThumbs.Count / 2);
-                        }
+                    if (isSameSexOrientation || otherwiseStraight) {
+                        Assert.Equal(nbItemMax, itemThumbs.Count);
+                        Assert.True(nbItemActor > itemThumbs.Count / 2);
                     }
-
-                    PornItemThumbAssert.CheckAll(allItemThumbs, source, actor, sexOrientation);
+                    else {
+                        Assert.True(nbItemActor <= itemThumbs.Count / 2);
+                    }
                 }
+
+                PornItemThumbAssert.CheckAll(allItemThumbs, source, channel, sexOrientation);
             }
         }
 
