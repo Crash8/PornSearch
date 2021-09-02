@@ -13,7 +13,7 @@ namespace PornSearch
     public class PornhubSearchSource : IPornSearchSource
     {
         private static readonly HttpClient HttpClient = new HttpClient();
-        private string _cookie;
+        private static string _cookie;
 
         private const string RegExItemThumb =
             "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
