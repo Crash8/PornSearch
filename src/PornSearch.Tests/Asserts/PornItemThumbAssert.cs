@@ -38,6 +38,8 @@ namespace PornSearch.Tests.Asserts
                     return 22;
                 return 20;
             }
+            if (source == PornSource.XVideos)
+                return string.IsNullOrWhiteSpace(filter) && page == 1 ? 48 : 27;
             throw new NotImplementedException();
         }
 
@@ -69,15 +71,20 @@ namespace PornSearch.Tests.Asserts
         [AssertionMethod]
         private static void Assert_ItemThumb_Id(string id, PornSource source) {
             Assert.NotNull(id);
-            if (source == PornSource.Pornhub)
-                Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{8,10})$", id);
-            else
-                throw new NotImplementedException();
+            switch (source) {
+                case PornSource.Pornhub:
+                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{8,10})$", id);
+                    break;
+                case PornSource.XVideos:
+                    Assert.Matches("^video[0-9]{7}/[0-9a-z_]*$", id);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
+            }
         }
 
         private static void Assert_ItemThumb_Title(string title) {
             Assert.NotNull(title);
-            Assert.True(title.Length > 1);
+            Assert.NotEqual("", title.Trim());
             Assert.Equal(HttpUtility.HtmlDecode(title), title);
             Assert.DoesNotContain("\u00A0", title);
         }
@@ -85,30 +92,40 @@ namespace PornSearch.Tests.Asserts
         [AssertionMethod]
         private static void Assert_ItemThumb_Channel_Id(string channelId, PornSource source, string filter) {
             Assert.NotNull(channelId);
-            if (source == PornSource.Pornhub) {
-                // If the search filter is empty, Channel Id may be empty if the video is not available in your country
-                bool isAvailable = !string.IsNullOrWhiteSpace(filter) || !string.IsNullOrEmpty(channelId);
-                if (isAvailable)
-                    Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
-            }
-            else {
-                throw new NotImplementedException();
+            switch (source) {
+                case PornSource.Pornhub: {
+                    // If the search filter is empty, Channel Id may be empty if the video is not available in your country
+                    bool isAvailable = !string.IsNullOrWhiteSpace(filter) || !string.IsNullOrEmpty(channelId);
+                    if (isAvailable)
+                        Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
+                    break;
+                }
+                case PornSource.XVideos:
+                    Assert.Matches("^/(channels|profiles|pornstar-channels|amateur-channels)/[^/\\s]*$", channelId);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
             }
         }
 
         private static void Assert_ItemThumb_Channel_Name(string channelName) {
             Assert.NotNull(channelName);
-            Assert.True(channelName.Length > 1);
+            Assert.NotEqual("", channelName.Trim());
             Assert.Equal(HttpUtility.HtmlDecode(channelName), channelName);
         }
 
         [AssertionMethod]
         private static void Assert_ItemThumb_ThumbnailUrl(string thumbnailUrl, PornSource source) {
             Assert.NotNull(thumbnailUrl);
-            if (source == PornSource.Pornhub)
-                Assert.Matches("^https://[bcde]i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
-            else
-                throw new NotImplementedException();
+            switch (source) {
+                case PornSource.Pornhub:
+                    Assert.Matches("^https://[bcde]i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
+                    break;
+                case PornSource.XVideos:
+                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw).xvideos-cdn.com/videos/thumbs[^\\s]*[.]jpg$",
+                                   thumbnailUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
+            }
         }
 
         private static void Assert_ItemThumb_Not_Same_Value(PornItemThumb item) {
