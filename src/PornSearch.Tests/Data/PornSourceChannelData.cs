@@ -32,11 +32,7 @@ namespace PornSearch.Tests.Data
                 // Channels
                 { "Brazzers", PornSexOrientation.Straight },
                 { "Black Male Me", PornSexOrientation.Gay },
-                { "Dream Tranny", PornSexOrientation.Trans },
-                // Models
-                { "yinyleon", PornSexOrientation.Straight },
-                { "Zilv Gudel", PornSexOrientation.Gay },
-                { "Kasey Kei", PornSexOrientation.Trans }
+                { "Dream Tranny", PornSexOrientation.Trans }
             };
             return channels.Select(c => new object[] { PornSource.Pornhub, c.Key, c.Value });
         }
@@ -44,23 +40,15 @@ namespace PornSearch.Tests.Data
         private static IEnumerable<object[]> GetXVideos() {
             Dictionary<string, PornSexOrientation> channels = new Dictionary<string, PornSexOrientation> {
                 // Pornstars
-                { "Lana Rhoades", PornSexOrientation.Straight },
-                { "Tim Kruger", PornSexOrientation.Gay },
-                { "Chanel Santini", PornSexOrientation.Trans },
-                // Pornstars Channels
                 { "Mia Khalifa", PornSexOrientation.Straight },
                 { "PIGBOY", PornSexOrientation.Gay },
-                { "Mariana Cordoba", PornSexOrientation.Trans },
+                { "Lola Spais", PornSexOrientation.Trans },
                 // Channels
                 { "Team Skeet", PornSexOrientation.Straight },
-                { "Hot Boys", PornSexOrientation.Gay },
-                { "Ladyboy Gold", PornSexOrientation.Trans },
-                // Amateurs Channels
-                { "Angel Emily", PornSexOrientation.Straight },
-                { "Gaktrizzy", PornSexOrientation.Gay },
-                { "Nathalia Fontes", PornSexOrientation.Trans }
+                { "Gaywire", PornSexOrientation.Gay },
+                { "GenderX Official", PornSexOrientation.Trans }
             };
-            return channels.Select(c => new object[] { PornSource.Pornhub, c.Key, c.Value });
+            return channels.Select(c => new object[] { PornSource.XVideos, c.Key, c.Value });
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

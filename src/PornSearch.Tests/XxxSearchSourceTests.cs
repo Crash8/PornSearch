@@ -9,7 +9,7 @@ using Xunit;
 
 namespace PornSearch.Tests
 {
-    public class XxxSearchSourceTests
+    public partial class XxxSearchSourceTests
     {
         private readonly Random _random = new Random();
 
@@ -148,7 +148,8 @@ namespace PornSearch.Tests
                         Assert.True(nbItemActor > itemThumbs.Count / 2);
                     }
                     else {
-                        Assert.True(nbItemActor <= itemThumbs.Count / 2);
+                        if (itemThumbs.Count > nbItemMax / 3)
+                            Assert.True(nbItemActor <= itemThumbs.Count / 2);
                     }
                 }
 
@@ -201,7 +202,7 @@ namespace PornSearch.Tests
             List<PornItemThumb> itemThumbs = await pornSearchSource.SearchAsync(searchFilter);
 
             PornItemThumbAssert.Check_NbItem_ByPage(itemThumbs.Count, source, searchFilter, pageSearch);
-            PornItemThumbAssert.Check_All_Unique_Value_ByPage(itemThumbs, source);
+            PornItemThumbAssert.Check_All_Unique_Value_ByPage(itemThumbs);
 
             return itemThumbs;
         }

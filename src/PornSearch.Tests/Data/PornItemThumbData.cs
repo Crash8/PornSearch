@@ -72,6 +72,19 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetPornhubGay() {
             List<PornItemThumb> itemThumbs = new List<PornItemThumb> {
+                // Fix the value "&#039;" in the title
+                new PornItemThumb {
+                    Source = PornSource.Pornhub,
+                    SexOrientation = PornSexOrientation.Gay,
+                    Id = "ph5d432ce7a448c",
+                    Title = "GAYWIRE - Bar Addison Becomes Draven Navarro's Farm Fuck Boy",
+                    Channel = new PornIdName {
+                        Id = "/channels/gay-wire",
+                        Name = "Gay Wire"
+                    },
+                    ThumbnailUrl =
+                        "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg"
+                },
                 new PornItemThumb {
                     Source = PornSource.Pornhub,
                     SexOrientation = PornSexOrientation.Gay,
@@ -177,8 +190,7 @@ namespace PornSearch.Tests.Data
                 new PornItemThumb {
                     Source = PornSource.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id =
-                        "/video7859351/26/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t/video7859351/26/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
+                    Id = "/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
                     Title = "Gay orgy   They're loving it so much, in fact, that they just can't",
                     Channel = new PornIdName {
                         Id = "/profiles/analgayfetish",
@@ -190,7 +202,7 @@ namespace PornSearch.Tests.Data
                 new PornItemThumb {
                     Source = PornSource.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video59864125/home-gay/22213231/0/quiet_top_gets_some_sloppy_head",
+                    Id = "/video59864125/quiet_top_gets_some_sloppy_head",
                     Title = "Quiet Top gets Some Sloppy Head",
                     Channel = new PornIdName {
                         Id = "/amateur-channels/finn-phillips",
@@ -198,6 +210,18 @@ namespace PornSearch.Tests.Data
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg"
+                },
+                new PornItemThumb {
+                    Source = PornSource.XVideos,
+                    SexOrientation = PornSexOrientation.Gay,
+                    Id = "/video9390594/johnny_rapids_orgy_cumshot_on_a_boat",
+                    Title = "Johnny Rapids orgy cumshot on a boat",
+                    Channel = new PornIdName {
+                        Id = "/channels/menofuk",
+                        Name = "Men Of Uk"
+                    },
+                    ThumbnailUrl =
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });
@@ -233,8 +257,8 @@ namespace PornSearch.Tests.Data
                 new PornItemThumb {
                     Source = PornSource.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video64139835/carioca_from_the_big_pica_started_with_a_condom_then_took_it_off_to_feel_it_on_the_fur",
-                    Title = "Carioca from the big pica started with a condom then took it off to feel it on the fur",
+                    Id = "/video64139835/carioca_da_pica_grossa_comecou_com_camisinha_depois_tirou_pra_sentir_no_pelo",
+                    Title = "Carioca da pica grossa começou com camisinha depois tirou pra sentir no pelo",
                     Channel = new PornIdName {
                         Id = "/pornstar-channels/maria_flavia_ts",
                         Name = "Maria Flavia Ts"

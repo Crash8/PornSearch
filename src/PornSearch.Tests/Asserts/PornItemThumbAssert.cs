@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using JetBrains.Annotations;
 using PornSearch.Tests.Enums;
@@ -22,8 +23,11 @@ namespace PornSearch.Tests.Asserts
                     Assert.Equal(nbItemMax, nbItem);
                     break;
                 case PageSearch.Channel:
-                case PageSearch.Partial:
                     Assert.True(nbItem >= 0);
+                    Assert.True(nbItem <= nbItemMax);
+                    break;
+                case PageSearch.Partial:
+                    Assert.True(nbItem > 0);
                     Assert.True(nbItem <= nbItemMax);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(pageSearch), pageSearch, null);
@@ -39,7 +43,7 @@ namespace PornSearch.Tests.Asserts
                 return 20;
             }
             if (source == PornSource.XVideos)
-                return string.IsNullOrWhiteSpace(filter) && page == 1 ? 48 : 27;
+                return string.IsNullOrWhiteSpace(filter) && page == 1 ? 47 : 27;
             throw new NotImplementedException();
         }
 
@@ -76,7 +80,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{8,10})$", id);
                     break;
                 case PornSource.XVideos:
-                    Assert.Matches("^video[0-9]{7}/[0-9a-z_]*$", id);
+                    Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
             }
@@ -101,7 +105,8 @@ namespace PornSearch.Tests.Asserts
                     break;
                 }
                 case PornSource.XVideos:
-                    Assert.Matches("^/(channels|profiles|pornstar-channels|amateur-channels)/[^/\\s]*$", channelId);
+                    Assert.Matches("^/(channels|profiles|models|pornstar-channels|amateur-channels|model-channels|amateurs|pornstars)/[^/\\s]*$",
+                                   channelId);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
             }
@@ -121,7 +126,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornSource.XVideos:
-                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw).xvideos-cdn.com/videos/thumbs[^\\s]*[.]jpg$",
+                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw).xvideos-cdn.com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
@@ -150,9 +155,9 @@ namespace PornSearch.Tests.Asserts
             }
         }
 
-        public static void Check_All_Unique_Value_ByPage(List<PornItemThumb> items, PornSource source) {
+        public static void Check_All_Unique_Value_ByPage(List<PornItemThumb> items) {
             Assert.NotNull(items);
-            Assert_All_Unique_Value(items, true, source);
+            Assert_All_Unique_Value(items, true);
         }
 
         private static void Assert_All_Unique_Value(List<PornItemThumb> items, PornSource source, string filter,
@@ -164,13 +169,12 @@ namespace PornSearch.Tests.Asserts
                 bool gaySearchNotEmpty = sexOrientation == PornSexOrientation.Gay && !string.IsNullOrWhiteSpace(filter);
                 uniqueValue = notGay || gaySearchNotEmpty;
             }
-            Assert_All_Unique_Value(items, uniqueValue, source);
+            Assert_All_Unique_Value(items, uniqueValue);
         }
 
-        private static void Assert_All_Unique_Value(List<PornItemThumb> items, bool uniqueValue, PornSource source) {
+        private static void Assert_All_Unique_Value(List<PornItemThumb> items, bool uniqueValue) {
             if (uniqueValue) {
-                // Tolerance value of the number of videos that can be found on multiple pages (e.g. consecutive pages)
-                int tolerance = source == PornSource.Pornhub ? 1 : 0;
+                const int tolerance = 2;
                 Assert.True(items.Count - items.Select(i => i.Id).Distinct().Count() <= tolerance);
                 Assert.True(items.Count - items.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
             }
@@ -187,15 +191,24 @@ namespace PornSearch.Tests.Asserts
             Assert.Equal(item1.Title, item2.Title);
             Assert.Equal(item1.Channel.Id, item2.Channel.Id);
             Assert.Equal(item1.Channel.Name, item2.Channel.Name);
-            if (item1.Source == PornSource.Pornhub) {
-                // The 9th character can change value
-                int length = item1.ThumbnailUrl.Length;
-                Assert.Equal(length, item2.ThumbnailUrl.Length);
-                Assert.Equal(item1.ThumbnailUrl.Substring(0, 8), item2.ThumbnailUrl.Substring(0, 8));
-                Assert.Equal(item1.ThumbnailUrl.Substring(9, length - 9), item2.ThumbnailUrl.Substring(9, length - 9));
-            }
-            else {
-                Assert.Equal(item1.ThumbnailUrl, item2.ThumbnailUrl);
+            switch (item1.Source) {
+                case PornSource.Pornhub: {
+                    // The 9th character can change value
+                    const string pattern = "^https://.(.*)$";
+                    Assert.Equal(Regex.Replace(item1.ThumbnailUrl, pattern, "$1"),
+                                 Regex.Replace(item2.ThumbnailUrl, pattern, "$1"));
+                    break;
+                }
+                case PornSource.XVideos: {
+                    // The first subdomain and end of url can change value
+                    const string pattern = "^https://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
+                    Assert.Equal(Regex.Replace(item1.ThumbnailUrl, pattern, "$1"),
+                                 Regex.Replace(item2.ThumbnailUrl, pattern, "$1"));
+                    break;
+                }
+                default:
+                    Assert.Equal(item1.ThumbnailUrl, item2.ThumbnailUrl);
+                    break;
             }
         }
     }
