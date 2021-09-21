@@ -14,10 +14,12 @@ namespace PornSearch.Tests.Data
                     case PornSource.Pornhub:
                         sourceChannels.AddRange(GetPornhubEmpty());
                         sourceChannels.AddRange(GetPornhubOnePage());
+                        sourceChannels.AddRange(GetPornhubDoubleToys());
                         break;
                     case PornSource.XVideos:
                         sourceChannels.AddRange(GetXVideosEmpty());
                         sourceChannels.AddRange(GetXVideosOnePage());
+                        sourceChannels.AddRange(GetXVideosDoubleToys());
                         break;
                     default: throw new ArgumentOutOfRangeException();
                 }
@@ -41,6 +43,14 @@ namespace PornSearch.Tests.Data
             return lastPage.Select(c => new object[] { PornSource.Pornhub, c.Value, c.Key, 1 });
         }
 
+        private static IEnumerable<object[]> GetPornhubDoubleToys() {
+            Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
+                { PornSexOrientation.Straight, 789 },
+                { PornSexOrientation.Gay, 15 }
+            };
+            return lastPage.Select(c => new object[] { PornSource.Pornhub, "Double Toys", c.Key, c.Value });
+        }
+
         private static IEnumerable<object[]> GetXVideosEmpty() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
                 { PornSexOrientation.Straight, 20000 },
@@ -57,6 +67,15 @@ namespace PornSearch.Tests.Data
                 { PornSexOrientation.Trans, "PIGBOY" }
             };
             return lastPage.Select(c => new object[] { PornSource.XVideos, c.Value, c.Key, 1 });
+        }
+
+        private static IEnumerable<object[]> GetXVideosDoubleToys() {
+            Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
+                { PornSexOrientation.Straight, 149 },
+                { PornSexOrientation.Gay, 149 },
+                { PornSexOrientation.Trans, 149 }
+            };
+            return lastPage.Select(c => new object[] { PornSource.XVideos, "Double Toys", c.Key, c.Value });
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
