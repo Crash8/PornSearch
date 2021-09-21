@@ -13,9 +13,12 @@ namespace PornSearch.Tests
         [ClassData(typeof(PornSearchLastPageData))]
         public async Task Search_LastPage(PornSource source, string filter, PornSexOrientation sexOrientation, int lastPage) {
             List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
+            List<PornItemThumb> itemThumbs;
 
-            List<PornItemThumb> itemThumbs = await SearchAsync(source, sexOrientation, filter, lastPage - 1, PageSearch.Complete);
-            allItemThumbs.AddRange(itemThumbs);
+            if (lastPage > 1) {
+                itemThumbs = await SearchAsync(source, sexOrientation, filter, lastPage - 1, PageSearch.Complete);
+                allItemThumbs.AddRange(itemThumbs);
+            }
             itemThumbs = await SearchAsync(source, sexOrientation, filter, lastPage, PageSearch.Partial);
             allItemThumbs.AddRange(itemThumbs);
             await SearchAsync(source, sexOrientation, filter, lastPage + 1, PageSearch.Empty);
