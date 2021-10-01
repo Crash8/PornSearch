@@ -187,7 +187,7 @@ namespace PornSearch.Tests.Asserts
                 Assert.True(items.Count - items.Select(i => i.Id).Distinct().Count() <= tolerance);
                 Assert.True(items.Count - items.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
             }
-            Assert.Equal(items.Select(i => i.Channel.Name).Distinct().Count(),
+            Assert.Equal(items.Select(i => i.Channel.Id).Distinct().Count(),
                          items.Select(i => $"{i.Channel.Id} {i.Channel.Name}").Distinct().Count());
         }
 
