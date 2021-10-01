@@ -138,17 +138,19 @@ namespace PornSearch.Tests
                     allItemThumbs.AddRange(itemThumbs);
 
                     int nbItemActor = itemThumbs.Count(i => i.Title.Contains(channel) || i.Channel.Name == channel);
-                    int nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, channel, page, PageSearch.Channel);
+                    const PageSearch pageSearch = PageSearch.Channel;
+                    int[] nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, channel, page, sexOrientation, pageSearch);
                     bool isSameSexOrientation = channelSexOrientation == sexOrientation;
                     bool otherwiseStraight = !sexOrientations.Contains(channelSexOrientation)
                                              && sexOrientation == PornSexOrientation.Straight;
 
                     if (isSameSexOrientation || otherwiseStraight) {
-                        Assert.Equal(nbItemMax, itemThumbs.Count);
+                        Assert.True(itemThumbs.Count >= nbItemMax[0]);
+                        Assert.True(itemThumbs.Count <= nbItemMax[1]);
                         Assert.True(nbItemActor > itemThumbs.Count / 2);
                     }
                     else {
-                        if (itemThumbs.Count > nbItemMax / 3)
+                        if (itemThumbs.Count > nbItemMax[1] / 3)
                             Assert.True(nbItemActor <= itemThumbs.Count / 2);
                     }
                 }
@@ -208,7 +210,7 @@ namespace PornSearch.Tests
         }
 
         private int NextRandomPage() {
-            return _random.Next(200) + 1;
+            return _random.Next(100) + 1;
         }
     }
 }

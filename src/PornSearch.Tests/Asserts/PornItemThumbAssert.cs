@@ -14,36 +14,45 @@ namespace PornSearch.Tests.Asserts
         [AssertionMethod]
         public static void Check_NbItem_ByPage(int nbItem, PornSource source, PornSearchFilter searchFilter,
                                                PageSearch pageSearch) {
-            int nbItemMax = GetNbItemMaxByPage(source, searchFilter.Filter, searchFilter.Page, pageSearch);
+            string description = $"{source}, '{searchFilter.Filter}', {searchFilter.Page}, {searchFilter.SexOrientation}";
+            int[] nbItemMax = GetNbItemMaxByPage(source, searchFilter.Filter, searchFilter.Page, searchFilter.SexOrientation,
+                                                 pageSearch);
             switch (pageSearch) {
                 case PageSearch.Empty:
-                    Assert.Equal(0, nbItem);
+                    Assert.True(0 == nbItem, $"Value = 0, Value: {nbItem} - {description}");
                     break;
                 case PageSearch.Complete:
-                    Assert.Equal(nbItemMax, nbItem);
+                    Assert.True(nbItem >= nbItemMax[0], $"Value >= {nbItemMax[0]}, Value: {nbItem} - {description}");
+                    Assert.True(nbItem <= nbItemMax[1], $"Value <= {nbItemMax[1]}, Value: {nbItem} - {description}");
                     break;
                 case PageSearch.Channel:
-                    Assert.True(nbItem >= 0);
-                    Assert.True(nbItem <= nbItemMax);
+                    Assert.True(nbItem >= 0, $"Value >= 0, Value: {nbItem} - {description}");
+                    Assert.True(nbItem <= nbItemMax[1], $"Value <= {nbItemMax[1]}, Value: {nbItem} - {description}");
                     break;
                 case PageSearch.Partial:
-                    Assert.True(nbItem > 0);
-                    Assert.True(nbItem <= nbItemMax);
+                    Assert.True(nbItem > 0, $"Value > 0, Value: {nbItem} - {description}");
+                    Assert.True(nbItem <= nbItemMax[1], $"Value <= {nbItemMax[1]}, Value: {nbItem} - {description}");
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(pageSearch), pageSearch, null);
             }
         }
 
-        public static int GetNbItemMaxByPage(PornSource source, string filter, int page, PageSearch pageSearch) {
+        public static int[] GetNbItemMaxByPage(PornSource source, string filter, int page, PornSexOrientation sexOrientation,
+                                               PageSearch pageSearch) {
             if (source == PornSource.Pornhub) {
                 if (string.IsNullOrWhiteSpace(filter))
-                    return page == 1 ? 32 : 44;
+                    return page == 1 ? new[] { 32, 32 } : new[] { 44, 44 };
                 if (pageSearch == PageSearch.Channel && page == 1)
-                    return 22;
-                return 20;
+                    return new[] { 22, 22 };
+                return new[] { 20, 20 };
             }
-            if (source == PornSource.XVideos)
-                return string.IsNullOrWhiteSpace(filter) && page == 1 ? 47 : 27;
+            if (source == PornSource.XVideos) {
+                if (string.IsNullOrWhiteSpace(filter))
+                    return page == 1 ? new[] { 46, 48 } : new[] { 27, 27 };
+                if (sexOrientation == PornSexOrientation.Gay || sexOrientation == PornSexOrientation.Trans)
+                    return new[] { 26, 27 };
+                return new[] { 27, 27 };
+            }
             throw new NotImplementedException();
         }
 
