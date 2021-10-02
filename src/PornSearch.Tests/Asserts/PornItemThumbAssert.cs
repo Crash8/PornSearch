@@ -15,8 +15,7 @@ namespace PornSearch.Tests.Asserts
         public static void Check_NbItem_ByPage(int nbItem, PornSource source, PornSearchFilter searchFilter,
                                                PageSearch pageSearch) {
             string description = $"{source}, '{searchFilter.Filter}', {searchFilter.Page}, {searchFilter.SexOrientation}";
-            int[] nbItemMax = GetNbItemMaxByPage(source, searchFilter.Filter, searchFilter.Page, searchFilter.SexOrientation,
-                                                 pageSearch);
+            int[] nbItemMax = GetNbItemMaxByPage(source, searchFilter.Filter, searchFilter.Page, pageSearch);
             switch (pageSearch) {
                 case PageSearch.Empty:
                     Assert.True(0 == nbItem, $"Value = 0, Value: {nbItem} - {description}");
@@ -37,8 +36,7 @@ namespace PornSearch.Tests.Asserts
             }
         }
 
-        public static int[] GetNbItemMaxByPage(PornSource source, string filter, int page, PornSexOrientation sexOrientation,
-                                               PageSearch pageSearch) {
+        public static int[] GetNbItemMaxByPage(PornSource source, string filter, int page, PageSearch pageSearch) {
             if (source == PornSource.Pornhub) {
                 if (string.IsNullOrWhiteSpace(filter))
                     return page == 1 ? new[] { 32, 32 } : new[] { 44, 44 };
@@ -46,13 +44,8 @@ namespace PornSearch.Tests.Asserts
                     return new[] { 22, 22 };
                 return new[] { 20, 20 };
             }
-            if (source == PornSource.XVideos) {
-                if (string.IsNullOrWhiteSpace(filter))
-                    return page == 1 ? new[] { 46, 48 } : new[] { 27, 27 };
-                if (sexOrientation == PornSexOrientation.Gay || sexOrientation == PornSexOrientation.Trans)
-                    return new[] { 26, 27 };
-                return new[] { 27, 27 };
-            }
+            if (source == PornSource.XVideos)
+                return string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 46, 48 } : new[] { 26, 27 };
             throw new NotImplementedException();
         }
 

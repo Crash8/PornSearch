@@ -138,8 +138,7 @@ namespace PornSearch.Tests
                     allItemThumbs.AddRange(itemThumbs);
 
                     int nbItemActor = itemThumbs.Count(i => i.Title.Contains(channel) || i.Channel.Name == channel);
-                    const PageSearch pageSearch = PageSearch.Channel;
-                    int[] nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, channel, page, sexOrientation, pageSearch);
+                    int[] nbItemMax = PornItemThumbAssert.GetNbItemMaxByPage(source, channel, page, PageSearch.Channel);
                     bool isSameSexOrientation = channelSexOrientation == sexOrientation;
                     bool otherwiseStraight = !sexOrientations.Contains(channelSexOrientation)
                                              && sexOrientation == PornSexOrientation.Straight;
