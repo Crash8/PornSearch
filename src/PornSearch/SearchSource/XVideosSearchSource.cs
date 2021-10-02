@@ -78,26 +78,6 @@ namespace PornSearch
                 return searchFilter.Page > Convert.ToInt32(matchPageActive.Groups[1].Value);
             }
             return searchFilter.Page > 1;
-
-            /*Match matchPagination = Regex.Match(content, "<div class=\"pagination.*?</ul >");
-            bool hasPagination = matchPagination.Success;
-            if (hasPagination) {
-                bool hasNextPage = matchPagination.Value.IndexOf("class=\"no-page next-page\"", StringComparison.Ordinal) > -1;
-                if (hasNextPage)
-                    return false;
-                Match match = Regex.Match(matchPagination.Value, "<title>.*?, page ([0-9]*) - XVIDEOS.COM</title>");
-            }
-            else {
-                return searchFilter.Page > 1;
-            }
-            Match match = Regex.Match(content, "<title>.*?, page ([0-9]*) - XVIDEOS.COM</title>");
-            if (match.Success) {
-                bool isStraightEmpty = searchFilter.SexOrientation == PornSexOrientation.Straight
-                                       && string.IsNullOrWhiteSpace(searchFilter.Filter);
-                int offset = isStraightEmpty ? 0 : -1;
-                return Convert.ToInt32(match.Groups[1].Value) != searchFilter.Page + offset;
-            }
-            return searchFilter.Page > 1;*/
         }
 
         protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
