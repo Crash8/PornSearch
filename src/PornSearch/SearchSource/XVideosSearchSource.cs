@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace PornSearch
 {
@@ -63,7 +62,7 @@ namespace PornSearch
         }
 
         protected override bool IsContentNotFound(string content) {
-            return content == "404" || content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal) == -1;
+            return content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal) == -1;
         }
 
         protected override bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
@@ -81,8 +80,6 @@ namespace PornSearch
         }
 
         protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
             int startIndex = content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal);
             int endIndex = content.IndexOf("<div id=\"footer", startIndex, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
@@ -92,10 +89,10 @@ namespace PornSearch
                                     Source = PornSource.XVideos,
                                     SexOrientation = sexOrientation,
                                     Id = m.Groups[2].Value.Replace("/THUMBNUM", ""),
-                                    Title = HttpUtility.HtmlDecode(m.Groups[3].Value).Replace("\u00A0", " "),
+                                    Title = HtmlDecode(m.Groups[3].Value),
                                     Channel = new PornIdName {
                                         Id = m.Groups[4].Value,
-                                        Name = HttpUtility.HtmlDecode(m.Groups[5].Value)
+                                        Name = HtmlDecode(m.Groups[5].Value)
                                     },
                                     ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1")
                                 })

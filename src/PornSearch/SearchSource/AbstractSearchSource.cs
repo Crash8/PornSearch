@@ -6,13 +6,19 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PornSearch
 {
     public abstract class AbstractSearchSource : IPornSearchSource
     {
-        private static readonly HttpClient HttpClient = new HttpClient();
-        private static ConcurrentDictionary<string, SemaphoreSlim> _semaphore = new ConcurrentDictionary<string, SemaphoreSlim>();
+        private static readonly HttpClient HttpClient;
+        private static readonly ConcurrentDictionary<string, SemaphoreSlim> Semaphore;
+
+        static AbstractSearchSource() {
+            HttpClient = new HttpClient();
+            Semaphore = new ConcurrentDictionary<string, SemaphoreSlim>();
+        }
 
         public abstract List<PornSexOrientation> GetSexOrientations();
 
@@ -25,7 +31,7 @@ namespace PornSearch
                 return null;
             string url = MakeUrl(searchFilter);
             string content = await GetPageContentAsync(url);
-            return IsContentNotFound(content) || IsBeyondLastPageContent(content, searchFilter)
+            return content == null || IsContentNotFound(content) || IsBeyondLastPageContent(content, searchFilter)
                 ? new List<PornItemThumb>()
                 : ExtractItemThumbs(content, searchFilter.SexOrientation);
         }
@@ -33,23 +39,17 @@ namespace PornSearch
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
 
         protected virtual async Task<string> GetPageContentAsync(string url) {
-            return await GetHtmlContentAsync(url);
-        }
-
-        private static async Task<string> GetHtmlContentAsync(string url) {
             return await GetHtmlContentWithCookieAsync(url, null);
         }
 
-        protected virtual bool IsContentNotFound(string content) {
-            return content == "404";
-        }
+        protected abstract bool IsContentNotFound(string content);
 
         protected virtual bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
             return false;
         }
 
         protected static async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
-            WaitBeforeSendFromUrl(url);
+            await WaitIfError429FromUrlAsync(url);
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url)) {
                 request.Headers.Add("User-Agent", "PornSearch/1.0");
                 request.Headers.Add("Referer", url);
@@ -58,9 +58,9 @@ namespace PornSearch
                     if (response.IsSuccessStatusCode)
                         return await response.Content.ReadAsStringAsync();
                     if (response.StatusCode == HttpStatusCode.NotFound)
-                        return "404";
+                        return null;
                     if ((int)response.StatusCode == 429) {
-                        await WaitFromUrlAsync(url, 30000);
+                        await WaitDelayFromUrlAsync(url, 30000);
                         return await GetHtmlContentWithCookieAsync(url, cookie);
                     }
                     HttpRequestException exception = new HttpRequestException(response.ReasonPhrase);
@@ -70,17 +70,23 @@ namespace PornSearch
             }
         }
 
-        private static void WaitBeforeSendFromUrl(string url) {
+        private static async Task WaitIfError429FromUrlAsync(string url) {
+            await WaitDelayFromUrlAsync(url, 0);
+        }
+
+        private static async Task WaitDelayFromUrlAsync(string url, int delay) {
             SemaphoreSlim semaphoreSlim = GetSemaphoreFromUrl(url);
-            semaphoreSlim.Wait();
+            await semaphoreSlim.WaitAsync();
+            if (delay > 0)
+                await Task.Delay(delay);
             semaphoreSlim.Release();
         }
 
         private static SemaphoreSlim GetSemaphoreFromUrl(string url) {
             string key = GetSemaphoreKeyFromUrl(url);
-            if (!_semaphore.ContainsKey(key))
-                _semaphore.TryAdd(key, new SemaphoreSlim(1));
-            return _semaphore[key];
+            if (!Semaphore.ContainsKey(key))
+                Semaphore.TryAdd(key, new SemaphoreSlim(1));
+            return Semaphore[key];
         }
 
         private static string GetSemaphoreKeyFromUrl(string url) {
@@ -88,13 +94,10 @@ namespace PornSearch
             return match.Groups[1].Value.ToLower();
         }
 
-        private static async Task WaitFromUrlAsync(string url, int delay) {
-            SemaphoreSlim semaphoreSlim = GetSemaphoreFromUrl(url);
-            await semaphoreSlim.WaitAsync();
-            await Task.Delay(delay);
-            semaphoreSlim.Release();
-        }
-
         protected abstract List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation searchFilterSexOrientation);
+
+        protected static string HtmlDecode(string htmlText) {
+            return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ");
+        }
     }
 }

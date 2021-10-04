@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using Jint;
 
 namespace PornSearch
@@ -41,7 +40,7 @@ namespace PornSearch
 
         protected override async Task<string> GetPageContentAsync(string url) {
             string content = await GetHtmlContentWithCookieAsync(url, _cookie);
-            bool hasNeedCookie = Regex.IsMatch(content, "Loading[.]{3}");
+            bool hasNeedCookie = content != null && Regex.IsMatch(content, "Loading[.]{3}");
             if (hasNeedCookie) {
                 _cookie = GetCookie(content);
                 content = await GetHtmlContentWithCookieAsync(url, _cookie);
@@ -57,17 +56,13 @@ namespace PornSearch
         }
 
         protected override bool IsContentNotFound(string content) {
-            return content == "404" || content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0;
+            return content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0;
         }
 
         protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
-            if (content == null)
-                throw new ArgumentNullException(nameof(content));
             int startIndex = content.IndexOf("<ul id=\"videoSearchResult\"", StringComparison.Ordinal);
             if (startIndex < 0)
                 startIndex = content.IndexOf("<ul id=\"videoCategory\"", StringComparison.Ordinal);
-            if (startIndex < 0)
-                throw new Exception("Data not found");
             int otherStartIndex = content.IndexOf("<ul ", startIndex + 4, StringComparison.Ordinal);
             int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
             if (endIndex > otherStartIndex)
@@ -79,10 +74,10 @@ namespace PornSearch
                                     Source = PornSource.Pornhub,
                                     SexOrientation = sexOrientation,
                                     Id = m.Groups[1].Value,
-                                    Title = HttpUtility.HtmlDecode(m.Groups[3].Value).Replace("\u00A0", " "),
+                                    Title = HtmlDecode(m.Groups[3].Value),
                                     Channel = new PornIdName {
                                         Id = m.Groups[5].Value,
-                                        Name = m.Groups[6].Value
+                                        Name = HtmlDecode(m.Groups[6].Value)
                                     },
                                     ThumbnailUrl = m.Groups[4].Value
                                 })
