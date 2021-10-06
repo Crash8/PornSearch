@@ -127,10 +127,10 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(thumbnailUrl);
             switch (source) {
                 case PornSource.Pornhub:
-                    Assert.Matches("^https://[bcde]i.phncdn.com/videos[^\\s]*[.]jpg$", thumbnailUrl);
+                    Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornSource.XVideos:
-                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw).xvideos-cdn.com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
