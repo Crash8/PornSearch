@@ -45,7 +45,7 @@ namespace PornSearch.Tests.Asserts
                 return new[] { 20, 20 };
             }
             if (source == PornSource.XVideos)
-                return string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 46, 48 } : new[] { 26, 27 };
+                return string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 46, 48 } : new[] { 25, 27 };
             throw new NotImplementedException();
         }
 
