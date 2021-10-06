@@ -39,7 +39,8 @@ namespace PornSearch.Tests.Data
                         Name = "Miss Daisy Diamond"
                     },
                     ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/202011/27/374175402/original/(m=eafTGgaaaa)(mh=AaHrhQhPfrLPy5_3)14.jpg"
+                        "https://ci.phncdn.com/videos/202011/27/374175402/original/(m=eafTGgaaaa)(mh=AaHrhQhPfrLPy5_3)14.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5fc04dbacd1e6"
                 },
                 // Fix the value "\u00A0" in the title
                 new PornItemThumb {
@@ -52,7 +53,8 @@ namespace PornSearch.Tests.Data
                         Name = "Purple Bitch"
                     },
                     ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/201907/27/237967581/original/(m=eafTGgaaaa)(mh=wsgEJN05BpMhMC7D)14.jpg"
+                        "https://ci.phncdn.com/videos/201907/27/237967581/original/(m=eafTGgaaaa)(mh=wsgEJN05BpMhMC7D)14.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0"
                 },
                 new PornItemThumb {
                     Source = PornSource.Pornhub,
@@ -64,7 +66,8 @@ namespace PornSearch.Tests.Data
                         Name = "Property Sex"
                     },
                     ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/201712/12/145091652/original/(m=eafTGgaaaa)(mh=dKfuDl_TV80fS7Wi)3.jpg"
+                        "https://ei.phncdn.com/videos/201712/12/145091652/original/(m=eafTGgaaaa)(mh=dKfuDl_TV80fS7Wi)3.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5a2f7e4f9c48a"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });
@@ -83,7 +86,8 @@ namespace PornSearch.Tests.Data
                         Name = "Gay Wire"
                     },
                     ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg"
+                        "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d432ce7a448c"
                 },
                 new PornItemThumb {
                     Source = PornSource.Pornhub,
@@ -95,7 +99,8 @@ namespace PornSearch.Tests.Data
                         Name = "Lucas Entertainment"
                     },
                     ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/202105/19/388272921/original/(m=eafTGgaaaa)(mh=fVKLwQqYceEaETFL)11.jpg"
+                        "https://ci.phncdn.com/videos/202105/19/388272921/original/(m=eafTGgaaaa)(mh=fVKLwQqYceEaETFL)11.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph60a518bb2da8a"
                 },
                 new PornItemThumb {
                     Source = PornSource.Pornhub,
@@ -107,7 +112,8 @@ namespace PornSearch.Tests.Data
                         Name = "Cris Fabio"
                     },
                     ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202101/08/381309022/original/(m=qM1VY-VbeafTGgaaaa)(mh=6k7w3qreddX5Pn38)0.jpg"
+                        "https://ei.phncdn.com/videos/202101/08/381309022/original/(m=qM1VY-VbeafTGgaaaa)(mh=6k7w3qreddX5Pn38)0.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5ff7f75ae5895"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });
@@ -126,7 +132,9 @@ namespace PornSearch.Tests.Data
                         Name = "1By-Day"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
+                    PageUrl =
+                        "https://www.xvideos.com/video39773111/petite_princess_sasha_rose_fingers_her_delicious_pink_and_rides_her_sex_toy"
                 },
                 // Fix the value "\u00A0" in the title
                 new PornItemThumb {
@@ -139,7 +147,8 @@ namespace PornSearch.Tests.Data
                         Name = "Ferame"
                     },
                     ThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg"
+                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
+                    PageUrl = "https://www.xvideos.com/video63965375/why_is_this_pussy_wet_vol_72"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -151,7 +160,8 @@ namespace PornSearch.Tests.Data
                         Name = "Darkxsite"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg",
+                    PageUrl = "https://www.xvideos.com/video26195069/double_penetrated_gonzo_babe_facialized"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -165,7 +175,9 @@ namespace PornSearch.Tests.Data
                         Name = "Reality Kings"
                     },
                     ThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg"
+                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg",
+                    PageUrl =
+                        "https://www.xvideos.com/video63909971/_raul_costa_waits_with_his_big_cock_out_for_petite_josephine_jackson_to_finish_her_yoga_-_reality_kings"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });
@@ -184,7 +196,8 @@ namespace PornSearch.Tests.Data
                         Name = "YoungPerps"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
+                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_father_s_day"
                 },
                 // Fix the value "\u00A0" in the title
                 new PornItemThumb {
@@ -197,7 +210,9 @@ namespace PornSearch.Tests.Data
                         Name = "Analgayfetish"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.8.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.8.jpg",
+                    PageUrl =
+                        "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -209,7 +224,8 @@ namespace PornSearch.Tests.Data
                         Name = "Finn Phillips"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg",
+                    PageUrl = "https://www.xvideos.com/video59864125/quiet_top_gets_some_sloppy_head"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -221,7 +237,8 @@ namespace PornSearch.Tests.Data
                         Name = "Men Of Uk"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg"
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg",
+                    PageUrl = "https://www.xvideos.com/video9390594/johnny_rapids_orgy_cumshot_on_a_boat"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });
@@ -240,7 +257,8 @@ namespace PornSearch.Tests.Data
                         Name = "Venus Lux"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/d4/a2/a9/d4a2a9883dd4eb3866afdfcb46457f43/d4a2a9883dd4eb3866afdfcb46457f43.16.jpg"
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/d4/a2/a9/d4a2a9883dd4eb3866afdfcb46457f43/d4a2a9883dd4eb3866afdfcb46457f43.16.jpg",
+                    PageUrl = "https://www.xvideos.com/video18936599/venus_lux_pounds_tyra_scott_s_asshole"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -252,7 +270,8 @@ namespace PornSearch.Tests.Data
                         Name = "Trans Erotica"
                     },
                     ThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg"
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg",
+                    PageUrl = "https://www.xvideos.com/video63886273/transerotica_trans_cutie_daisy_c_anal_fucked_by_kai_bailey"
                 },
                 new PornItemThumb {
                     Source = PornSource.XVideos,
@@ -264,7 +283,9 @@ namespace PornSearch.Tests.Data
                         Name = "Maria Flavia Ts"
                     },
                     ThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg"
+                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg",
+                    PageUrl =
+                        "https://www.xvideos.com/video64139835/carioca_da_pica_grossa_comecou_com_camisinha_depois_tirou_pra_sentir_no_pelo"
                 }
             };
             return itemThumbs.Select(i => new object[] { i });

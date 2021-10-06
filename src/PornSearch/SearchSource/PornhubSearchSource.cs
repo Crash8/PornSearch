@@ -97,7 +97,8 @@ namespace PornSearch
                                         Id = m.Groups[5].Value,
                                         Name = HtmlDecode(m.Groups[6].Value)
                                     },
-                                    ThumbnailUrl = m.Groups[4].Value
+                                    ThumbnailUrl = m.Groups[4].Value,
+                                    PageUrl = $"https://www.pornhub.com{m.Groups[2].Value}"
                                 })
                         .ToList();
         }

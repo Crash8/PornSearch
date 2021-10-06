@@ -98,7 +98,8 @@ namespace PornSearch
                                         Id = m.Groups[4].Value,
                                         Name = HtmlDecode(m.Groups[5].Value)
                                     },
-                                    ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1")
+                                    ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1"),
+                                    PageUrl = $"https://www.xvideos.com{m.Groups[2].Value.Replace("/THUMBNUM", "")}"
                                 })
                         .ToList();
         }

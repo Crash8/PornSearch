@@ -71,6 +71,8 @@ namespace PornSearch.Tests.Asserts
             Assert_ItemThumb_Channel_Id(item.Channel.Id, source, filter);
             Assert_ItemThumb_Channel_Name(item.Channel.Name);
             Assert_ItemThumb_ThumbnailUrl(item.ThumbnailUrl, source);
+            Assert_ItemThumb_PageUrl(item.PageUrl, source);
+            Assert_ItemThumb_Link_Id_PageUrl(item.Id, item.PageUrl, source);
             Assert_ItemThumb_Not_Same_Value(item);
         }
 
@@ -135,6 +137,34 @@ namespace PornSearch.Tests.Asserts
             }
         }
 
+        [AssertionMethod]
+        private static void Assert_ItemThumb_PageUrl(string pageUrl, PornSource source) {
+            Assert.NotNull(pageUrl);
+            switch (source) {
+                case PornSource.Pornhub:
+                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{8,10})$",
+                                   pageUrl);
+                    break;
+                case PornSource.XVideos:
+                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{5,8}/[^\\s]*$", pageUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_ItemThumb_Link_Id_PageUrl(string id, string pageUrl, PornSource source) {
+            switch (source) {
+                case PornSource.Pornhub:
+                    Assert.Equal($"https://www.pornhub.com/view_video.php?viewkey={id}", pageUrl);
+                    break;
+                case PornSource.XVideos:
+                    Assert.Equal($"https://www.xvideos.com{id}", pageUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(source), source, null);
+            }
+        }
+
         private static void Assert_ItemThumb_Not_Same_Value(PornItemThumb item) {
             Assert_All_Not_Same_Value(new List<PornItemThumb> { item });
         }
@@ -145,15 +175,21 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, items.Count(i => item.Id == item.Channel.Id));
                 Assert.Equal(0, items.Count(i => item.Id == item.Channel.Name));
                 Assert.Equal(0, items.Count(i => item.Id == item.ThumbnailUrl));
+                Assert.Equal(0, items.Count(i => item.Id == item.PageUrl));
 
                 Assert.Equal(0, items.Count(i => item.Title == item.Channel.Id));
                 Assert.Equal(0, items.Count(i => item.Title == item.Channel.Name));
                 Assert.Equal(0, items.Count(i => item.Title == item.ThumbnailUrl));
+                Assert.Equal(0, items.Count(i => item.Title == item.PageUrl));
 
                 Assert.Equal(0, items.Count(i => item.Channel.Id == item.Channel.Name));
                 Assert.Equal(0, items.Count(i => item.Channel.Id == item.ThumbnailUrl));
+                Assert.Equal(0, items.Count(i => item.Channel.Id == item.PageUrl));
 
                 Assert.Equal(0, items.Count(i => item.Channel.Name == item.ThumbnailUrl));
+                Assert.Equal(0, items.Count(i => item.Channel.Name == item.PageUrl));
+
+                Assert.Equal(0, items.Count(i => item.ThumbnailUrl == item.PageUrl));
             }
         }
 
@@ -179,6 +215,7 @@ namespace PornSearch.Tests.Asserts
                 const int tolerance = 2;
                 Assert.True(items.Count - items.Select(i => i.Id).Distinct().Count() <= tolerance);
                 Assert.True(items.Count - items.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
+                Assert.True(items.Count - items.Select(i => i.PageUrl).Distinct().Count() <= tolerance);
             }
             Assert.Equal(items.Select(i => i.Channel.Id).Distinct().Count(),
                          items.Select(i => $"{i.Channel.Id} {i.Channel.Name}").Distinct().Count());
@@ -212,6 +249,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Equal(item1.ThumbnailUrl, item2.ThumbnailUrl);
                     break;
             }
+            Assert.Equal(item1.PageUrl, item2.PageUrl);
         }
     }
 }
