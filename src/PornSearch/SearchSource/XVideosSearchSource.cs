@@ -65,18 +65,22 @@ namespace PornSearch
             return content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal) == -1;
         }
 
-        protected override bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
+        protected override string GetContentPaginationInContent(string content) {
             int startIndex = content.IndexOf("<div class=\"pagination", StringComparison.Ordinal);
             if (startIndex > 0) {
                 int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
-                string contentPagination = content.Substring(startIndex, endIndex - startIndex);
-                bool hasNextPage = contentPagination.IndexOf("class=\"no-page next-page\"", StringComparison.Ordinal) > -1;
-                if (hasNextPage)
-                    return false;
-                Match matchPageActive = Regex.Match(content, "<a class=\"active\" href=\"\">([^<]*)</a>");
-                return searchFilter.Page > Convert.ToInt32(matchPageActive.Groups[1].Value);
+                return content.Substring(startIndex, endIndex - startIndex);
             }
-            return searchFilter.Page > 1;
+            return null;
+        }
+
+        protected override bool IsNextButtonInContentPagination(string contentPagination) {
+            return contentPagination.IndexOf("class=\"no-page next-page\"", StringComparison.Ordinal) > -1;
+        }
+
+        protected override int? GetPageActiveInContentPagination(string contentPagination) {
+            Match matchPageActive = Regex.Match(contentPagination, "<a class=\"active\" href=\"\">([^<]*)</a>");
+            return Convert.ToInt32(matchPageActive.Groups[1].Value);
         }
 
         protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {

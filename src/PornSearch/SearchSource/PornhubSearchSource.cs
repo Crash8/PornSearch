@@ -55,6 +55,24 @@ namespace PornSearch
             return new Engine().Execute(content).GetValue("go").Invoke().ToString();
         }
 
+        protected override string GetContentPaginationInContent(string content) {
+            int startIndex = content.IndexOf("<div class=\"pagination3\">", StringComparison.Ordinal);
+            if (startIndex > 0) {
+                int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
+                return content.Substring(startIndex, endIndex - startIndex);
+            }
+            return null;
+        }
+
+        protected override bool IsNextButtonInContentPagination(string contentPagination) {
+            return contentPagination.IndexOf("class=\"page_next omega\"", StringComparison.Ordinal) > -1;
+        }
+
+        protected override int? GetPageActiveInContentPagination(string contentPagination) {
+            Match matchPageActive = Regex.Match(contentPagination, "<li class=\"page_current[^<]*[^>]*>([^<]*)</span>");
+            return matchPageActive.Success ? (int?)Convert.ToInt32(matchPageActive.Groups[1].Value) : null;
+        }
+
         protected override bool IsContentNotFound(string content) {
             return content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0;
         }

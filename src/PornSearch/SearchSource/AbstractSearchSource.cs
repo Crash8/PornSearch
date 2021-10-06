@@ -44,9 +44,22 @@ namespace PornSearch
 
         protected abstract bool IsContentNotFound(string content);
 
-        protected virtual bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
-            return false;
+        private bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
+            string contentPagination = GetContentPaginationInContent(content);
+            if (!string.IsNullOrWhiteSpace(contentPagination)) {
+                if (IsNextButtonInContentPagination(contentPagination))
+                    return false;
+                int? pageActive = GetPageActiveInContentPagination(contentPagination);
+                return pageActive == null || searchFilter.Page > pageActive.Value;
+            }
+            return searchFilter.Page > 1;
         }
+
+        protected abstract string GetContentPaginationInContent(string content);
+
+        protected abstract bool IsNextButtonInContentPagination(string contentPagination);
+
+        protected abstract int? GetPageActiveInContentPagination(string contentPagination);
 
         protected static async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
             await WaitIfError429FromUrlAsync(url);
