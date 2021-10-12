@@ -5,7 +5,7 @@ using Xunit;
 
 namespace PornSearch.Tests.Extensions
 {
-    public class ServiceCollectionExtensionsTests
+    public class ServiceCollectionExtensions_Tests
     {
         [Fact]
         public void ArgumentNullException() {
