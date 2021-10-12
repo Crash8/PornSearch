@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace PornSearch.Tests.Data
 {
-    public class PornSourceChannelData : IEnumerable<object[]>
+    public class PornWebsiteChannelData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator() {
-            List<object[]> sourceChannels = new List<object[]>();
-            foreach (PornSource source in Enum.GetValues(typeof(PornSource))) {
-                switch (source) {
-                    case PornSource.Pornhub:
-                        sourceChannels.AddRange(GetPornhub());
+            List<object[]> websiteChannels = new List<object[]>();
+            foreach (PornWebsite website in Enum.GetValues(typeof(PornWebsite))) {
+                switch (website) {
+                    case PornWebsite.Pornhub:
+                        websiteChannels.AddRange(GetPornhub());
                         break;
-                    case PornSource.XVideos:
-                        sourceChannels.AddRange(GetXVideos());
+                    case PornWebsite.XVideos:
+                        websiteChannels.AddRange(GetXVideos());
                         break;
                     default: throw new ArgumentOutOfRangeException();
                 }
             }
-            return sourceChannels.GetEnumerator();
+            return websiteChannels.GetEnumerator();
         }
 
         private static IEnumerable<object[]> GetPornhub() {
@@ -34,7 +34,7 @@ namespace PornSearch.Tests.Data
                 { "Black Male Me", PornSexOrientation.Gay },
                 { "Dream Tranny", PornSexOrientation.Trans }
             };
-            return channels.Select(c => new object[] { PornSource.Pornhub, c.Key, c.Value });
+            return channels.Select(c => new object[] { PornWebsite.Pornhub, c.Key, c.Value });
         }
 
         private static IEnumerable<object[]> GetXVideos() {
@@ -48,7 +48,7 @@ namespace PornSearch.Tests.Data
                 { "Gaywire", PornSexOrientation.Gay },
                 { "GenderX Official", PornSexOrientation.Trans }
             };
-            return channels.Select(c => new object[] { PornSource.XVideos, c.Key, c.Value });
+            return channels.Select(c => new object[] { PornWebsite.XVideos, c.Key, c.Value });
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

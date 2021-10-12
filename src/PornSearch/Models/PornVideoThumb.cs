@@ -1,8 +1,8 @@
 namespace PornSearch
 {
-    public class PornItemThumb
+    public class PornVideoThumb
     {
-        public PornSource Source { get; set; }
+        public PornWebsite Website { get; set; }
         public PornSexOrientation SexOrientation { get; set; }
         public string Id { get; set; }
         public string Title { get; set; }

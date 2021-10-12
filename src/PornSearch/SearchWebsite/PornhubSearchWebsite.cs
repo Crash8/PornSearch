@@ -7,11 +7,11 @@ using Jint;
 
 namespace PornSearch
 {
-    public class PornhubSearchSource : AbstractSearchSource
+    internal class PornhubSearchWebsite : AbstractSearchWebsite
     {
         private static string _cookie;
 
-        private const string RegExItemThumb =
+        private const string RegExVideoThumb =
             "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
             + " title=\"(.*?)\"[\\s\\S]*?data-src = \"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
             + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
@@ -77,7 +77,7 @@ namespace PornSearch
             return content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0;
         }
 
-        protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
+        protected override List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter) {
             int startIndex = content.IndexOf("<ul id=\"videoSearchResult\"", StringComparison.Ordinal);
             if (startIndex < 0)
                 startIndex = content.IndexOf("<ul id=\"videoCategory\"", StringComparison.Ordinal);
@@ -86,11 +86,11 @@ namespace PornSearch
             if (endIndex > otherStartIndex)
                 endIndex = content.IndexOf("</ul>", endIndex + 5, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            return Regex.Matches(contentItems, RegExItemThumb)
+            return Regex.Matches(contentItems, RegExVideoThumb)
                         .Cast<Match>()
-                        .Select(m => new PornItemThumb {
-                                    Source = PornSource.Pornhub,
-                                    SexOrientation = sexOrientation,
+                        .Select(m => new PornVideoThumb {
+                                    Website = searchFilter.Website,
+                                    SexOrientation = searchFilter.SexOrientation,
                                     Id = m.Groups[1].Value,
                                     Title = HtmlDecode(m.Groups[3].Value),
                                     Channel = new PornIdName {

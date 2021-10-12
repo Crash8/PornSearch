@@ -10,21 +10,19 @@ using System.Web;
 
 namespace PornSearch
 {
-    public abstract class AbstractSearchSource : IPornSearchSource
+    internal abstract class AbstractSearchWebsite : IPornSearchWebsite
     {
         private static readonly HttpClient HttpClient;
         private static readonly ConcurrentDictionary<string, SemaphoreSlim> Semaphore;
 
-        static AbstractSearchSource() {
+        static AbstractSearchWebsite() {
             HttpClient = new HttpClient();
             Semaphore = new ConcurrentDictionary<string, SemaphoreSlim>();
         }
 
         public abstract List<PornSexOrientation> GetSexOrientations();
 
-        public async Task<List<PornItemThumb>> SearchAsync(PornSearchFilter searchFilter) {
-            if (searchFilter == null)
-                throw new ArgumentNullException(nameof(searchFilter));
+        public async Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter) {
             if (searchFilter.Page <= 0)
                 throw new ArgumentException("Value greater than zero", nameof(searchFilter.Page));
             if (!GetSexOrientations().Contains(searchFilter.SexOrientation))
@@ -32,8 +30,8 @@ namespace PornSearch
             string url = MakeUrl(searchFilter);
             string content = await GetPageContentAsync(url);
             return content == null || IsContentNotFound(content) || IsBeyondLastPageContent(content, searchFilter)
-                ? new List<PornItemThumb>()
-                : ExtractItemThumbs(content, searchFilter.SexOrientation);
+                ? new List<PornVideoThumb>()
+                : ExtractVideoThumbs(content, searchFilter);
         }
 
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
@@ -107,7 +105,7 @@ namespace PornSearch
             return match.Groups[1].Value.ToLower();
         }
 
-        protected abstract List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation searchFilterSexOrientation);
+        protected abstract List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter);
 
         protected static string HtmlDecode(string htmlText) {
             return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ");

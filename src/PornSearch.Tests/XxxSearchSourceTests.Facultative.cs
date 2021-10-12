@@ -7,23 +7,23 @@ using Xunit;
 
 namespace PornSearch.Tests
 {
-    public partial class XxxSearchSourceTests
+    public partial class XxxSearchWebsiteTests
     {
         //[Theory]
         [ClassData(typeof(PornSearchLastPageData))]
-        public async Task Search_LastPage(PornSource source, string filter, PornSexOrientation sexOrientation, int lastPage) {
-            List<PornItemThumb> allItemThumbs = new List<PornItemThumb>();
-            List<PornItemThumb> itemThumbs;
+        public async Task Search_LastPage(PornWebsite website, string filter, PornSexOrientation sexOrientation, int lastPage) {
+            List<PornVideoThumb> allVideoThumbs = new List<PornVideoThumb>();
+            List<PornVideoThumb> videoThumbs;
 
             if (lastPage > 1) {
-                itemThumbs = await SearchAsync(source, sexOrientation, filter, lastPage - 1, PageSearch.Complete);
-                allItemThumbs.AddRange(itemThumbs);
+                videoThumbs = await SearchAsync(website, sexOrientation, filter, lastPage - 1, PageSearch.Complete);
+                allVideoThumbs.AddRange(videoThumbs);
             }
-            itemThumbs = await SearchAsync(source, sexOrientation, filter, lastPage, PageSearch.Partial);
-            allItemThumbs.AddRange(itemThumbs);
-            await SearchAsync(source, sexOrientation, filter, lastPage + 1, PageSearch.Empty);
+            videoThumbs = await SearchAsync(website, sexOrientation, filter, lastPage, PageSearch.Partial);
+            allVideoThumbs.AddRange(videoThumbs);
+            await SearchAsync(website, sexOrientation, filter, lastPage + 1, PageSearch.Empty);
 
-            PornItemThumbAssert.CheckAll(allItemThumbs, source, filter, sexOrientation);
+            PornVideoThumbAssert.CheckAll(allVideoThumbs, website, filter, sexOrientation);
         }
     }
 }

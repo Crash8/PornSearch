@@ -1,6 +1,6 @@
 namespace PornSearch
 {
-    public enum PornSource
+    public enum PornWebsite
     {
         Pornhub,
         XVideos

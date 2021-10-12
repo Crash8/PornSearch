@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace PornSearch
 {
-    public interface IPornSearchSource
+    internal interface IPornSearchWebsite
     {
         List<PornSexOrientation> GetSexOrientations();
-        Task<List<PornItemThumb>> SearchAsync(PornSearchFilter searchFilter);
+        Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter);
     }
 }

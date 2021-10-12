@@ -9,14 +9,14 @@ namespace PornSearch.Tests.Data
     {
         public IEnumerator<object[]> GetEnumerator() {
             List<object[]> sourceChannels = new List<object[]>();
-            foreach (PornSource source in Enum.GetValues(typeof(PornSource))) {
-                switch (source) {
-                    case PornSource.Pornhub:
+            foreach (PornWebsite website in Enum.GetValues(typeof(PornWebsite))) {
+                switch (website) {
+                    case PornWebsite.Pornhub:
                         sourceChannels.AddRange(GetPornhubEmpty());
                         sourceChannels.AddRange(GetPornhubOnePage());
                         sourceChannels.AddRange(GetPornhubDoubleToys());
                         break;
-                    case PornSource.XVideos:
+                    case PornWebsite.XVideos:
                         sourceChannels.AddRange(GetXVideosEmpty());
                         sourceChannels.AddRange(GetXVideosOnePage());
                         sourceChannels.AddRange(GetXVideosDoubleToys());
@@ -29,10 +29,10 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetPornhubEmpty() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 5246 },
-                { PornSexOrientation.Gay, 1419 }
+                { PornSexOrientation.Straight, 2273 },
+                { PornSexOrientation.Gay, 1428 }
             };
-            return lastPage.Select(c => new object[] { PornSource.Pornhub, "", c.Key, c.Value });
+            return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "", c.Key, c.Value });
         }
 
         private static IEnumerable<object[]> GetPornhubOnePage() {
@@ -40,15 +40,15 @@ namespace PornSearch.Tests.Data
                 { PornSexOrientation.Straight, "PIGBOY" },
                 { PornSexOrientation.Gay, "Nooberg" }
             };
-            return lastPage.Select(c => new object[] { PornSource.Pornhub, c.Value, c.Key, 1 });
+            return lastPage.Select(c => new object[] { PornWebsite.Pornhub, c.Value, c.Key, 1 });
         }
 
         private static IEnumerable<object[]> GetPornhubDoubleToys() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 790 },
+                { PornSexOrientation.Straight, 795 },
                 { PornSexOrientation.Gay, 15 }
             };
-            return lastPage.Select(c => new object[] { PornSource.Pornhub, "Double Toys", c.Key, c.Value });
+            return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "Double Toys", c.Key, c.Value });
         }
 
         private static IEnumerable<object[]> GetXVideosEmpty() {
@@ -57,7 +57,7 @@ namespace PornSearch.Tests.Data
                 { PornSexOrientation.Gay, 297 },
                 { PornSexOrientation.Trans, 297 }
             };
-            return lastPage.Select(c => new object[] { PornSource.XVideos, "", c.Key, c.Value });
+            return lastPage.Select(c => new object[] { PornWebsite.XVideos, "", c.Key, c.Value });
         }
 
         private static IEnumerable<object[]> GetXVideosOnePage() {
@@ -66,7 +66,7 @@ namespace PornSearch.Tests.Data
                 { PornSexOrientation.Gay, "1409" },
                 { PornSexOrientation.Trans, "PIGBOY" }
             };
-            return lastPage.Select(c => new object[] { PornSource.XVideos, c.Value, c.Key, 1 });
+            return lastPage.Select(c => new object[] { PornWebsite.XVideos, c.Value, c.Key, 1 });
         }
 
         private static IEnumerable<object[]> GetXVideosDoubleToys() {
@@ -75,7 +75,7 @@ namespace PornSearch.Tests.Data
                 { PornSexOrientation.Gay, 149 },
                 { PornSexOrientation.Trans, 149 }
             };
-            return lastPage.Select(c => new object[] { PornSource.XVideos, "Double Toys", c.Key, c.Value });
+            return lastPage.Select(c => new object[] { PornWebsite.XVideos, "Double Toys", c.Key, c.Value });
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

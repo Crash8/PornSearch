@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace PornSearch.Tests.Data
 {
-    public class PornSourceData : IEnumerable<object[]>
+    public class PornWebsiteData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator() {
-            return Enum.GetValues(typeof(PornSource)).Cast<PornSource>().Select(s => new object[] { s }).GetEnumerator();
+            return Enum.GetValues(typeof(PornWebsite)).Cast<PornWebsite>().Select(s => new object[] { s }).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace PornSearch
 {
-    public class XVideosSearchSource : AbstractSearchSource
+    internal class XVideosSearchWebsite : AbstractSearchWebsite
     {
-        private const string RegExItemThumb =
+        private const string RegExVideoThumb =
             "<div.*class=\"thumb-block.*<img.*?data-src=\"(.*?)\".*?<a href=\"(/video.*?)\" title=\"(.*?)\".*<a href=\"(.*?)\">"
             + "<span.*?>(.*?)<";
 
@@ -83,15 +83,15 @@ namespace PornSearch
             return Convert.ToInt32(matchPageActive.Groups[1].Value);
         }
 
-        protected override List<PornItemThumb> ExtractItemThumbs(string content, PornSexOrientation sexOrientation) {
+        protected override List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter) {
             int startIndex = content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal);
             int endIndex = content.IndexOf("<div id=\"footer", startIndex, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            return Regex.Matches(contentItems, RegExItemThumb)
+            return Regex.Matches(contentItems, RegExVideoThumb)
                         .Cast<Match>()
-                        .Select(m => new PornItemThumb {
-                                    Source = PornSource.XVideos,
-                                    SexOrientation = sexOrientation,
+                        .Select(m => new PornVideoThumb {
+                                    Website = searchFilter.Website,
+                                    SexOrientation = searchFilter.SexOrientation,
                                     Id = m.Groups[2].Value.Replace("/THUMBNUM", ""),
                                     Title = HtmlDecode(m.Groups[3].Value),
                                     Channel = new PornIdName {
