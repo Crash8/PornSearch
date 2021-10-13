@@ -9,7 +9,7 @@ namespace PornSearch.Tests.Data
     {
         public IEnumerator<object[]> GetEnumerator() {
             List<object[]> websiteChannels = new List<object[]>();
-            foreach (PornWebsite website in Enum.GetValues(typeof(PornWebsite))) {
+            foreach (PornWebsite website in ConfigForTests.GetWebsites()) {
                 switch (website) {
                     case PornWebsite.Pornhub:
                         websiteChannels.AddRange(GetPornhub());
