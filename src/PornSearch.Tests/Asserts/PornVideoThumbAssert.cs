@@ -175,24 +175,24 @@ namespace PornSearch.Tests.Asserts
             const int tolerance = 1;
             foreach (PornVideoThumb videoThumb in videoThumbs) {
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Title));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == videoThumb.Channel.Id));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == videoThumb.Channel.Name));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == videoThumb.ThumbnailUrl));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == videoThumb.PageUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Id));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Name));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.ThumbnailUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == videoThumb.Channel.Id));
-                Assert.True(videoThumbs.Count(i => videoThumb.Title == videoThumb.Channel.Name) <= tolerance);
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == videoThumb.ThumbnailUrl));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == videoThumb.PageUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.Channel.Id));
+                Assert.True(videoThumbs.Count(i => videoThumb.Title == i.Channel.Name) <= tolerance);
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.ThumbnailUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == videoThumb.Channel.Name));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == videoThumb.ThumbnailUrl));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == videoThumb.PageUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.Channel.Name));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.ThumbnailUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == videoThumb.ThumbnailUrl));
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == videoThumb.PageUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.ThumbnailUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.ThumbnailUrl == videoThumb.PageUrl));
+                Assert.Equal(0, videoThumbs.Count(i => videoThumb.ThumbnailUrl == i.PageUrl));
             }
         }
 
