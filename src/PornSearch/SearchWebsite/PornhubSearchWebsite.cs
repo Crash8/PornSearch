@@ -65,7 +65,7 @@ namespace PornSearch
         }
 
         protected override bool IsNextButtonInContentPagination(string contentPagination) {
-            return contentPagination.IndexOf("class=\"page_next omega\"", StringComparison.Ordinal) > -1;
+            return contentPagination.IndexOf("class=\"page_next\"", StringComparison.Ordinal) > -1;
         }
 
         protected override int? GetPageActiveInContentPagination(string contentPagination) {
