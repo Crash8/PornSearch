@@ -172,8 +172,9 @@ namespace PornSearch.Tests.Asserts
         }
 
         private static void Assert_All_Not_Same_Value(List<PornVideoThumb> videoThumbs) {
-            const int tolerance = 1;
             foreach (PornVideoThumb videoThumb in videoThumbs) {
+                int tolerance = videoThumb.Website == PornWebsite.XVideos ? 4 : 0;
+
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Title));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Id));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Name));
