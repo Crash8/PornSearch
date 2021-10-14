@@ -95,6 +95,7 @@ namespace PornSearch.Tests
             await CheckSearchOn3PagesAsync(website, "", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(website, "Amateur", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(website, "Teen Anal", 1, PageSearch.Complete);
+            await CheckSearchOn3PagesAsync(website, "é", 1, PageSearch.Complete);
             await CheckSearchOn3PagesAsync(website, "Threesome", NextRandomPage(), PageSearch.Complete);
             await CheckSearchOn3PagesAsync(website, "Blowjob Cumshot Ass", 10000, PageSearch.Empty);
             await CheckSearchOn3PagesAsync(website, "azertyuiop", 1, PageSearch.Empty);
