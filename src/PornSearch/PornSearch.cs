@@ -63,7 +63,8 @@ namespace PornSearch
                 case UnicodeCategory.DecimalDigitNumber:
                 case UnicodeCategory.LowercaseLetter:
                 case UnicodeCategory.SpaceSeparator:
-                case UnicodeCategory.UppercaseLetter: return true;
+                case UnicodeCategory.UppercaseLetter:
+                case UnicodeCategory.OtherLetter: return true;
                 default: return false;
             }
         }
