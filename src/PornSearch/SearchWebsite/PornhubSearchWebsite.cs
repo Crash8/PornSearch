@@ -9,7 +9,7 @@ namespace PornSearch
 {
     internal class PornhubSearchWebsite : AbstractSearchWebsite
     {
-        private static string _cookie;
+        private string _cookie;
 
         private const string RegExVideoThumb =
             "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
