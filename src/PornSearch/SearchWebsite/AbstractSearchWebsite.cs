@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -109,6 +111,29 @@ namespace PornSearch
 
         protected static string HtmlDecode(string htmlText) {
             return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ");
+        }
+
+        public abstract PornSourceVideo GetSourceVideo(string url);
+
+        public async Task<PornVideo> GetVideoByIdAsync(string videoId) {
+            string url = MakeUrlVideo(videoId);
+            string content = await GetPageContentAsync(url);
+            return content == null || IsVideoContentNotFound(content) ? null : ExtractVideo(content);
+        }
+
+        protected abstract string MakeUrlVideo(string videoId);
+
+        protected abstract bool IsVideoContentNotFound(string content);
+
+        protected abstract PornVideo ExtractVideo(string content);
+
+        protected static int ConvertToInt(string number) {
+            number = number.Replace(",", "");
+            return Convert.ToInt32(number);
+        }
+
+        protected static string ToTitleCase(string text) {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
         }
     }
 }

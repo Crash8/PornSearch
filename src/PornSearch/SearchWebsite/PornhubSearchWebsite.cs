@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace PornSearch
             bool hasNeedCookie = content != null && Regex.IsMatch(content, "Loading[.]{3}");
             if (hasNeedCookie) {
                 _cookie = GetCookie(content);
-                content = await GetHtmlContentWithCookieAsync(url, _cookie);
+                content = await GetPageContentAsync(url);
             }
             return content;
         }
@@ -101,6 +102,114 @@ namespace PornSearch
                                     PageUrl = $"https://www.pornhub.com{m.Groups[2].Value}"
                                 })
                         .ToList();
+        }
+
+        public override PornSourceVideo GetSourceVideo(string url) {
+            const string pattern = "^https://[a-z]{2,3}[.]pornhub[.]com/view_video[.]php[?]viewkey=([^\\s]+)$";
+            Match match = Regex.Match(url, pattern);
+            return !match.Success
+                ? null
+                : new PornSourceVideo {
+                    Id = match.Groups[1].Value,
+                    Website = PornWebsite.Pornhub
+                };
+        }
+
+        protected override string MakeUrlVideo(string videoId) {
+            return $"https://www.pornhub.com/view_video.php?viewkey={videoId}";
+        }
+
+        protected override bool IsVideoContentNotFound(string content) {
+            return content.IndexOf("<div class=\"geoBlocked\">", StringComparison.Ordinal) > 0
+                   || content.IndexOf("<section class=\"noVideo\">", StringComparison.Ordinal) > 0;
+        }
+
+        protected override PornVideo ExtractVideo(string content) {
+            PornVideo video = new PornVideo { Website = PornWebsite.Pornhub };
+            FillVideoFromHeaderContent(content, ref video);
+            FillVideoFromBodyContent(content, ref video);
+            FillVideo_Categories(content, ref video);
+            FillVideo_Tags(content, ref video);
+            FillVideo_Actors(content, ref video);
+            return video;
+        }
+
+        private static void FillVideoFromHeaderContent(string content, ref PornVideo video) {
+            const string pattern = "<meta property=\"og:url\" content=\"([^?]*[?]viewkey=([^\"]*))\" />[\\s\\S]*?"
+                                   + "<meta property=\"og:title\" content=\"([^\"]*)\" />[\\s\\S]*?"
+                                   + "<meta property=\"og:image\" content=\"([^\"]*)\" />[\\s\\S]*?"
+                                   + "phOrientationSegment.*?= \"([^\"]*)[\\s\\S]*?" + "\"uploadDate\": \"([^\"]*)[\\s\\S]*?";
+            Match match = Regex.Match(content, pattern);
+            if (match.Success) {
+                Enum.TryParse(match.Groups[5].Value, true, out PornSexOrientation sexOrientation);
+                video.SexOrientation = sexOrientation;
+                video.Id = match.Groups[2].Value;
+                video.Title = HtmlDecode(match.Groups[3].Value);
+                video.ThumbnailUrl = match.Groups[4].Value;
+                video.PageUrl = match.Groups[1].Value;
+                video.UploadDate = DateTime.Parse(match.Groups[6].Value);
+            }
+        }
+
+        private static void FillVideoFromBodyContent(string content, ref PornVideo video) {
+            const string pattern = "<img src=\"([^?]*)[?][^\"]*\" class=\"videoElementPoster\"[\\s\\S]*?"
+                                   + "<div class=\"ratingInfo\">\\s.*?" + "class=\"count\">([^<]*)[\\s\\S]*?"
+                                   + "<span class=\"votesUp\" data-rating=\"([^\"]*)[\\s\\S]*?"
+                                   + "<span class=\"votesDown\" data-rating=\"([^\"]*)[\\s\\S]*?"
+                                   + "<div class=\"userInfo\">[\\s\\S]*?href=\"([^\"]*).*?>([^<]*)";
+            Match match = Regex.Match(content, pattern);
+            if (match.Success) {
+                video.SmallThumbnailUrl = match.Groups[1].Value;
+                video.NbViews = ConvertToInt(match.Groups[2].Value);
+                video.NbLikes = ConvertToInt(match.Groups[3].Value);
+                video.NbDislikes = ConvertToInt(match.Groups[4].Value);
+                video.Channel = new PornIdName {
+                    Id = match.Groups[5].Value,
+                    Name = HtmlDecode(match.Groups[6].Value)
+                };
+            }
+        }
+
+        private static void FillVideo_Categories(string content, ref PornVideo video) {
+            int startIndex = content.IndexOf("<div class=\"categoriesWrapper\">", StringComparison.Ordinal);
+            int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
+            content = content.Substring(startIndex, endIndex - startIndex);
+            MatchCollection matches = Regex.Matches(content, "<a class=\"item\" href=\"([^\"]*)\"[^>]*>([^<]*)");
+            video.Categories = matches.Cast<Match>()
+                                      .Select(m => new PornIdName {
+                                                  Id = m.Groups[1].Value,
+                                                  Name = HtmlDecode(m.Groups[2].Value)
+                                              })
+                                      .ToList();
+        }
+
+        private static void FillVideo_Tags(string content, ref PornVideo video) {
+            int startIndex = content.IndexOf("<div class=\"tagsWrapper\">", StringComparison.Ordinal);
+            if (startIndex < 0)
+                return;
+            int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
+            content = content.Substring(startIndex, endIndex - startIndex);
+            MatchCollection matches = Regex.Matches(content, "<a class=\"item\" href=\"([^\"]*)\"[^>]*>([^<]*)");
+            video.Tags = matches.Cast<Match>()
+                                .Select(m => new PornIdName {
+                                            Id = m.Groups[1].Value,
+                                            Name = ToTitleCase(HtmlDecode(m.Groups[2].Value))
+                                        })
+                                .ToList();
+        }
+
+        private static void FillVideo_Actors(string content, ref PornVideo video) {
+            int startIndex = content.IndexOf("<div class=\"pornstarsWrapper ", StringComparison.Ordinal);
+            int endIndex = content.IndexOf("<div id=\"deletePornstarResult\"", startIndex, StringComparison.Ordinal);
+            content = content.Substring(startIndex, endIndex - startIndex);
+            const string pattern = "data-mxptype=\"Pornstar\"\\s*data-mxptext=\"([^\"]*)\"\\s*.*\\s.*\\s*href=\"([^\"]*)";
+            MatchCollection matches = Regex.Matches(content, pattern);
+            video.Actors = matches.Cast<Match>()
+                                  .Select(m => new PornIdName {
+                                              Id = m.Groups[2].Value,
+                                              Name = HtmlDecode(m.Groups[1].Value)
+                                          })
+                                  .ToList();
         }
     }
 }

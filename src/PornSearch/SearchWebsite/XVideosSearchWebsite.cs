@@ -103,5 +103,28 @@ namespace PornSearch
                                 })
                         .ToList();
         }
+
+        public override PornSourceVideo GetSourceVideo(string url) {
+            const string pattern = "^https://www[.]xvideos[.]com/video([0-9]+)/[^\\s]*$";
+            Match match = Regex.Match(url, pattern);
+            return !match.Success
+                ? null
+                : new PornSourceVideo {
+                    Id = match.Groups[1].Value,
+                    Website = PornWebsite.XVideos
+                };
+        }
+
+        protected override string MakeUrlVideo(string videoId) {
+            return $"https://www.xvideos.com/video{videoId}/";
+        }
+
+        protected override bool IsVideoContentNotFound(string content) {
+            throw new NotImplementedException();
+        }
+
+        protected override PornVideo ExtractVideo(string content) {
+            throw new NotImplementedException();
+        }
     }
 }

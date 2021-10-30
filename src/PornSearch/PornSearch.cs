@@ -17,12 +17,16 @@ namespace PornSearch
         }
 
         public List<PornSource> GetSources() {
-            return (from PornWebsite website in Enum.GetValues(typeof(PornWebsite))
+            return (from PornWebsite website in GetAllWebsites()
                     let searchWebsite = GetSearchWebsite(website)
                     select new PornSource {
                         Website = website,
                         SexOrientations = searchWebsite.GetSexOrientations()
                     }).ToList();
+        }
+
+        private static Array GetAllWebsites() {
+            return Enum.GetValues(typeof(PornWebsite));
         }
 
         private IPornSearchWebsite GetSearchWebsite(PornWebsite website) {
@@ -67,6 +71,24 @@ namespace PornSearch
                 case UnicodeCategory.OtherLetter: return true;
                 default: return false;
             }
+        }
+
+        public async Task<PornVideo> GetVideoAsync(string url) {
+            PornSourceVideo sourceVideo = GetSourceVideo(url);
+            if (sourceVideo != null) {
+                IPornSearchWebsite searchWebsite = GetSearchWebsite(sourceVideo.Website);
+                return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id);
+            }
+            return null;
+        }
+
+        public PornSourceVideo GetSourceVideo(string url) {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+            url = url.ToLower();
+            return (from PornWebsite website in GetAllWebsites()
+                    select GetSearchWebsite(website) into searchWebsite
+                    select searchWebsite.GetSourceVideo(url)).FirstOrDefault(sourceVideo => sourceVideo != null);
         }
     }
 }

@@ -7,5 +7,7 @@ namespace PornSearch
     {
         List<PornSexOrientation> GetSexOrientations();
         Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter);
+        PornSourceVideo GetSourceVideo(string url);
+        Task<PornVideo> GetVideoByIdAsync(string videoId);
     }
 }
