@@ -30,7 +30,7 @@ namespace PornSearch.Tests.Data
         private static IEnumerable<object[]> GetPornhubEmpty() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
                 { PornSexOrientation.Straight, 2273 },
-                { PornSexOrientation.Gay, 1428 }
+                { PornSexOrientation.Gay, 1437 }
             };
             return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "", c.Key, c.Value });
         }
@@ -45,8 +45,8 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetPornhubDoubleToys() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 795 },
-                { PornSexOrientation.Gay, 15 }
+                { PornSexOrientation.Straight, 803 },
+                { PornSexOrientation.Gay, 16 }
             };
             return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "Double Toys", c.Key, c.Value });
         }
