@@ -71,9 +71,9 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetXVideosDoubleToys() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 149 },
-                { PornSexOrientation.Gay, 149 },
-                { PornSexOrientation.Trans, 149 }
+                { PornSexOrientation.Straight, 134 },
+                { PornSexOrientation.Gay, 134 },
+                { PornSexOrientation.Trans, 134 }
             };
             return lastPage.Select(c => new object[] { PornWebsite.XVideos, "Double Toys", c.Key, c.Value });
         }
