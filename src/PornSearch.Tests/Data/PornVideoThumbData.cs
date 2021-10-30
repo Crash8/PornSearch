@@ -105,15 +105,15 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "ph5ff7f75ae5895",
-                    Title = "Huge dick shot cum and continued to fuck the hole while making a creampie.",
+                    Id = "ph610ecc9a8ca91",
+                    Title = "Two cocks one toy Best friends do frotting together and cum HornyJohny66",
                     Channel = new PornIdName {
-                        Id = "/model/cris-fabio",
-                        Name = "Cris Fabio"
+                        Id = "/model/hornyjohny66",
+                        Name = "hornyjohny66"
                     },
                     ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202101/08/381309022/original/(m=qM1VY-VbeafTGgaaaa)(mh=6k7w3qreddX5Pn38)0.jpg",
-                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5ff7f75ae5895"
+                        "https://ci.phncdn.com/videos/202108/07/392562291/original/(m=eafTGgaaaa)(mh=7sAwZCkSnPzuMw0w)12.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91"
                 }
             };
             return videoThumbs.Select(i => new object[] { i });
