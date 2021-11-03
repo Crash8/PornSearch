@@ -83,7 +83,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(id);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{8,10})$", id);
+                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{7,10})$", id);
                     break;
                 case PornWebsite.XVideos:
                     Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
@@ -144,7 +144,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(pageUrl);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{8,10})$",
+                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{7,10})$",
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
