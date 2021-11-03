@@ -23,7 +23,10 @@ namespace PornSearch.Tests.Asserts
                     Assert.True(0 == nbVideo, $"Value = 0, Value: {nbVideo} - {description}");
                     break;
                 case PageSearch.Complete:
-                    Assert.True(nbVideo >= nbVideoMax[0], $"Value >= {nbVideoMax[0]}, Value: {nbVideo} - {description}");
+                    // If for Pornhub the search filter is empty, Channel Id may be empty if the video is not available in your country
+                    int tolerance = website == PornWebsite.Pornhub && string.IsNullOrWhiteSpace(filter) ? 1 : 0;
+                    Assert.True(nbVideo >= nbVideoMax[0] - tolerance,
+                                $"Value >= {nbVideoMax[0] - tolerance}, Value: {nbVideo} - {description}");
                     Assert.True(nbVideo <= nbVideoMax[1], $"Value <= {nbVideoMax[1]}, Value: {nbVideo} - {description}");
                     break;
                 case PageSearch.Channel:
@@ -70,7 +73,7 @@ namespace PornSearch.Tests.Asserts
             Assert_VideoThumb_Id(videoThumb.Id, website);
             Assert_VideoThumb_Title(videoThumb.Title);
             Assert.NotNull(videoThumb.Channel);
-            Assert_VideoThumb_Channel_Id(videoThumb.Channel.Id, website, filter);
+            Assert_VideoThumb_Channel_Id(videoThumb.Channel.Id, website);
             Assert_VideoThumb_Channel_Name(videoThumb.Channel.Name);
             Assert_VideoThumb_ThumbnailUrl(videoThumb.ThumbnailUrl, website);
             Assert_VideoThumb_PageUrl(videoThumb.PageUrl, website);
@@ -100,16 +103,12 @@ namespace PornSearch.Tests.Asserts
         }
 
         [AssertionMethod]
-        private static void Assert_VideoThumb_Channel_Id(string channelId, PornWebsite website, string filter) {
+        private static void Assert_VideoThumb_Channel_Id(string channelId, PornWebsite website) {
             Assert.NotNull(channelId);
             switch (website) {
-                case PornWebsite.Pornhub: {
-                    // If the search filter is empty, Channel Id may be empty if the video is not available in your country
-                    bool isAvailable = !string.IsNullOrWhiteSpace(filter) || !string.IsNullOrEmpty(channelId);
-                    if (isAvailable)
-                        Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
+                case PornWebsite.Pornhub:
+                    Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
                     break;
-                }
                 case PornWebsite.XVideos:
                     Assert.Matches("^/(channels|profiles|models|pornstar-channels|amateur-channels|model-channels|amateurs|pornstars)/[^/\\s]*$",
                                    channelId);
