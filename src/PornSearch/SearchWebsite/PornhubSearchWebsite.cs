@@ -89,6 +89,8 @@ namespace PornSearch
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
             return Regex.Matches(contentItems, RegExVideoThumb)
                         .Cast<Match>()
+                        // If the search filter is empty, Channel Id may be empty if the video is not available in your country
+                        .Where(m => m.Groups[5].Value != "")
                         .Select(m => new PornVideoThumb {
                                     Website = searchFilter.Website,
                                     SexOrientation = searchFilter.SexOrientation,
