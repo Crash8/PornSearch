@@ -54,7 +54,7 @@ namespace PornSearch.Tests
             return _random.Next(100) + 1;
         }
 
-        private async Task CheckVideosInSearchOnPagesAsync(PornWebsite website, string filter, int pageMin) {
+        private static async Task CheckVideosInSearchOnPagesAsync(PornWebsite website, string filter, int pageMin) {
             PornSearch pornSearch = new PornSearch();
             PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
@@ -64,7 +64,8 @@ namespace PornSearch.Tests
             }
         }
 
-        private async Task SearchVideosAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter, int page) {
+        private static async Task SearchVideosAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter,
+                                                    int page) {
             PornSearch pornSearch = new PornSearch();
             PornSearchFilter searchFilter = new PornSearchFilter {
                 Website = website,
@@ -77,8 +78,14 @@ namespace PornSearch.Tests
             foreach (PornVideoThumb videoThumb in videoThumbs) {
                 PornVideo video = await pornSearch.GetVideoAsync(videoThumb.PageUrl);
 
-                PornVideoAssert.Check(video, videoThumb);
-            }
+                    PornVideoAssert.Check(video, website, sexOrientation);
+                    PornVideoAssert.Check(video, videoThumb);
+                }
+                catch (Exception ex) { }
+                finally {
+                    semaphoreSlim.Release();
+                }
+            })).ToArray());
         }
 
         [Theory]
@@ -90,6 +97,8 @@ namespace PornSearch.Tests
             foreach (string url in urls) {
                 PornVideo video = await pornSearch.GetVideoAsync(url);
                 videos.Add(video);
+
+                PornVideoAssert.Check(video, sourceVideo.Website, video.SexOrientation);
 
                 // Just to use "sourceVideo" and keep the same data source
                 Assert.Equal(sourceVideo.Id, video.Id);
@@ -108,6 +117,7 @@ namespace PornSearch.Tests
 
             PornVideo video = await pornSearch.GetVideoAsync(videoSource.PageUrl);
 
+            PornVideoAssert.Check(video, videoSource.Website, videoSource.SexOrientation);
             PornVideoAssert.Equal(videoSource, video);
         }
     }

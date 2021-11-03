@@ -1,10 +1,262 @@
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Web;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace PornSearch.Tests.Asserts
 {
     public static class PornVideoAssert
     {
+        public static void Check(PornVideo video, PornWebsite website, PornSexOrientation sexOrientation) {
+            Assert.NotNull(video);
+            Assert.Equal(website, video.Website);
+            Assert.Equal(sexOrientation, video.SexOrientation);
+            Assert_Video_Id(video.Id, website);
+            Assert_Video_Title(video.Title);
+            Assert.NotNull(video.Channel);
+            Assert_Video_Channel_Id(video.Channel.Id, website);
+            Assert_Video_Channel_Name(video.Channel.Name);
+            Assert_Video_ThumbnailUrl(video.ThumbnailUrl, website);
+            Assert_Video_SmallThumbnailUrl(video.SmallThumbnailUrl, website);
+            Assert_Video_PageUrl(video.PageUrl, website);
+            Assert_Video_Categories(video.Categories, website, sexOrientation);
+            Assert_Video_Tags(video.Tags, website, sexOrientation);
+            Assert_Video_Actors(video.Actors, website);
+            Assert_Video_NbViews(video.NbViews);
+            Assert_Video_NbLikes(video.NbLikes);
+            Assert_Video_NbDislikes(video.NbDislikes);
+            Assert_Video_UploadDate(video.UploadDate);
+            Assert_Video_RelatedVideos(video.RelatedVideos, website, sexOrientation);
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Id(string id, PornWebsite website) {
+            Assert.NotNull(id);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{7,10})$", id);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        private static void Assert_Video_Title(string title) {
+            Assert.NotNull(title);
+            Assert.NotEqual("", title.Trim());
+            Assert.Equal(HttpUtility.HtmlDecode(title), title);
+            Assert.DoesNotContain("\u00A0", title);
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Channel_Id(string channelId, PornWebsite website) {
+            Assert.NotNull(channelId);
+            switch (website) {
+                case PornWebsite.Pornhub: {
+                    Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
+                    break;
+                }
+                case PornWebsite.XVideos:
+                    Assert.Matches("^/(channels|profiles|models|pornstar-channels|amateur-channels|model-channels|amateurs|pornstars)/[^/\\s]*$",
+                                   channelId);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        private static void Assert_Video_Channel_Name(string channelName) {
+            Assert.NotNull(channelName);
+            Assert.NotEqual("", channelName.Trim());
+            Assert.Equal(HttpUtility.HtmlDecode(channelName), channelName);
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_ThumbnailUrl(string thumbnailUrl, PornWebsite website) {
+            Assert.NotNull(thumbnailUrl);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                                   thumbnailUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_SmallThumbnailUrl(string smallThumbnailUrl, PornWebsite website) {
+            Assert.NotNull(smallThumbnailUrl);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", smallThumbnailUrl);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                                   smallThumbnailUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_PageUrl(string pageUrl, PornWebsite website) {
+            Assert.NotNull(pageUrl);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{7,10})$",
+                                   pageUrl);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{5,8}/[^\\s]*$", pageUrl);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Categories(List<PornIdName> categories, PornWebsite website,
+                                                    PornSexOrientation sexOrientation) {
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.NotNull(categories);
+                    foreach (PornIdName category in categories) {
+                        Assert_Video_Category_Id(category.Id, website, sexOrientation);
+                        Assert_Video_Category_Name(category.Name);
+                    }
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Null(categories);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Category_Id(string categoryId, PornWebsite website, PornSexOrientation sexOrientation) {
+            Assert.NotNull(categoryId);
+            switch (website) {
+                case PornWebsite.Pornhub: {
+                    switch (sexOrientation) {
+                        case PornSexOrientation.Straight:
+                            Assert.Matches("^/(video[?]c=[0-9]+|hd|categories/[^\\s]+|popularwithwomen|vr|transgender|interactive)$",
+                                           categoryId);
+                            break;
+                        case PornSexOrientation.Gay:
+                            Assert.Matches("^/(gay(/video[?]c=[0-9]+|porn)|popularwithwomen)$", categoryId);
+                            break;
+                        default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
+                    }
+                    break;
+                }
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        private static void Assert_Video_Category_Name(string categoryName) {
+            Assert.NotNull(categoryName);
+            Assert.NotEqual("", categoryName.Trim());
+            Assert.Equal(HttpUtility.HtmlDecode(categoryName), categoryName);
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Tags(List<PornIdName> tags, PornWebsite website, PornSexOrientation sexOrientation) {
+            Assert.NotNull(tags);
+            foreach (PornIdName tag in tags) {
+                Assert_Video_Tag_Id(tag.Id, website, sexOrientation);
+                Assert_Video_Tag_Name(tag.Name);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Tag_Id(string tagId, PornWebsite website, PornSexOrientation sexOrientation) {
+            Assert.NotNull(tagId);
+            switch (website) {
+                case PornWebsite.Pornhub: {
+                    switch (sexOrientation) {
+                        case PornSexOrientation.Straight:
+                            Assert.Matches("^/(video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|categories/[^\\s]+|hd|vr|interactive|popularwithwomen)$",
+                                           tagId);
+                            break;
+                        case PornSexOrientation.Gay:
+                            Assert.Matches("^/gay(/video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|porn)$", tagId);
+                            break;
+                        default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
+                    }
+                    break;
+                }
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        private static void Assert_Video_Tag_Name(string tagName) {
+            Assert.NotNull(tagName);
+            Assert.NotEqual("", tagName.Trim());
+            Assert.Equal(HttpUtility.HtmlDecode(tagName), tagName);
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Actors(List<PornIdName> actors, PornWebsite website) {
+            Assert.NotNull(actors);
+            foreach (PornIdName actor in actors) {
+                Assert_Video_Actor_Id(actor.Id, website);
+                Assert_Video_Actor_Name(actor.Name);
+            }
+        }
+
+        [AssertionMethod]
+        private static void Assert_Video_Actor_Id(string actorId, PornWebsite website) {
+            Assert.NotNull(actorId);
+            switch (website) {
+                case PornWebsite.Pornhub: {
+                    Assert.Matches("^/pornstar/[^\\s]+$", actorId);
+                    break;
+                }
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+        }
+
+        private static void Assert_Video_Actor_Name(string actorName) {
+            Assert.NotNull(actorName);
+            Assert.NotEqual("", actorName.Trim());
+            Assert.Equal(HttpUtility.HtmlDecode(actorName), actorName);
+        }
+
+        private static void Assert_Video_NbViews(int nbViews) {
+            Assert.True(nbViews > 0);
+        }
+
+        private static void Assert_Video_NbLikes(int nbLikes) {
+            Assert.True(nbLikes >= 0);
+        }
+
+        private static void Assert_Video_NbDislikes(int nbDislikes) {
+            Assert.True(nbDislikes >= 0);
+        }
+
+        private static void Assert_Video_UploadDate(DateTime uploadDate) {
+            Assert.True(uploadDate < DateTime.Now);
+            Assert.True(uploadDate > new DateTime(2000, 1, 1));
+        }
+
+        private static void Assert_Video_RelatedVideos(List<PornVideoThumb> relatedVideos, PornWebsite website,
+                                                       PornSexOrientation sexOrientation) {
+            Assert.NotNull(relatedVideos);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.True(relatedVideos.Count >= 33);
+                    Assert.True(relatedVideos.Count <= 45);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+            PornVideoThumbAssert.CheckAll(relatedVideos, website, "filter not empty", sexOrientation);
+        }
+
         public static void Check(PornVideo video1, PornVideoThumb videoThumb) {
             Assert.NotNull(video1);
             Assert.NotNull(videoThumb);
