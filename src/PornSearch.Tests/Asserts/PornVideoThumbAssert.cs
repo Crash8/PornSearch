@@ -173,7 +173,7 @@ namespace PornSearch.Tests.Asserts
 
         private static void Assert_All_Not_Same_Value(List<PornVideoThumb> videoThumbs) {
             foreach (PornVideoThumb videoThumb in videoThumbs) {
-                int tolerance = videoThumb.Website == PornWebsite.XVideos ? 4 : 0;
+                const int tolerance = 1;
 
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Title));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Id));
@@ -182,7 +182,6 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.PageUrl));
 
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.Channel.Id));
-                Assert.True(videoThumbs.Count(i => videoThumb.Title == i.Channel.Name) <= tolerance);
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.PageUrl));
 
@@ -190,6 +189,7 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.PageUrl));
 
+                Assert.True(videoThumbs.Count(i => videoThumb.Channel.Name == i.Title) <= tolerance);
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.PageUrl));
 
