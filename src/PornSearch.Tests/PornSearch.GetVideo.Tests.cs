@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using PornSearch.Tests.Asserts;
 using PornSearch.Tests.Data;
@@ -59,7 +60,7 @@ namespace PornSearch.Tests
             PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
             foreach (PornSexOrientation sexOrientation in source.SexOrientations) {
-                for (int page = pageMin; page < pageMin + 1; page++)
+                for (int page = pageMin; page < pageMin + 2; page++)
                     await SearchVideosAsync(website, sexOrientation, filter, page);
             }
         }
@@ -75,17 +76,20 @@ namespace PornSearch.Tests
             };
             List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 
-            foreach (PornVideoThumb videoThumb in videoThumbs) {
-                PornVideo video = await pornSearch.GetVideoAsync(videoThumb.PageUrl);
+            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(5, 5);
+            Task.WaitAll(videoThumbs.Select(videoThumb => Task.Run(async () => {
+                                        try {
+                                            await semaphoreSlim.WaitAsync();
+                                            PornVideo video = await pornSearch.GetVideoAsync(videoThumb.PageUrl);
 
-                    PornVideoAssert.Check(video, website, sexOrientation);
-                    PornVideoAssert.Check(video, videoThumb);
-                }
-                catch (Exception ex) { }
-                finally {
-                    semaphoreSlim.Release();
-                }
-            })).ToArray());
+                                            PornVideoAssert.Check(video, website, sexOrientation);
+                                            PornVideoAssert.Check(video, videoThumb);
+                                        }
+                                        finally {
+                                            semaphoreSlim.Release();
+                                        }
+                                    }))
+                                    .ToArray());
         }
 
         [Theory]
