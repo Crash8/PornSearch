@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -133,6 +132,7 @@ namespace PornSearch
             FillVideo_Categories(content, ref video);
             FillVideo_Tags(content, ref video);
             FillVideo_Actors(content, ref video);
+            FillVideo_RelatedVideos(content, ref video);
             return video;
         }
 
@@ -212,6 +212,61 @@ namespace PornSearch
                                               Name = HtmlDecode(m.Groups[1].Value)
                                           })
                                   .ToList();
+        }
+
+        private static void FillVideo_RelatedVideos(string content, ref PornVideo video) {
+            video.RelatedVideos = new List<PornVideoThumb>();
+            FillVideo_RelatedVideos_Right(content, ref video);
+            FillVideo_RelatedVideos_Center(content, ref video);
+        }
+
+        private static void FillVideo_RelatedVideos_Right(string content, ref PornVideo video) {
+            int startIndex = content.IndexOf("<ul id=\"recommendedVideos\"", StringComparison.Ordinal);
+            int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
+            string contentItems = content.Substring(startIndex, endIndex - startIndex);
+            PornWebsite website = video.Website;
+            PornSexOrientation sexOrientation = video.SexOrientation;
+            video.RelatedVideos.AddRange(Regex.Matches(contentItems, RegExVideoThumb)
+                                              .Cast<Match>()
+                                              // Channel Id may be empty if the video is not available in your country
+                                              .Where(m => m.Groups[5].Value != "")
+                                              .Select(m => new PornVideoThumb {
+                                                          Website = website,
+                                                          SexOrientation = sexOrientation,
+                                                          Id = m.Groups[1].Value,
+                                                          Title = HtmlDecode(m.Groups[3].Value),
+                                                          Channel = new PornIdName {
+                                                              Id = m.Groups[5].Value,
+                                                              Name = HtmlDecode(m.Groups[6].Value)
+                                                          },
+                                                          ThumbnailUrl = m.Groups[4].Value,
+                                                          PageUrl = $"https://www.pornhub.com{m.Groups[2].Value}"
+                                                      }));
+        }
+
+        private static void FillVideo_RelatedVideos_Center(string content, ref PornVideo video) {
+            int startIndex = content.IndexOf("<ul id=\"relatedVideosCenter\"", StringComparison.Ordinal);
+            int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
+            string contentItems = content.Substring(startIndex, endIndex - startIndex);
+            PornWebsite website = video.Website;
+            PornSexOrientation sexOrientation = video.SexOrientation;
+            video.RelatedVideos.AddRange(Regex.Matches(contentItems, RegExVideoThumb)
+                                              .Cast<Match>()
+                                              // Channel Id may be empty if the video is not available in your country
+                                              .Where(m => m.Groups[5].Value != "")
+                                              .Where(m => m.Groups[2].Value != "javascript:void(0)")
+                                              .Select(m => new PornVideoThumb {
+                                                          Website = website,
+                                                          SexOrientation = sexOrientation,
+                                                          Id = m.Groups[1].Value,
+                                                          Title = HtmlDecode(m.Groups[3].Value),
+                                                          Channel = new PornIdName {
+                                                              Id = m.Groups[5].Value,
+                                                              Name = HtmlDecode(m.Groups[6].Value)
+                                                          },
+                                                          ThumbnailUrl = m.Groups[4].Value,
+                                                          PageUrl = $"https://www.pornhub.com{m.Groups[2].Value}"
+                                                      }));
         }
     }
 }
