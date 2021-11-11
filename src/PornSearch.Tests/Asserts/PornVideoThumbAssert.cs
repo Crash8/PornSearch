@@ -24,7 +24,7 @@ namespace PornSearch.Tests.Asserts
                     break;
                 case PageSearch.Complete:
                     // If for Pornhub the search filter is empty, Channel Id may be empty if the video is not available in your country
-                    int tolerance = website == PornWebsite.Pornhub && string.IsNullOrWhiteSpace(filter) ? 1 : 0;
+                    int tolerance = website == PornWebsite.Pornhub && string.IsNullOrWhiteSpace(filter) ? 2 : 0;
                     Assert.True(nbVideo >= nbVideoMax[0] - tolerance,
                                 $"Value >= {nbVideoMax[0] - tolerance}, Value: {nbVideo} - {description}");
                     Assert.True(nbVideo <= nbVideoMax[1], $"Value <= {nbVideoMax[1]}, Value: {nbVideo} - {description}");
@@ -86,7 +86,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(id);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{7,10})$", id);
+                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$", id);
                     break;
                 case PornWebsite.XVideos:
                     Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
@@ -143,7 +143,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(pageUrl);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{7,10})$",
+                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$",
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
@@ -172,7 +172,7 @@ namespace PornSearch.Tests.Asserts
 
         private static void Assert_All_Not_Same_Value(List<PornVideoThumb> videoThumbs) {
             foreach (PornVideoThumb videoThumb in videoThumbs) {
-                const int tolerance = 1;
+                const int tolerance = 2;
 
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Title));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Id));
@@ -188,7 +188,8 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.PageUrl));
 
-                Assert.True(videoThumbs.Count(i => videoThumb.Channel.Name == i.Title) <= tolerance);
+                Assert.True(videoThumbs.Count(i => videoThumb.Channel.Name == i.Title) <= tolerance,
+                            videoThumbs.Count(i => videoThumb.Channel.Name == i.Title).ToString());
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.PageUrl));
 
