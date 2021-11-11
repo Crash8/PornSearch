@@ -60,7 +60,7 @@ namespace PornSearch.Tests
             PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
             foreach (PornSexOrientation sexOrientation in source.SexOrientations) {
-                for (int page = pageMin; page < pageMin + 2; page++)
+                for (int page = pageMin; page < pageMin + 3; page++)
                     await SearchVideosAsync(website, sexOrientation, filter, page);
             }
         }
