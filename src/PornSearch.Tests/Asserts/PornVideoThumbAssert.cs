@@ -59,14 +59,13 @@ namespace PornSearch.Tests.Asserts
                                     PornSexOrientation sexOrientation) {
             Assert.NotNull(videosThumbs);
             foreach (PornVideoThumb videoThumb in videosThumbs)
-                Assert_VideoThumb(videoThumb, website, filter, sexOrientation);
+                Assert_VideoThumb(videoThumb, website, sexOrientation);
             Assert_All_Unique_Value(videosThumbs, website, filter, sexOrientation);
             Assert_All_Not_Same_Value(videosThumbs);
         }
 
         [AssertionMethod]
-        private static void Assert_VideoThumb(PornVideoThumb videoThumb, PornWebsite website, string filter,
-                                              PornSexOrientation sexOrientation) {
+        private static void Assert_VideoThumb(PornVideoThumb videoThumb, PornWebsite website, PornSexOrientation sexOrientation) {
             Assert.NotNull(videoThumb);
             Assert.Equal(website, videoThumb.Website);
             Assert.Equal(sexOrientation, videoThumb.SexOrientation);
