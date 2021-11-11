@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -110,7 +109,7 @@ namespace PornSearch
         protected abstract List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter);
 
         protected static string HtmlDecode(string htmlText) {
-            return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ");
+            return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ").Trim();
         }
 
         public abstract PornSourceVideo GetSourceVideo(string url);
