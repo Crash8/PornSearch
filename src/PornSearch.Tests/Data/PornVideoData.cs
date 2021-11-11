@@ -143,7 +143,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 85557,
                     NbLikes = 308,
                     NbDislikes = 46,
-                    UploadDate = DateTime.Parse("2020-11-27T00:56:59+00:00")
+                    Date = new DateTime(2021, 7, 31)
                 },
                 // Fix the value "\u00A0" in the title
                 new PornVideo {
@@ -272,7 +272,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 735402,
                     NbLikes = 3884,
                     NbDislikes = 708,
-                    UploadDate = DateTime.Parse("2019-07-27T16:44:42+00:00")
+                    Date = new DateTime(2019, 7, 27)
                 },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
@@ -417,7 +417,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 37412314,
                     NbLikes = 102562,
                     NbDislikes = 40631,
-                    UploadDate = DateTime.Parse("2017-12-12T07:10:08+00:00")
+                    Date = new DateTime(2017, 12, 12)
                 }
             };
             return videos.Select(i => new object[] { i });
@@ -557,7 +557,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 134289,
                     NbLikes = 509,
                     NbDislikes = 162,
-                    UploadDate = DateTime.Parse("2019-08-01T18:19:46+00:00")
+                    Date = new DateTime(2019, 8, 1)
                 },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
@@ -649,7 +649,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 92207,
                     NbLikes = 260,
                     NbDislikes = 30,
-                    UploadDate = DateTime.Parse("2021-05-19T13:57:55+00:00")
+                    Date = new DateTime(2021, 5, 19)
                 },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
@@ -777,7 +777,7 @@ namespace PornSearch.Tests.Data
                     NbViews = 36050,
                     NbLikes = 180,
                     NbDislikes = 10,
-                    UploadDate = DateTime.Parse("2021-08-07T18:14:50+00:00")
+                    Date = new DateTime(2021, 8, 8)
                 }
             };
             return videos.Select(i => new object[] { i });
