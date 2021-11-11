@@ -274,6 +274,70 @@ namespace PornSearch.Tests.Data
                     NbDislikes = 708,
                     Date = new DateTime(2019, 7, 27)
                 },
+                // Fix no tags
+                new PornVideo {
+                    Website = PornWebsite.Pornhub,
+                    SexOrientation = PornSexOrientation.Straight,
+                    Id = "ph617b1e523c581",
+                    Title = "Creamy pregnant pussy can't take big black dick",
+                    Channel = new PornIdName {
+                        Id = "/model/fantasticblack",
+                        Name = "Fantasticblack"
+                    },
+                    ThumbnailUrl =
+                        "https://ei.phncdn.com/videos/202110/28/397146301/original/(m=eaAaGwObaaaa)(mh=7gx5N9HdKoUoPBO9)3.jpg",
+                    SmallThumbnailUrl =
+                        "https://ei.phncdn.com/videos/202110/28/397146301/original/(m=eafTGgaaaa)(mh=zclXhBPYfYn0BKIW)3.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph617b1e523c581",
+                    Categories = new List<PornIdName> {
+                        new PornIdName {
+                            Id = "/video?c=3",
+                            Name = "Amateur"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=6",
+                            Name = "BBW"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=7",
+                            Name = "Big Dick"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=15",
+                            Name = "Creampie"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=16",
+                            Name = "Cumshot"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=72",
+                            Name = "Double Penetration"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=17",
+                            Name = "Ebony"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=115",
+                            Name = "Exclusive"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=502",
+                            Name = "Female Orgasm"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=138",
+                            Name = "Verified Amateurs"
+                        }
+                    },
+                    Tags = new List<PornIdName>(),
+                    Actors = new List<PornIdName>(),
+                    NbViews = 283,
+                    NbLikes = 0,
+                    NbDislikes = 0,
+                    Date = new DateTime(2021, 10, 28)
+                },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Straight,
