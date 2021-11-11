@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -174,6 +175,10 @@ namespace PornSearch
 
         private static void FillVideo_Categories(string content, ref PornVideo video) {
             int startIndex = content.IndexOf("<div class=\"categoriesWrapper\">", StringComparison.Ordinal);
+            if (startIndex < 0) {
+                video.Categories = new List<PornIdName>();
+                return;
+            }
             int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
             content = content.Substring(startIndex, endIndex - startIndex);
             MatchCollection matches = Regex.Matches(content, "<a class=\"item\" href=\"([^\"]*)\"[^>]*>([^<]*)");
@@ -187,8 +192,10 @@ namespace PornSearch
 
         private static void FillVideo_Tags(string content, ref PornVideo video) {
             int startIndex = content.IndexOf("<div class=\"tagsWrapper\">", StringComparison.Ordinal);
-            if (startIndex < 0)
+            if (startIndex < 0) {
+                video.Tags = new List<PornIdName>();
                 return;
+            }
             int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
             content = content.Substring(startIndex, endIndex - startIndex);
             MatchCollection matches = Regex.Matches(content, "<a class=\"item\" href=\"([^\"]*)\"[^>]*>([^<]*)");
@@ -202,6 +209,10 @@ namespace PornSearch
 
         private static void FillVideo_Actors(string content, ref PornVideo video) {
             int startIndex = content.IndexOf("<div class=\"pornstarsWrapper ", StringComparison.Ordinal);
+            if (startIndex < 0) {
+                video.Actors = new List<PornIdName>();
+                return;
+            }
             int endIndex = content.IndexOf("<div id=\"deletePornstarResult\"", startIndex, StringComparison.Ordinal);
             content = content.Substring(startIndex, endIndex - startIndex);
             const string pattern = "data-mxptype=\"Pornstar\"\\s*data-mxptext=\"([^\"]*)\"\\s*.*\\s.*\\s*href=\"([^\"]*)";
@@ -222,6 +233,8 @@ namespace PornSearch
 
         private static void FillVideo_RelatedVideos_Right(string content, ref PornVideo video) {
             int startIndex = content.IndexOf("<ul id=\"recommendedVideos\"", StringComparison.Ordinal);
+            if (startIndex < 0)
+                return;
             int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
             PornWebsite website = video.Website;
@@ -246,6 +259,8 @@ namespace PornSearch
 
         private static void FillVideo_RelatedVideos_Center(string content, ref PornVideo video) {
             int startIndex = content.IndexOf("<ul id=\"relatedVideosCenter\"", StringComparison.Ordinal);
+            if (startIndex < 0)
+                return;
             int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
             PornWebsite website = video.Website;
