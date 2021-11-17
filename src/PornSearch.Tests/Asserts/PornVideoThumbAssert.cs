@@ -88,7 +88,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$", id);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
+                    Assert.Matches("^[0-9]{4,8}$", id);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -109,8 +109,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/(channels|profiles|models|pornstar-channels|amateur-channels|model-channels|amateurs|pornstars)/[^/\\s]*$",
-                                   channelId);
+                    Assert.Matches("^/[^/\\s]*$", channelId);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -130,7 +129,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -146,7 +145,7 @@ namespace PornSearch.Tests.Asserts
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{5,8}/[^\\s]*$", pageUrl);
+                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]*$", pageUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -159,7 +158,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Equal($"https://www.pornhub.com/view_video.php?viewkey={id}", pageUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Equal($"https://www.xvideos.com{id}", pageUrl);
+                    Assert.StartsWith($"https://www.xvideos.com/video{id}/", pageUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -171,8 +170,6 @@ namespace PornSearch.Tests.Asserts
 
         private static void Assert_All_Not_Same_Value(List<PornVideoThumb> videoThumbs) {
             foreach (PornVideoThumb videoThumb in videoThumbs) {
-                const int tolerance = 2;
-
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Title));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Id));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.Channel.Name));
@@ -187,8 +184,6 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.PageUrl));
 
-                Assert.True(videoThumbs.Count(i => videoThumb.Channel.Name == i.Title) <= tolerance,
-                            videoThumbs.Count(i => videoThumb.Channel.Name == i.Title).ToString());
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Name == i.PageUrl));
 
@@ -243,9 +238,9 @@ namespace PornSearch.Tests.Asserts
                 }
                 case PornWebsite.XVideos: {
                     // The first subdomain and end of url can change value
-                    const string pattern = "^https://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$1"),
-                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$1"));
+                    const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
+                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2"),
+                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2"));
                     break;
                 }
                 default:

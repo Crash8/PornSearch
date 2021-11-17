@@ -28,7 +28,7 @@ namespace PornSearch.Tests.Asserts
             Assert_Video_NbViews(video.NbViews);
             Assert_Video_NbLikes(video.NbLikes);
             Assert_Video_NbDislikes(video.NbDislikes);
-            Assert_Video_Date(video.Date);
+            Assert_Video_Date(video.Date, website);
             Assert_Video_RelatedVideos(video.RelatedVideos, website, sexOrientation);
             Assert_Video_Link_Id_PageUrl(video.Id, video.PageUrl, website);
             Assert_Video_Link_NbViews_NbLikes_NbDislikes(video.NbViews, video.NbLikes, video.NbDislikes);
@@ -43,7 +43,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$", id);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/video[0-9]{5,8}/[^\\s]*$", id);
+                    Assert.Matches("^[0-9]{4,8}$", id);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -65,8 +65,7 @@ namespace PornSearch.Tests.Asserts
                     break;
                 }
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/(channels|profiles|models|pornstar-channels|amateur-channels|model-channels|amateurs|pornstars)/[^/\\s]*$",
-                                   channelId);
+                    Assert.Matches("^/[^/\\s]*$", channelId);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -86,7 +85,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -101,7 +100,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", smallThumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    smallThumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -117,7 +116,7 @@ namespace PornSearch.Tests.Asserts
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{5,8}/[^\\s]*$", pageUrl);
+                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]*$", pageUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -194,6 +193,21 @@ namespace PornSearch.Tests.Asserts
                     }
                     break;
                 }
+                case PornWebsite.XVideos: {
+                    switch (sexOrientation) {
+                        case PornSexOrientation.Straight:
+                            Assert.Matches("^/tags/[^\\s]+$", tagId);
+                            break;
+                        case PornSexOrientation.Gay:
+                            Assert.Matches("^/tags/t:gay/[^\\s]+$", tagId);
+                            break;
+                        case PornSexOrientation.Trans:
+                            Assert.Matches("^/tags/t:shemale/[^\\s]+$", tagId);
+                            break;
+                        default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
+                    }
+                    break;
+                }
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
         }
@@ -217,10 +231,12 @@ namespace PornSearch.Tests.Asserts
         private static void Assert_Video_Actor_Id(string actorId, PornWebsite website) {
             Assert.NotNull(actorId);
             switch (website) {
-                case PornWebsite.Pornhub: {
+                case PornWebsite.Pornhub:
                     Assert.Matches("^/pornstar/[^\\s]+$", actorId);
                     break;
-                }
+                case PornWebsite.XVideos:
+                    Assert.Matches("^/(pornstar-channels|pornstars|models|amateur-channels|model-channels)/[^\\s]+$", actorId);
+                    break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
         }
@@ -232,7 +248,7 @@ namespace PornSearch.Tests.Asserts
         }
 
         private static void Assert_Video_NbViews(int nbViews) {
-            Assert.True(nbViews > 0);
+           Assert.True(nbViews > 0);
         }
 
         private static void Assert_Video_NbLikes(int nbLikes) {
@@ -243,9 +259,20 @@ namespace PornSearch.Tests.Asserts
             Assert.True(nbDislikes >= 0);
         }
 
-        private static void Assert_Video_Date(DateTime date) {
-            Assert.True(date < DateTime.Now);
-            Assert.True(date > new DateTime(2000, 1, 1));
+        private static void Assert_Video_Date(DateTime? date, PornWebsite website) {
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.NotNull(date);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.Null(date);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
+            if (date != null) {
+                Assert.True(date < DateTime.Now);
+                Assert.True(date > new DateTime(2000, 1, 1));
+            }
         }
 
         private static void Assert_Video_RelatedVideos(List<PornVideoThumb> relatedVideos, PornWebsite website,
@@ -255,6 +282,23 @@ namespace PornSearch.Tests.Asserts
                 case PornWebsite.Pornhub:
                     Assert.True(relatedVideos.Count >= 33, relatedVideos.Count.ToString());
                     Assert.True(relatedVideos.Count <= 46, relatedVideos.Count.ToString());
+                    break;
+                case PornWebsite.XVideos:
+                    switch (sexOrientation) {
+                        case PornSexOrientation.Straight:
+                            Assert.True(relatedVideos.Count >= 22, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
+                            break;
+                        case PornSexOrientation.Gay:
+                            Assert.True(relatedVideos.Count >= 8, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
+                            break;
+                        case PornSexOrientation.Trans:
+                            Assert.True(relatedVideos.Count >= 19, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
+                            break;
+                        default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
+                    }
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -268,7 +312,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Equal($"https://www.pornhub.com/view_video.php?viewkey={id}", pageUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Equal($"https://www.xvideos.com{id}", pageUrl);
+                    Assert.StartsWith($"https://www.xvideos.com/video{id}/", pageUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -288,8 +332,10 @@ namespace PornSearch.Tests.Asserts
             Assert.True(video.Id != video.ThumbnailUrl);
             Assert.True(video.Id != video.SmallThumbnailUrl);
             Assert.True(video.Id != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.Id != c.Id));
-            Assert.True(video.Categories.All(c => video.Id != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.Id != c.Id));
+                Assert.True(video.Categories.All(c => video.Id != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.Id != t.Id));
             Assert.True(video.Tags.All(t => video.Id != t.Name));
             Assert.True(video.Actors.All(a => video.Id != a.Id));
@@ -302,60 +348,57 @@ namespace PornSearch.Tests.Asserts
             Assert.True(video.RelatedVideos.All(r => video.Id != r.Channel.Name));
 
             Assert.True(video.Title != video.Channel.Id);
-            // Assert.True(video.Title != video.Channel.Name);
             Assert.True(video.Title != video.ThumbnailUrl);
             Assert.True(video.Title != video.SmallThumbnailUrl);
             Assert.True(video.Title != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.Title != c.Id));
-            Assert.True(video.Categories.All(c => video.Title != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.Title != c.Id));
+                Assert.True(video.Categories.All(c => video.Title != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.Title != t.Id));
-            Assert.True(video.Tags.All(t => video.Title != t.Name));
             Assert.True(video.Actors.All(a => video.Title != a.Id));
-            Assert.True(video.Actors.All(a => video.Title != a.Name));
             Assert.True(video.RelatedVideos.All(r => video.Title != r.Id));
-            // Assert.True(video.RelatedVideos.All(r => video.Title != r.Title));
             Assert.True(video.RelatedVideos.All(r => video.Title != r.PageUrl));
             Assert.True(video.RelatedVideos.All(r => video.Title != r.ThumbnailUrl));
             Assert.True(video.RelatedVideos.All(r => video.Title != r.Channel.Id));
-            Assert.True(video.RelatedVideos.All(r => video.Title != r.Channel.Name));
 
             Assert.True(video.Channel.Id != video.Channel.Name);
             Assert.True(video.Channel.Id != video.ThumbnailUrl);
             Assert.True(video.Channel.Id != video.SmallThumbnailUrl);
             Assert.True(video.Channel.Id != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.Channel.Id != c.Id));
-            Assert.True(video.Categories.All(c => video.Channel.Id != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.Channel.Id != c.Id));
+                Assert.True(video.Categories.All(c => video.Channel.Id != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.Channel.Id != t.Id));
             Assert.True(video.Tags.All(t => video.Channel.Id != t.Name));
-            // Assert.True(video.Actors.All(a => video.Channel.Id != a.Id));
             Assert.True(video.Actors.All(a => video.Channel.Id != a.Name));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.Id));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.Title));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.PageUrl));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.ThumbnailUrl));
-            // Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.Channel.Id));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Id != r.Channel.Name));
 
             Assert.True(video.Channel.Name != video.ThumbnailUrl);
             Assert.True(video.Channel.Name != video.SmallThumbnailUrl);
             Assert.True(video.Channel.Name != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.Channel.Name != c.Id));
-            Assert.True(video.Categories.All(c => video.Channel.Name != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.Channel.Name != c.Id));
+                Assert.True(video.Categories.All(c => video.Channel.Name != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.Channel.Name != t.Id));
-            // Assert.True(video.Tags.All(t => video.Channel.Name != t.Name));
             Assert.True(video.Actors.All(a => video.Channel.Name != a.Id));
-            // Assert.True(video.Actors.All(a => video.Channel.Name != a.Name));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.Id));
-            Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.Title));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.PageUrl));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.ThumbnailUrl));
             Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.Channel.Id));
-            // Assert.True(video.RelatedVideos.All(r => video.Channel.Name != r.Channel.Name));
 
             Assert.True(video.ThumbnailUrl != video.SmallThumbnailUrl);
             Assert.True(video.ThumbnailUrl != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.ThumbnailUrl != c.Id));
-            Assert.True(video.Categories.All(c => video.ThumbnailUrl != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.ThumbnailUrl != c.Id));
+                Assert.True(video.Categories.All(c => video.ThumbnailUrl != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.ThumbnailUrl != t.Id));
             Assert.True(video.Tags.All(t => video.ThumbnailUrl != t.Name));
             Assert.True(video.Actors.All(a => video.ThumbnailUrl != a.Id));
@@ -368,8 +411,10 @@ namespace PornSearch.Tests.Asserts
             Assert.True(video.RelatedVideos.All(r => video.ThumbnailUrl != r.Channel.Name));
 
             Assert.True(video.SmallThumbnailUrl != video.PageUrl);
-            Assert.True(video.Categories.All(c => video.SmallThumbnailUrl != c.Id));
-            Assert.True(video.Categories.All(c => video.SmallThumbnailUrl != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.SmallThumbnailUrl != c.Id));
+                Assert.True(video.Categories.All(c => video.SmallThumbnailUrl != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.SmallThumbnailUrl != t.Id));
             Assert.True(video.Tags.All(t => video.SmallThumbnailUrl != t.Name));
             Assert.True(video.Actors.All(a => video.SmallThumbnailUrl != a.Id));
@@ -381,8 +426,10 @@ namespace PornSearch.Tests.Asserts
             Assert.True(video.RelatedVideos.All(r => video.SmallThumbnailUrl != r.Channel.Id));
             Assert.True(video.RelatedVideos.All(r => video.SmallThumbnailUrl != r.Channel.Name));
 
-            Assert.True(video.Categories.All(c => video.PageUrl != c.Id));
-            Assert.True(video.Categories.All(c => video.PageUrl != c.Name));
+            if (video.Categories != null) {
+                Assert.True(video.Categories.All(c => video.PageUrl != c.Id));
+                Assert.True(video.Categories.All(c => video.PageUrl != c.Name));
+            }
             Assert.True(video.Tags.All(t => video.PageUrl != t.Id));
             Assert.True(video.Tags.All(t => video.PageUrl != t.Name));
             Assert.True(video.Actors.All(a => video.PageUrl != a.Id));
@@ -394,30 +441,28 @@ namespace PornSearch.Tests.Asserts
             Assert.True(video.RelatedVideos.All(r => video.PageUrl != r.Channel.Id));
             Assert.True(video.RelatedVideos.All(r => video.PageUrl != r.Channel.Name));
 
-            foreach (PornIdName category in video.Categories) {
-                Assert.True(video.Categories.All(c => category.Id != c.Name));
-                // Assert.True(video.Tags.All(t => category.Id != t.Id));
-                Assert.True(video.Tags.All(t => category.Id != t.Name));
-                Assert.True(video.Actors.All(a => category.Id != a.Id));
-                Assert.True(video.Actors.All(a => category.Id != a.Name));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.Id));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.Title));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.PageUrl));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.ThumbnailUrl));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.Channel.Id));
-                Assert.True(video.RelatedVideos.All(r => category.Id != r.Channel.Name));
+            if (video.Categories != null)
+                foreach (PornIdName category in video.Categories) {
+                    Assert.True(video.Categories.All(c => category.Id != c.Name));
+                    Assert.True(video.Tags.All(t => category.Id != t.Name));
+                    Assert.True(video.Actors.All(a => category.Id != a.Id));
+                    Assert.True(video.Actors.All(a => category.Id != a.Name));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.Id));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.Title));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.PageUrl));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.ThumbnailUrl));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.Channel.Id));
+                    Assert.True(video.RelatedVideos.All(r => category.Id != r.Channel.Name));
 
-                Assert.True(video.Tags.All(t => category.Name != t.Id));
-                // Assert.True(video.Tags.All(t => category.Name != t.Name));
-                Assert.True(video.Actors.All(a => category.Name != a.Id));
-                Assert.True(video.Actors.All(a => category.Name != a.Name));
-                Assert.True(video.RelatedVideos.All(r => category.Name != r.Id));
-                // Assert.True(video.RelatedVideos.All(r => category.Name != r.Title));
-                Assert.True(video.RelatedVideos.All(r => category.Name != r.PageUrl));
-                Assert.True(video.RelatedVideos.All(r => category.Name != r.ThumbnailUrl));
-                Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Id));
-                Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Name));
-            }
+                    Assert.True(video.Tags.All(t => category.Name != t.Id));
+                    Assert.True(video.Actors.All(a => category.Name != a.Id));
+                    Assert.True(video.Actors.All(a => category.Name != a.Name));
+                    Assert.True(video.RelatedVideos.All(r => category.Name != r.Id));
+                    Assert.True(video.RelatedVideos.All(r => category.Name != r.PageUrl));
+                    Assert.True(video.RelatedVideos.All(r => category.Name != r.ThumbnailUrl));
+                    Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Id));
+                    Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Name));
+                }
 
             foreach (PornIdName tag in video.Tags) {
                 Assert.True(video.Tags.All(t => tag.Id != t.Name));
@@ -431,13 +476,10 @@ namespace PornSearch.Tests.Asserts
                 Assert.True(video.RelatedVideos.All(r => tag.Id != r.Channel.Name));
 
                 Assert.True(video.Actors.All(a => tag.Name != a.Id));
-                // Assert.True(video.Actors.All(a => tag.Name != a.Name));
                 Assert.True(video.RelatedVideos.All(r => tag.Name != r.Id));
-                // Assert.True(video.RelatedVideos.All(r => tag.Name != r.Title));
                 Assert.True(video.RelatedVideos.All(r => tag.Name != r.PageUrl));
                 Assert.True(video.RelatedVideos.All(r => tag.Name != r.ThumbnailUrl));
                 Assert.True(video.RelatedVideos.All(r => tag.Name != r.Channel.Id));
-                // Assert.True(video.RelatedVideos.All(r => tag.Name != r.Channel.Name));
             }
 
             foreach (PornIdName actor in video.Actors) {
@@ -446,15 +488,12 @@ namespace PornSearch.Tests.Asserts
                 Assert.True(video.RelatedVideos.All(r => actor.Id != r.Title));
                 Assert.True(video.RelatedVideos.All(r => actor.Id != r.PageUrl));
                 Assert.True(video.RelatedVideos.All(r => actor.Id != r.ThumbnailUrl));
-                // Assert.True(video.RelatedVideos.All(r => actor.Id != r.Channel.Id));
                 Assert.True(video.RelatedVideos.All(r => actor.Id != r.Channel.Name));
 
                 Assert.True(video.RelatedVideos.All(r => actor.Name != r.Id));
-                Assert.True(video.RelatedVideos.All(r => actor.Name != r.Title));
                 Assert.True(video.RelatedVideos.All(r => actor.Name != r.PageUrl));
                 Assert.True(video.RelatedVideos.All(r => actor.Name != r.ThumbnailUrl));
                 Assert.True(video.RelatedVideos.All(r => actor.Name != r.Channel.Id));
-                // Assert.True(video.RelatedVideos.All(r => actor.Name != r.Channel.Name));
             }
         }
 
@@ -477,16 +516,26 @@ namespace PornSearch.Tests.Asserts
                 }
                 case PornWebsite.XVideos: {
                     // The first subdomain and end of url can change value
-                    const string pattern = "^https://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                    Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$1"),
-                                 Regex.Replace(videoThumb.ThumbnailUrl, pattern, "$1"));
+                    const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
+                    Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$2"),
+                                 Regex.Replace(videoThumb.ThumbnailUrl, pattern, "$2"));
                     break;
                 }
                 default:
                     Assert.Equal(video1.SmallThumbnailUrl, videoThumb.ThumbnailUrl);
                     break;
             }
-            Assert.Equal(video1.PageUrl, videoThumb.PageUrl);
+            switch (video1.Website) {
+                case PornWebsite.Pornhub:
+                    Assert.Equal(video1.PageUrl, videoThumb.PageUrl);
+                    break;
+                case PornWebsite.XVideos:
+                    // End of url can change value
+                    const string pattern = "^https://www.xvideos.com/video([0-9]+)/.*$";
+                    Assert.Equal(Regex.Replace(video1.PageUrl, pattern, "$1"), Regex.Replace(videoThumb.PageUrl, pattern, "$1"));
+                    break;
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
         public static void Equal(PornVideo video1, PornVideo video2) {
@@ -510,11 +559,11 @@ namespace PornSearch.Tests.Asserts
                 }
                 case PornWebsite.XVideos: {
                     // The first subdomain and end of url can change value
-                    const string pattern = "^https://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                    Assert.Equal(Regex.Replace(video1.ThumbnailUrl, pattern, "$1"),
-                                 Regex.Replace(video2.ThumbnailUrl, pattern, "$1"));
-                    Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$1"),
-                                 Regex.Replace(video2.SmallThumbnailUrl, pattern, "$1"));
+                    const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
+                    Assert.Equal(Regex.Replace(video1.ThumbnailUrl, pattern, "$2"),
+                                 Regex.Replace(video2.ThumbnailUrl, pattern, "$2"));
+                    Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$2"),
+                                 Regex.Replace(video2.SmallThumbnailUrl, pattern, "$2"));
                     break;
                 }
                 default:
