@@ -19,7 +19,7 @@ namespace PornSearch
         public int NbViews { get; set; }
         public int NbLikes { get; set; }
         public int NbDislikes { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public List<PornVideoThumb> RelatedVideos { get; set; }
     }
 }
