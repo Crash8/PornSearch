@@ -114,7 +114,8 @@ namespace PornSearch.Tests
                     List<PornVideoThumb> videoThumbs = await SearchAsync(website, sexOrientation, channel, page, pageSearch);
                     allVideoThumbs.AddRange(videoThumbs);
 
-                    int nbVideoActor = videoThumbs.Count(i => i.Title.Contains(channel) || i.Channel.Name == channel);
+                    int nbVideoActor = videoThumbs.Count(i => i.Title.Contains(channel, StringComparison.OrdinalIgnoreCase)
+                                                              || i.Channel.Name == channel);
                     int[] nbVideoMax = PornVideoThumbAssert.GetNbVideoMaxByPage(website, channel, page, PageSearch.Channel);
                     bool isSameSexOrientation = channelSexOrientation == sexOrientation;
                     bool otherwiseStraight = !source.SexOrientations.Contains(channelSexOrientation)
