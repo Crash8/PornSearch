@@ -853,14 +853,14 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video39773111/petite_princess_sasha_rose_fingers_her_delicious_pink_and_rides_her_sex_toy",
+                    Id = "39773111",
                     Title = "Petite princess Sasha Rose fingers her delicious pink & rides her sex toy",
                     Channel = new PornIdName {
-                        Id = "/channels/1by-day",
+                        Id = "/1by-day",
                         Name = "1By-Day"
                     },
                     ThumbnailUrl =
-                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169lll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
                     SmallThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
                     PageUrl =
@@ -917,16 +917,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video63965375/why_is_this_pussy_wet_vol_72",
+                    Id = "63965375",
                     Title = "Why is This Pussy Wet  Vol 72",
                     Channel = new PornIdName {
-                        Id = "/channels/ferame",
+                        Id = "/ferame",
                         Name = "Ferame"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
                     SmallThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
                     PageUrl = "https://www.xvideos.com/video63965375/why_is_this_pussy_wet_vol_72",
                     Tags = new List<PornIdName> {
                         new PornIdName {
@@ -966,16 +966,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video26195069/double_penetrated_gonzo_babe_facialized",
+                    Id = "26195069",
                     Title = "Double penetrated gonzo babe facialized",
                     Channel = new PornIdName {
-                        Id = "/profiles/darkxsite",
+                        Id = "/darkxsite",
                         Name = "Darkxsite"
                     },
                     ThumbnailUrl =
-                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169lll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg",
                     SmallThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg",
+                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/27/67/d4/2767d489b1eb14d7821e8df57b791a9d/2767d489b1eb14d7821e8df57b791a9d.20.jpg",
                     PageUrl = "https://www.xvideos.com/video26195069/double_penetrated_gonzo_babe_facialized",
                     Tags = new List<PornIdName> {
                         new PornIdName {
@@ -1052,18 +1052,17 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id =
-                        "/video63909971/_raul_costa_waits_with_his_big_cock_out_for_petite_josephine_jackson_to_finish_her_yoga_-_reality_kings",
+                    Id = "63909971",
                     Title =
                         "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
                     Channel = new PornIdName {
-                        Id = "/channels/reality-kings-channel",
+                        Id = "/reality-kings-channel",
                         Name = "Reality Kings"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg",
                     SmallThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/e8/c3/b8/e8c3b880587e7e64cc3ace8b81645721/e8c3b880587e7e64cc3ace8b81645721.30.jpg",
                     PageUrl =
                         "https://www.xvideos.com/video63909971/_raul_costa_waits_with_his_big_cock_out_for_petite_josephine_jackson_to_finish_her_yoga_-_reality_kings",
                     Tags = new List<PornIdName> {
@@ -1168,16 +1167,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video63543339/fireworks_in_his_ass_for_father_s_day",
+                    Id = "63543339",
                     Title = "Fireworks In His Ass For Father's Day",
                     Channel = new PornIdName {
-                        Id = "/channels/youngperps",
+                        Id = "/youngperps",
                         Name = "YoungPerps"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169poster/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
                     SmallThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
                     PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_father_s_day",
                     Tags = new List<PornIdName> {
                         new PornIdName {
@@ -1274,16 +1273,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
+                    Id = "7859351",
                     Title = "Gay orgy   They're loving it so much, in fact, that they just can't",
                     Channel = new PornIdName {
-                        Id = "/profiles/analgayfetish",
+                        Id = "/analgayfetish",
                         Name = "Analgayfetish"
                     },
                     ThumbnailUrl =
-                        "http://img-l3.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.15.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169lll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.15.jpg",
                     SmallThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.8.jpg",
+                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.15.jpg",
                     PageUrl =
                         "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
                     Tags = new List<PornIdName> {
@@ -1340,16 +1339,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video59864125/quiet_top_gets_some_sloppy_head",
+                    Id = "59864125",
                     Title = "Quiet Top gets Some Sloppy Head",
                     Channel = new PornIdName {
-                        Id = "/amateur-channels/finn-phillips",
+                        Id = "/finn-phillips",
                         Name = "Finn Phillips"
                     },
                     ThumbnailUrl =
-                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169poster/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg",
                     SmallThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg",
+                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/f3/b5/11/f3b511b10de81bc6abd730a02b914b42/f3b511b10de81bc6abd730a02b914b42.19.jpg",
                     PageUrl = "https://www.xvideos.com/video59864125/quiet_top_gets_some_sloppy_head",
                     Tags = new List<PornIdName> {
                         new PornIdName {
@@ -1433,14 +1432,14 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video9390594/johnny_rapids_orgy_cumshot_on_a_boat",
+                    Id = "9390594",
                     Title = "Johnny Rapids orgy cumshot on a boat",
                     Channel = new PornIdName {
-                        Id = "/channels/menofuk",
+                        Id = "/menofuk",
                         Name = "Men Of Uk"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169lll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg",
                     SmallThumbnailUrl =
                         "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/b0/1e/c9/b01ec9383c300cf4bf21ff3745f3f6a3/b01ec9383c300cf4bf21ff3745f3f6a3.16.jpg",
                     PageUrl = "https://www.xvideos.com/video9390594/johnny_rapids_orgy_cumshot_on_a_boat",
@@ -1518,14 +1517,14 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video18936599/venus_lux_pounds_tyra_scott_s_asshole",
+                    Id = "18936599",
                     Title = "Venus Lux Pounds Tyra Scott's Asshole",
                     Channel = new PornIdName {
-                        Id = "/pornstar-channels/tsvenuslux",
+                        Id = "/tsvenuslux",
                         Name = "Venus Lux"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/d4/a2/a9/d4a2a9883dd4eb3866afdfcb46457f43/d4a2a9883dd4eb3866afdfcb46457f43.16.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169lll/d4/a2/a9/d4a2a9883dd4eb3866afdfcb46457f43/d4a2a9883dd4eb3866afdfcb46457f43.16.jpg",
                     SmallThumbnailUrl =
                         "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/d4/a2/a9/d4a2a9883dd4eb3866afdfcb46457f43/d4a2a9883dd4eb3866afdfcb46457f43.16.jpg",
                     PageUrl = "https://www.xvideos.com/video18936599/venus_lux_pounds_tyra_scott_s_asshole",
@@ -1588,16 +1587,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video63886273/transerotica_trans_cutie_daisy_c_anal_fucked_by_kai_bailey",
+                    Id = "63886273",
                     Title = "TRANSEROTICA Trans Cutie Daisy C Anal Fucked By Kai Bailey",
                     Channel = new PornIdName {
-                        Id = "/channels/transerotica",
+                        Id = "/transerotica",
                         Name = "Trans Erotica"
                     },
                     ThumbnailUrl =
-                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg",
+                        "https://img-hw.xvideos-cdn.com/videos/thumbs169poster/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg",
                     SmallThumbnailUrl =
-                        "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg",
+                        "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/b6/cd/56/b6cd5694ea43141af6c5263138498983/b6cd5694ea43141af6c5263138498983.24.jpg",
                     PageUrl = "https://www.xvideos.com/video63886273/transerotica_trans_cutie_daisy_c_anal_fucked_by_kai_bailey",
                     Tags = new List<PornIdName> {
                         new PornIdName {
@@ -1669,16 +1668,16 @@ namespace PornSearch.Tests.Data
                 new PornVideo {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video64139835/carioca_da_pica_grossa_comecou_com_camisinha_depois_tirou_pra_sentir_no_pelo",
+                    Id = "64139835",
                     Title = "Carioca da pica grossa começou com camisinha depois tirou pra sentir no pelo",
                     Channel = new PornIdName {
-                        Id = "/pornstar-channels/maria_flavia_ts",
+                        Id = "/maria_flavia_ts",
                         Name = "Maria Flavia Ts"
                     },
                     ThumbnailUrl =
-                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg",
                     SmallThumbnailUrl =
-                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg",
+                        "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/86/b3/7c/86b37cf8a6ada2e3eeef46277331c8f2/86b37cf8a6ada2e3eeef46277331c8f2.13.jpg",
                     PageUrl =
                         "https://www.xvideos.com/video64139835/carioca_da_pica_grossa_comecou_com_camisinha_depois_tirou_pra_sentir_no_pelo",
                     Tags = new List<PornIdName> {

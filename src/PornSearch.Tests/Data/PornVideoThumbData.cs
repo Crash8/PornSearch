@@ -125,10 +125,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video39773111/petite_princess_sasha_rose_fingers_her_delicious_pink_and_rides_her_sex_toy",
+                    Id = "39773111",
                     Title = "Petite princess Sasha Rose fingers her delicious pink & rides her sex toy",
                     Channel = new PornIdName {
-                        Id = "/channels/1by-day",
+                        Id = "/1by-day",
                         Name = "1By-Day"
                     },
                     ThumbnailUrl =
@@ -140,10 +140,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video63965375/why_is_this_pussy_wet_vol_72",
+                    Id = "63965375",
                     Title = "Why is This Pussy Wet  Vol 72",
                     Channel = new PornIdName {
-                        Id = "/channels/ferame",
+                        Id = "/ferame",
                         Name = "Ferame"
                     },
                     ThumbnailUrl =
@@ -153,10 +153,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id = "/video26195069/double_penetrated_gonzo_babe_facialized",
+                    Id = "26195069",
                     Title = "Double penetrated gonzo babe facialized",
                     Channel = new PornIdName {
-                        Id = "/profiles/darkxsite",
+                        Id = "/darkxsite",
                         Name = "Darkxsite"
                     },
                     ThumbnailUrl =
@@ -166,12 +166,11 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
-                    Id =
-                        "/video63909971/_raul_costa_waits_with_his_big_cock_out_for_petite_josephine_jackson_to_finish_her_yoga_-_reality_kings",
+                    Id = "63909971",
                     Title =
                         "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
                     Channel = new PornIdName {
-                        Id = "/channels/reality-kings-channel",
+                        Id = "/reality-kings-channel",
                         Name = "Reality Kings"
                     },
                     ThumbnailUrl =
@@ -189,10 +188,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video63543339/fireworks_in_his_ass_for_father_s_day",
+                    Id = "63543339",
                     Title = "Fireworks In His Ass For Father's Day",
                     Channel = new PornIdName {
-                        Id = "/channels/youngperps",
+                        Id = "/youngperps",
                         Name = "YoungPerps"
                     },
                     ThumbnailUrl =
@@ -203,10 +202,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
+                    Id = "7859351",
                     Title = "Gay orgy   They're loving it so much, in fact, that they just can't",
                     Channel = new PornIdName {
-                        Id = "/profiles/analgayfetish",
+                        Id = "/analgayfetish",
                         Name = "Analgayfetish"
                     },
                     ThumbnailUrl =
@@ -217,10 +216,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video59864125/quiet_top_gets_some_sloppy_head",
+                    Id = "59864125",
                     Title = "Quiet Top gets Some Sloppy Head",
                     Channel = new PornIdName {
-                        Id = "/amateur-channels/finn-phillips",
+                        Id = "/finn-phillips",
                         Name = "Finn Phillips"
                     },
                     ThumbnailUrl =
@@ -230,10 +229,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
-                    Id = "/video9390594/johnny_rapids_orgy_cumshot_on_a_boat",
+                    Id = "9390594",
                     Title = "Johnny Rapids orgy cumshot on a boat",
                     Channel = new PornIdName {
-                        Id = "/channels/menofuk",
+                        Id = "/menofuk",
                         Name = "Men Of Uk"
                     },
                     ThumbnailUrl =
@@ -250,10 +249,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video18936599/venus_lux_pounds_tyra_scott_s_asshole",
+                    Id = "18936599",
                     Title = "Venus Lux Pounds Tyra Scott's Asshole",
                     Channel = new PornIdName {
-                        Id = "/pornstar-channels/tsvenuslux",
+                        Id = "/tsvenuslux",
                         Name = "Venus Lux"
                     },
                     ThumbnailUrl =
@@ -263,10 +262,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video63886273/transerotica_trans_cutie_daisy_c_anal_fucked_by_kai_bailey",
+                    Id = "63886273",
                     Title = "TRANSEROTICA Trans Cutie Daisy C Anal Fucked By Kai Bailey",
                     Channel = new PornIdName {
-                        Id = "/channels/transerotica",
+                        Id = "/transerotica",
                         Name = "Trans Erotica"
                     },
                     ThumbnailUrl =
@@ -276,10 +275,10 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Trans,
-                    Id = "/video64139835/carioca_da_pica_grossa_comecou_com_camisinha_depois_tirou_pra_sentir_no_pelo",
+                    Id = "64139835",
                     Title = "Carioca da pica grossa começou com camisinha depois tirou pra sentir no pelo",
                     Channel = new PornIdName {
-                        Id = "/pornstar-channels/maria_flavia_ts",
+                        Id = "/maria_flavia_ts",
                         Name = "Maria Flavia Ts"
                     },
                     ThumbnailUrl =
