@@ -8,8 +8,8 @@ namespace PornSearch
     internal class XVideosSearchWebsite : AbstractSearchWebsite
     {
         private const string RegExVideoThumb =
-            "<div.*class=\"thumb-block.*<img.*?data-src=\"(.*?)\".*?<a href=\"(/video.*?)\" title=\"(.*?)\".*<a href=\"(.*?)\">"
-            + "<span.*?>(.*?)<";
+            "<div.*class=\"thumb-block.*<img.*?data-src=\"(.*?)\".*?<a href=\"(/video([0-9]+).*?)\" title=\"(.*?)\".*"
+            + "<a href=\"/[^/]*(.*?)\">" + "<span.*?>(.*?)<";
 
         public override List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
@@ -92,11 +92,11 @@ namespace PornSearch
                         .Select(m => new PornVideoThumb {
                                     Website = searchFilter.Website,
                                     SexOrientation = searchFilter.SexOrientation,
-                                    Id = m.Groups[2].Value.Replace("/THUMBNUM", ""),
-                                    Title = HtmlDecode(m.Groups[3].Value),
+                                    Id = m.Groups[3].Value,
+                                    Title = HtmlDecode(m.Groups[4].Value),
                                     Channel = new PornIdName {
-                                        Id = m.Groups[4].Value,
-                                        Name = HtmlDecode(m.Groups[5].Value)
+                                        Id = m.Groups[5].Value,
+                                        Name = HtmlDecode(m.Groups[6].Value)
                                     },
                                     ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1"),
                                     PageUrl = $"https://www.xvideos.com{m.Groups[2].Value.Replace("/THUMBNUM", "")}"
