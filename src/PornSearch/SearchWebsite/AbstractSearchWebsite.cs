@@ -109,7 +109,7 @@ namespace PornSearch
         protected abstract List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter);
 
         protected static string HtmlDecode(string htmlText) {
-            return HttpUtility.HtmlDecode(htmlText).Replace("\u00A0", " ").Trim();
+            return HTML5Decode.Utility.HtmlDecode(htmlText).Replace("\u00A0", " ").Trim();
         }
 
         public abstract PornSourceVideo GetSourceVideo(string url);
