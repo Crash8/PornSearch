@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PornSearch
 {
@@ -127,8 +126,11 @@ namespace PornSearch
         protected abstract PornVideo ExtractVideo(string content);
 
         protected static int ConvertToInt(string number) {
-            number = number.Replace(",", "");
-            return Convert.ToInt32(number);
+            if (number.EndsWith("k"))
+                return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000);
+            if (number.EndsWith("M"))
+                return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000 * 1000);
+            return Convert.ToInt32(number.Replace(",", ""));
         }
 
         protected static string ToTitleCase(string text) {
