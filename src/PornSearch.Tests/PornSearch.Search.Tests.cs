@@ -142,12 +142,22 @@ namespace PornSearch.Tests
             PornSexOrientation sexOrientation = videoThumb.SexOrientation;
             string filter = videoThumb.Title;
 
-            List<PornVideoThumb> videoThumbs = await SearchAsync(website, sexOrientation, filter, 1, PageSearch.Partial);
+            List<PornVideoThumb> videoThumbs;
+            PornVideoThumb videoThumbSearch;
+            do {
+                videoThumbs = await SearchAsync(website, sexOrientation, filter, 1, PageSearch.Partial);
 
-            PornVideoThumb videoThumbSearch = videoThumbs.FirstOrDefault(i => i.Id == videoThumb.Id);
+                videoThumbSearch = videoThumbs.FirstOrDefault(i => i.Id == videoThumb.Id);
+                filter = RemoveLastWord(filter);
+            } while (videoThumbSearch == null && !string.IsNullOrEmpty(filter));
 
             PornVideoThumbAssert.CheckAll(videoThumbs, website, filter, sexOrientation);
             PornVideoThumbAssert.Equal(videoThumb, videoThumbSearch);
+        }
+
+        private static string RemoveLastWord(string text) {
+            string[] words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(" ", words.Take(words.Length - 1));
         }
 
         private static async Task
