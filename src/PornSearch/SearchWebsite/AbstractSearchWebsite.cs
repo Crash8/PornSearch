@@ -126,9 +126,9 @@ namespace PornSearch
         protected abstract PornVideo ExtractVideo(string content);
 
         protected static int ConvertToInt(string number) {
-            if (number.EndsWith("k"))
+            if (number.EndsWith("k", StringComparison.OrdinalIgnoreCase))
                 return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000);
-            if (number.EndsWith("M"))
+            if (number.EndsWith("m", StringComparison.OrdinalIgnoreCase))
                 return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000 * 1000);
             return Convert.ToInt32(number.Replace(",", ""));
         }
