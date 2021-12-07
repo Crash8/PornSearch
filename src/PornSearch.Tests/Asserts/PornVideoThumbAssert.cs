@@ -239,8 +239,8 @@ namespace PornSearch.Tests.Asserts
                 case PornWebsite.XVideos: {
                     // The first subdomain and end of url can change value
                     const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2"),
-                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2"));
+                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", ""),
+                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", ""));
                     break;
                 }
                 default:
