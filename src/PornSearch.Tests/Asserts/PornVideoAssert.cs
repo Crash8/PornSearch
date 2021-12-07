@@ -151,7 +151,8 @@ namespace PornSearch.Tests.Asserts
                                            categoryId);
                             break;
                         case PornSexOrientation.Gay:
-                            Assert.Matches("^/(gay(/video[?]c=[0-9]+|porn)|popularwithwomen|vr|categories/[^\\s]+)$", categoryId);
+                            Assert.Matches("^/(gay(/video[?]c=[0-9]+|porn)|popularwithwomen|vr|transgender|categories/[^\\s]+)$",
+                                           categoryId);
                             break;
                         default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
                     }
@@ -183,11 +184,12 @@ namespace PornSearch.Tests.Asserts
                 case PornWebsite.Pornhub: {
                     switch (sexOrientation) {
                         case PornSexOrientation.Straight:
-                            Assert.Matches("^/(video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|categories/[^\\s]+|hd|vr|interactive|popularwithwomen)$",
+                            Assert.Matches("^/(video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|categories/[^\\s]+|hd|vr|interactive|popularwithwomen|transgender|gayporn|sfw)$",
                                            tagId);
                             break;
                         case PornSexOrientation.Gay:
-                            Assert.Matches("^(/gay(/video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|porn)|/video/gayporn)$", tagId);
+                            Assert.Matches("^(/gay(/video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|porn)|/video/gayporn|popularwithwomen)$",
+                                           tagId);
                             break;
                         default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
                     }
@@ -235,7 +237,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^/pornstar/[^\\s]+$", actorId);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/(pornstar-channels|pornstars|models|amateur-channels|model-channels)/[^\\s]+$", actorId);
+                    Assert.Matches("^/(pornstar-channels|pornstars|models|amateur-channels|model-channels|amateurs)/[^\\s]+$", actorId);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
