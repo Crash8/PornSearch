@@ -105,7 +105,7 @@ namespace PornSearch
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
-            const string pattern = "^https://www[.]xvideos[.]com/video([0-9]+)/[^\\s]*$";
+            const string pattern = "^https://www[.]xvideos[.]com/video([0-9]+)/[^\\s]+$";
             Match match = Regex.Match(url, pattern);
             return !match.Success
                 ? null
@@ -116,7 +116,7 @@ namespace PornSearch
         }
 
         protected override string MakeUrlVideo(string videoId) {
-            return $"https://www.xvideos.com/video{videoId}/";
+            return $"https://www.xvideos.com/video{videoId}/a";
         }
 
         protected override bool IsVideoContentNotFound(string content) {

@@ -116,7 +116,7 @@ namespace PornSearch.Tests.Asserts
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]*$", pageUrl);
+                    Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]+$", pageUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
@@ -248,7 +248,7 @@ namespace PornSearch.Tests.Asserts
         }
 
         private static void Assert_Video_NbViews(int nbViews) {
-           Assert.True(nbViews > 0);
+            Assert.True(nbViews > 0);
         }
 
         private static void Assert_Video_NbLikes(int nbLikes) {

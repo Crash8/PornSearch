@@ -52,6 +52,7 @@ namespace PornSearch.Tests.Data
                 "https://www.xvideos.com/?k=double&typef=gay&p=8",
                 "https://www.xvideos.com/new/12",
                 "https://www.xvideos.com/video64117055",
+                "https://www.xvideos.com/video64117056/",
                 "https://www.xvideos.com/video/",
                 "https://www.xvideos.com/video/test"
             };

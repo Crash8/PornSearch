@@ -39,7 +39,7 @@ namespace PornSearch.Tests.Data
             List<string> urls = new List<string> {
                 "https://www.xvideos.com/video36423251/dick_sucked_shemale_cums",
                 "https://www.xvideos.COM/video36423251/dick_sucked",
-                "https://www.xvideos.com/video36423251/",
+                "https://www.xvideos.com/video36423251/a",
                 "https://www.xvideos.com/video36423251/test"
             };
             PornSourceVideo sourceVideo = new PornSourceVideo {
