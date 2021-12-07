@@ -288,7 +288,7 @@ namespace PornSearch.Tests.Asserts
                 case PornWebsite.XVideos:
                     switch (sexOrientation) {
                         case PornSexOrientation.Straight:
-                            Assert.True(relatedVideos.Count >= 22, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count >= 18, relatedVideos.Count.ToString());
                             Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                             break;
                         case PornSexOrientation.Gay:
@@ -296,7 +296,7 @@ namespace PornSearch.Tests.Asserts
                             Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                             break;
                         case PornSexOrientation.Trans:
-                            Assert.True(relatedVideos.Count >= 19, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count >= 13, relatedVideos.Count.ToString());
                             Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                             break;
                         default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
