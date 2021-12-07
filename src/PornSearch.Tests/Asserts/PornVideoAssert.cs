@@ -463,7 +463,6 @@ namespace PornSearch.Tests.Asserts
                     Assert.True(video.RelatedVideos.All(r => category.Name != r.PageUrl));
                     Assert.True(video.RelatedVideos.All(r => category.Name != r.ThumbnailUrl));
                     Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Id));
-                    Assert.True(video.RelatedVideos.All(r => category.Name != r.Channel.Name));
                 }
 
             foreach (PornIdName tag in video.Tags) {
@@ -507,7 +506,8 @@ namespace PornSearch.Tests.Asserts
             Assert.Equal(video1.Id, videoThumb.Id);
             Assert.Equal(video1.Title, videoThumb.Title);
             Assert.Equal(video1.Channel.Id, videoThumb.Channel.Id);
-            Assert.Equal(video1.Channel.Name, videoThumb.Channel.Name);
+            Assert.Equal(CleanChannelName(video1.Channel.Name, video1.Website),
+                         CleanChannelName(videoThumb.Channel.Name, videoThumb.Website));
             switch (video1.Website) {
                 case PornWebsite.Pornhub: {
                     // The 9th character can change value
@@ -631,6 +631,14 @@ namespace PornSearch.Tests.Asserts
             if (website == PornWebsite.Pornhub && sexOrientation == PornSexOrientation.Gay && tagName.StartsWith("Gay "))
                 return tagName.Substring(4);
             return tagName;
+        }
+
+        private static string CleanChannelName(string channelName, PornWebsite website) {
+            if (website == PornWebsite.XVideos)
+                switch (channelName) {
+                    case "GenderX Official": return "GenderX Films";
+                }
+            return channelName;
         }
     }
 }

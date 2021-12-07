@@ -46,7 +46,7 @@ namespace PornSearch.Tests.Data
                 // Channels
                 { "Team Skeet", PornSexOrientation.Straight },
                 { "Gaywire", PornSexOrientation.Gay },
-                { "GenderX Official", PornSexOrientation.Trans }
+                { "GenderX Films", PornSexOrientation.Trans }
             };
             return channels.Select(c => new object[] { PornWebsite.XVideos, c.Key, c.Value });
         }
