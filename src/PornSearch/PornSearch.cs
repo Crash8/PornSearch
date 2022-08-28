@@ -82,6 +82,13 @@ namespace PornSearch
             return null;
         }
 
+        public async Task<PornVideo> GetVideoAsync(PornSourceVideo sourceVideo) {
+            if (sourceVideo == null)
+                throw new ArgumentNullException(nameof(sourceVideo));
+            IPornSearchWebsite searchWebsite = GetSearchWebsite(sourceVideo.Website);
+            return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id);
+        }
+
         public PornSourceVideo GetSourceVideo(string url) {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
