@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PornSearch
 {
-    public class PornSearch
+    public class PornSearch : IPornSearch
     {
         private readonly ConcurrentDictionary<PornWebsite, IPornSearchWebsite> _searchWebsites;
 
