@@ -12,10 +12,9 @@ namespace PornSearch
     {
         private string _cookie;
 
-        private const string RegExVideoThumb =
-            "<li class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
-            + " title=\"(.*?)\"[\\s\\S]*?data-src = \"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
-            + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
+        private const string RegExVideoThumb = "<li.*?class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
+                                               + " title=\"(.*?)\"[\\s\\S]*?data-src = \"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
+                                               + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
 
         public override List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
@@ -57,7 +56,7 @@ namespace PornSearch
         }
 
         protected override string GetContentPaginationInContent(string content) {
-            int startIndex = content.IndexOf("<div class=\"pagination3\">", StringComparison.Ordinal);
+            int startIndex = content.IndexOf("<div class=\"pagination3", StringComparison.Ordinal);
             if (startIndex > 0) {
                 int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
                 return content.Substring(startIndex, endIndex - startIndex);
