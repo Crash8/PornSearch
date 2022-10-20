@@ -112,7 +112,7 @@ namespace PornSearch.Tests.Data
                         Name = "hornyjohny66"
                     },
                     ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/202108/07/392562291/original/(m=eafTGgaaaa)(mh=7sAwZCkSnPzuMw0w)12.jpg",
+                        "https://ei.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eafTGgaaaa)(mh=zrFKt_bp3k54N8-K)16.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91"
                 }
             };

@@ -19,10 +19,13 @@ namespace PornSearch.Tests.Extensions
             IServiceCollection serviceCollectionReturn = serviceCollection.AddPornSearch();
 
             Assert.Same(serviceCollection, serviceCollectionReturn);
-            Assert.Equal(1, serviceCollection.Count);
+            Assert.Equal(2, serviceCollection.Count);
             Assert.Equal(ServiceLifetime.Transient, serviceCollection[0].Lifetime);
             Assert.Equal("PornSearch.PornSearch", serviceCollection[0].ServiceType.FullName);
             Assert.Equal("PornSearch.PornSearch", serviceCollection[0].ImplementationType?.FullName);
+            Assert.Equal(ServiceLifetime.Transient, serviceCollection[1].Lifetime);
+            Assert.Equal("PornSearch.IPornSearch", serviceCollection[1].ServiceType.FullName);
+            Assert.Equal("PornSearch.PornSearch", serviceCollection[1].ImplementationType?.FullName);
         }
     }
 }

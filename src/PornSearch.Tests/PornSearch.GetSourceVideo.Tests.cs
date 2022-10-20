@@ -8,7 +8,7 @@ namespace PornSearch.Tests
     {
         [Fact]
         public void GetSourceVideo_ArgumentNullException() {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             Assert.Throws<ArgumentNullException>(() => pornSearch.GetSourceVideo(null));
         }
@@ -16,7 +16,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(BadVideoUrlData))]
         public void GetSourceVideo_Null(string url) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             PornSourceVideo sourceVideo = pornSearch.GetSourceVideo(url);
 
@@ -26,7 +26,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(MultipleVideoUrlData))]
         public void GetSourceVideo_MultipleVideoUrl(string[] urls, PornSourceVideo sourceVideoSource) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             foreach (string url in urls) {
                 PornSourceVideo sourceVideo = pornSearch.GetSourceVideo(url);

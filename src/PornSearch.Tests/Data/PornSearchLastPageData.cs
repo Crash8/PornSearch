@@ -63,7 +63,7 @@ namespace PornSearch.Tests.Data
         private static IEnumerable<object[]> GetXVideosOnePage() {
             Dictionary<PornSexOrientation, string> lastPage = new Dictionary<PornSexOrientation, string> {
                 { PornSexOrientation.Straight, "PIGBOY" },
-                { PornSexOrientation.Gay, "1409" },
+                { PornSexOrientation.Gay, "1407" },
                 { PornSexOrientation.Trans, "PIGBOY" }
             };
             return lastPage.Select(c => new object[] { PornWebsite.XVideos, c.Value, c.Key, 1 });

@@ -8,7 +8,7 @@ namespace PornSearch.Tests
     {
         [Fact]
         public void GetSources() {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
             List<PornSource> sources = pornSearch.GetSources();
 
             Assert.NotNull(sources);

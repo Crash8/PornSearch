@@ -208,18 +208,6 @@ namespace PornSearch.Tests.Data
                             Name = "Ass Fuck"
                         },
                         new PornIdName {
-                            Id = "/video/search?search=teenager",
-                            Name = "Teenager"
-                        },
-                        new PornIdName {
-                            Id = "/video/search?search=young",
-                            Name = "Young"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=138",
-                            Name = "Verified Amateurs"
-                        },
-                        new PornIdName {
                             Id = "/video?c=35",
                             Name = "Anal"
                         },
@@ -266,6 +254,10 @@ namespace PornSearch.Tests.Data
                         new PornIdName {
                             Id = "/video/search?search=doggy+style",
                             Name = "Doggy Style"
+                        },
+                        new PornIdName {
+                            Id = "/video/search?search=cum+in+mouth",
+                            Name = "Cum In Mouth"
                         }
                     },
                     Actors = new List<PornIdName>(),
@@ -273,70 +265,6 @@ namespace PornSearch.Tests.Data
                     NbLikes = 3884,
                     NbDislikes = 708,
                     Date = new DateTime(2019, 7, 27)
-                },
-                // Fix no tags
-                new PornVideo {
-                    Website = PornWebsite.Pornhub,
-                    SexOrientation = PornSexOrientation.Straight,
-                    Id = "ph617b1e523c581",
-                    Title = "Creamy pregnant pussy can't take big black dick",
-                    Channel = new PornIdName {
-                        Id = "/model/fantasticblack",
-                        Name = "Fantasticblack"
-                    },
-                    ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202110/28/397146301/original/(m=eaAaGwObaaaa)(mh=7gx5N9HdKoUoPBO9)3.jpg",
-                    SmallThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202110/28/397146301/original/(m=eafTGgaaaa)(mh=zclXhBPYfYn0BKIW)3.jpg",
-                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph617b1e523c581",
-                    Categories = new List<PornIdName> {
-                        new PornIdName {
-                            Id = "/video?c=3",
-                            Name = "Amateur"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=6",
-                            Name = "BBW"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=7",
-                            Name = "Big Dick"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=15",
-                            Name = "Creampie"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=16",
-                            Name = "Cumshot"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=72",
-                            Name = "Double Penetration"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=17",
-                            Name = "Ebony"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=115",
-                            Name = "Exclusive"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=502",
-                            Name = "Female Orgasm"
-                        },
-                        new PornIdName {
-                            Id = "/video?c=138",
-                            Name = "Verified Amateurs"
-                        }
-                    },
-                    Tags = new List<PornIdName>(),
-                    Actors = new List<PornIdName>(),
-                    NbViews = 283,
-                    NbLikes = 0,
-                    NbDislikes = 0,
-                    Date = new DateTime(2021, 10, 28)
                 },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
@@ -543,7 +471,7 @@ namespace PornSearch.Tests.Data
                         },
                         new PornIdName {
                             Id = "/gay/video?c=49",
-                            Name = "Twink"
+                            Name = "Twink (18+)"
                         }
                     },
                     Tags = new List<PornIdName> {
@@ -671,6 +599,10 @@ namespace PornSearch.Tests.Data
                             Name = "Muscle"
                         },
                         new PornIdName {
+                            Id = "/categories/pornstar",
+                            Name = "Pornstar"
+                        },
+                        new PornIdName {
                             Id = "/gay/video?c=552",
                             Name = "Tattooed Men"
                         }
@@ -709,7 +641,16 @@ namespace PornSearch.Tests.Data
                             Name = "Big Cock"
                         }
                     },
-                    Actors = new List<PornIdName>(),
+                    Actors = new List<PornIdName> {
+                        new PornIdName {
+                            Id = "/pornstar/rafael-carreras",
+                            Name = "Rafael Carreras"
+                        },
+                        new PornIdName {
+                            Id = "/pornstar/joaquin-santana",
+                            Name = "Joaquin Santana"
+                        }
+                    },
                     NbViews = 92207,
                     NbLikes = 260,
                     NbDislikes = 30,
@@ -725,9 +666,9 @@ namespace PornSearch.Tests.Data
                         Name = "hornyjohny66"
                     },
                     ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202108/07/392562291/original/(m=eaAaGwObaaaa)(mh=yOsKorH0iXbQhjV3)12.jpg",
+                        "https://di.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eaAaGwObaaaa)(mh=EwnkTYRPaU2G-s9P)16.jpg",
                     SmallThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202108/07/392562291/original/(m=eafTGgaaaa)(mh=7sAwZCkSnPzuMw0w)12.jpg",
+                        "https://di.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eafTGgaaaa)(mh=zrFKt_bp3k54N8-K)16.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91",
                     Categories = new List<PornIdName> {
                         new PornIdName {
@@ -764,7 +705,7 @@ namespace PornSearch.Tests.Data
                         },
                         new PornIdName {
                             Id = "/gay/video?c=49",
-                            Name = "Twink"
+                            Name = "Twink (18+)"
                         },
                         new PornIdName {
                             Id = "/gay/video?c=731",
@@ -1147,10 +1088,6 @@ namespace PornSearch.Tests.Data
                         new PornIdName {
                             Id = "/models/josephine-jackson",
                             Name = "Josephine Jackson"
-                        },
-                        new PornIdName {
-                            Id = "/models/josephine-4",
-                            Name = "Josephine"
                         }
                     },
                     NbViews = 1407786,

@@ -31,8 +31,8 @@ namespace PornSearch.Tests.Data
                 { "Daisy Taylor", PornSexOrientation.Trans },
                 // Channels
                 { "Brazzers", PornSexOrientation.Straight },
-                { "Black Male Me", PornSexOrientation.Gay },
-                { "Dream Tranny", PornSexOrientation.Trans }
+                { "Asian Boy Models", PornSexOrientation.Gay },
+                { "Ladyboy Gold", PornSexOrientation.Trans }
             };
             return channels.Select(c => new object[] { PornWebsite.Pornhub, c.Key, c.Value });
         }

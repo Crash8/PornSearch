@@ -188,7 +188,7 @@ namespace PornSearch.Tests.Asserts
                                            tagId);
                             break;
                         case PornSexOrientation.Gay:
-                            Assert.Matches("^(/gay(/video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|porn)|/video/gayporn|popularwithwomen)$",
+                            Assert.Matches("^(/gay(/video(/search[?]search=[^\\s]+|[?]c=[0-9]+)|porn)|/video/gayporn|popularwithwomen|/video/search[?]search=[^\\s]+|[?]c=[0-9]+)$",
                                            tagId);
                             break;
                         default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
@@ -296,7 +296,7 @@ namespace PornSearch.Tests.Asserts
                             Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                             break;
                         case PornSexOrientation.Trans:
-                            Assert.True(relatedVideos.Count >= 13, relatedVideos.Count.ToString());
+                            Assert.True(relatedVideos.Count >= 11, relatedVideos.Count.ToString());
                             Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                             break;
                         default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);

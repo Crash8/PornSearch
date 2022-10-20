@@ -50,7 +50,7 @@ namespace PornSearch.Tests.Asserts
                 return new[] { 20, 20 };
             }
             if (website == PornWebsite.XVideos)
-                return string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 46, 48 } : new[] { 25, 27 };
+                return string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 43, 48 } : new[] { 25, 27 };
             throw new NotImplementedException();
         }
 

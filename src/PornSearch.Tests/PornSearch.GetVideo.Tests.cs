@@ -15,15 +15,16 @@ namespace PornSearch.Tests
 
         [Fact]
         public async Task GetVideo_ArgumentNullException() {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.GetVideoAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.GetVideoAsync((string)null));
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.GetVideoAsync((PornSourceVideo)null));
         }
 
         [Theory]
         [ClassData(typeof(BadVideoUrlData))]
         public async Task GetVideo_Null_BadVideoUrl(string url) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             PornVideo video = await pornSearch.GetVideoAsync(url);
 
@@ -33,7 +34,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(NotContentVideoUrlData))]
         public async Task GetVideo_Null_NotContentVideoUrl(string url) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             PornVideo video = await pornSearch.GetVideoAsync(url);
 
@@ -42,12 +43,37 @@ namespace PornSearch.Tests
 
         [Theory]
         [ClassData(typeof(PornWebsiteData))]
-        public async Task GetVideo_Search(PornWebsite website) {
+        public async Task GetVideo_Search_Empty(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "", 1);
+        }
+
+        [Theory]
+        [ClassData(typeof(PornWebsiteData))]
+        public async Task GetVideo_Search_Amateur(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "Amateur", 1);
+        }
+
+        [Theory]
+        [ClassData(typeof(PornWebsiteData))]
+        public async Task GetVideo_Search_TeenAnal(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "Teen Anal", 1);
+        }
+
+        [Theory]
+        [ClassData(typeof(PornWebsiteData))]
+        public async Task GetVideo_Search_E(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "é", 1);
+        }
+
+        [Theory]
+        [ClassData(typeof(PornWebsiteData))]
+        public async Task GetVideo_Search_Threesome(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "Threesome", NextRandomPage());
+        }
+
+        [Theory]
+        [ClassData(typeof(PornWebsiteData))]
+        public async Task GetVideo_Search_BlowjobCumshotAss(PornWebsite website) {
             await CheckVideosInSearchOnPagesAsync(website, "Blowjob Cumshot Ass", NextRandomPage());
         }
 
@@ -56,7 +82,7 @@ namespace PornSearch.Tests
         }
 
         private static async Task CheckVideosInSearchOnPagesAsync(PornWebsite website, string filter, int pageMin) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
             PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
             foreach (PornSexOrientation sexOrientation in source.SexOrientations) {
@@ -65,9 +91,8 @@ namespace PornSearch.Tests
             }
         }
 
-        private static async Task SearchVideosAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter,
-                                                    int page) {
-            PornSearch pornSearch = new PornSearch();
+        private static async Task SearchVideosAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter, int page) {
+            IPornSearch pornSearch = new PornSearch();
             PornSearchFilter searchFilter = new PornSearchFilter {
                 Website = website,
                 SexOrientation = sexOrientation,
@@ -95,7 +120,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(MultipleVideoUrlData))]
         public async Task GetVideo_MultipleVideoUrl(string[] urls, PornSourceVideo sourceVideo) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
             List<PornVideo> videos = new List<PornVideo>();
 
             foreach (string url in urls) {
@@ -117,7 +142,7 @@ namespace PornSearch.Tests
         [Theory]
         [ClassData(typeof(PornVideoData))]
         public async Task GetVideo_Video(PornVideo videoSource) {
-            PornSearch pornSearch = new PornSearch();
+            IPornSearch pornSearch = new PornSearch();
 
             PornVideo video = await pornSearch.GetVideoAsync(videoSource.PageUrl);
 
