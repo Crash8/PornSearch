@@ -65,6 +65,7 @@ namespace PornSearch
                 request.Headers.Add("User-Agent", "PornSearch/1.0");
                 request.Headers.Add("Referer", url);
                 request.Headers.Add("Cookie", cookie);
+                request.Headers.Add("Accept-Language", "en");
                 using (HttpResponseMessage response = await HttpClient.SendAsync(request)) {
                     if (response.IsSuccessStatusCode)
                         return await response.Content.ReadAsStringAsync();
