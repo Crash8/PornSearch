@@ -38,8 +38,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/miss-daisy-diamond",
                         Name = "Miss Daisy Diamond"
                     },
-                    ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202011/27/374175402/original/(m=eaAaGwObaaaa)(mh=8mDb1m1o_9EAlB4k)14.jpg",
+                    ThumbnailUrl = "https://ei.phncdn.com/videos/202011/27/374175402/original/(m=eaAaGwObaaaa)(mh=8mDb1m1o_9EAlB4k)14.jpg",
                     SmallThumbnailUrl =
                         "https://ci.phncdn.com/videos/202011/27/374175402/original/(m=eafTGgaaaa)(mh=AaHrhQhPfrLPy5_3)14.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5fc04dbacd1e6",
@@ -155,8 +154,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/purple-bitch",
                         Name = "Purple Bitch"
                     },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/201907/27/237967581/original/(m=eaAaGwObaaaa)(mh=ytHFxN6FIgeP-j3f)14.jpg",
+                    ThumbnailUrl = "https://di.phncdn.com/videos/201907/27/237967581/original/(m=eaAaGwObaaaa)(mh=ytHFxN6FIgeP-j3f)14.jpg",
                     SmallThumbnailUrl =
                         "https://ci.phncdn.com/videos/201907/27/237967581/original/(m=eafTGgaaaa)(mh=wsgEJN05BpMhMC7D)14.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0",
@@ -275,8 +273,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/property-sex",
                         Name = "Property Sex"
                     },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/201712/12/145091652/original/(m=eaAaGwObaaaa)(mh=1_0bvB_2QRESJwUJ)3.jpg",
+                    ThumbnailUrl = "https://di.phncdn.com/videos/201712/12/145091652/original/(m=eaAaGwObaaaa)(mh=1_0bvB_2QRESJwUJ)3.jpg",
                     SmallThumbnailUrl =
                         "https://ei.phncdn.com/videos/201712/12/145091652/original/(m=eafTGgaaaa)(mh=dKfuDl_TV80fS7Wi)3.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5a2f7e4f9c48a",
@@ -427,8 +424,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/gay-wire",
                         Name = "Gay Wire"
                     },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/201908/01/239007621/original/(m=eaAaGwObaaaa)(mh=6-925Q9Wh5OOgwfj)10.jpg",
+                    ThumbnailUrl = "https://di.phncdn.com/videos/201908/01/239007621/original/(m=eaAaGwObaaaa)(mh=6-925Q9Wh5OOgwfj)10.jpg",
                     SmallThumbnailUrl =
                         "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d432ce7a448c",
@@ -551,6 +547,70 @@ namespace PornSearch.Tests.Data
                     NbDislikes = 162,
                     Date = new DateTime(2019, 8, 1)
                 },
+                // Fix no tags
+                new PornVideo {
+                    Website = PornWebsite.Pornhub,
+                    SexOrientation = PornSexOrientation.Gay,
+                    Id = "ph61d1f5079ab42",
+                    Title = "hard pounding with a view of nice ass",
+                    Channel = new PornIdName {
+                        Id = "/model/stevenlucasxxx",
+                        Name = "stevenlucasxxx"
+                    },
+                    ThumbnailUrl =
+                        "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eaAaGwObaaaa)(mh=AZ_I8xVgFxXW6yjl)1.jpg",
+                    SmallThumbnailUrl =
+                    "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42",
+                    Categories = new List<PornIdName> {
+                        new PornIdName {
+                            Id = "/gay/video?c=40",
+                            Name = "Bareback"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=56",
+                            Name = "Blowjob"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=71",
+                            Name = "Creampie"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=352",
+                            Name = "Cumshot"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=412",
+                            Name = "Feet"
+                        },
+                        new PornIdName {
+                            Id = "/gayporn",
+                            Name = "Gay"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=107",
+                            Name = "HD Porn"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=322",
+                            Name = "Jock"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=51",
+                            Name = "Muscle"
+                        },
+                        new PornIdName {
+                            Id = "/gay/video?c=731",
+                            Name = "Verified Amateurs"
+                        }
+                    },
+                    Tags = new List<PornIdName>(),
+                    Actors = new List<PornIdName>(),
+                    NbViews = 26800,
+                    NbLikes = 5,
+                    NbDislikes = 1,
+                    Date = new DateTime(2022, 1, 2)
+                },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Gay,
@@ -560,8 +620,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/lucasentertainment",
                         Name = "Lucas Entertainment"
                     },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/202105/19/388272921/original/(m=eaAaGwObaaaa)(mh=FAmlwuMOegqg_ChD)11.jpg",
+                    ThumbnailUrl = "https://di.phncdn.com/videos/202105/19/388272921/original/(m=eaAaGwObaaaa)(mh=FAmlwuMOegqg_ChD)11.jpg",
                     SmallThumbnailUrl =
                         "https://ci.phncdn.com/videos/202105/19/388272921/original/(m=eafTGgaaaa)(mh=fVKLwQqYceEaETFL)11.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph60a518bb2da8a",
@@ -665,8 +724,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/hornyjohny66",
                         Name = "hornyjohny66"
                     },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eaAaGwObaaaa)(mh=EwnkTYRPaU2G-s9P)16.jpg",
+                    ThumbnailUrl = "https://di.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eaAaGwObaaaa)(mh=EwnkTYRPaU2G-s9P)16.jpg",
                     SmallThumbnailUrl =
                         "https://di.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eafTGgaaaa)(mh=zrFKt_bp3k54N8-K)16.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91",
@@ -994,8 +1052,7 @@ namespace PornSearch.Tests.Data
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
                     Id = "63909971",
-                    Title =
-                        "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
+                    Title = "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
                     Channel = new PornIdName {
                         Id = "/reality-kings-channel",
                         Name = "Reality Kings"
@@ -1220,8 +1277,7 @@ namespace PornSearch.Tests.Data
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169lll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.15.jpg",
                     SmallThumbnailUrl =
                         "http://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.15.jpg",
-                    PageUrl =
-                        "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
+                    PageUrl = "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t",
                     Tags = new List<PornIdName> {
                         new PornIdName {
                             Id = "/tags/t:gay/gay",

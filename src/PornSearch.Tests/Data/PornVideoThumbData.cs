@@ -92,6 +92,19 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Gay,
+                    Id = "ph61d1f5079ab42",
+                    Title = "hard pounding with a view of nice ass",
+                    Channel = new PornIdName {
+                        Id = "/model/stevenlucasxxx",
+                        Name = "stevenlucasxxx"
+                    },
+                    ThumbnailUrl =
+                    "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42"
+                },
+                new PornVideoThumb {
+                    Website = PornWebsite.Pornhub,
+                    SexOrientation = PornSexOrientation.Gay,
                     Id = "ph60a518bb2da8a",
                     Title = "Marco Antonio, Pol Prince, Rafael Carreras, Joaquin Santana | Raw Foursome",
                     Channel = new PornIdName {
