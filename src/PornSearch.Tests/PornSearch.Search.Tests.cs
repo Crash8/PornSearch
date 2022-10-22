@@ -91,13 +91,43 @@ public partial class PornSearch_Search_Tests
 
     [Theory]
     [ClassData(typeof(PornWebsiteData))]
-    public async Task Search_OK(PornWebsite website) {
+    public async Task Search_OK_Empty(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "", 1, PageSearch.Complete);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_Amateur(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "Amateur", 1, PageSearch.Complete);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_TeenAnal(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "Teen Anal", 1, PageSearch.Complete);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_E(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "é", 1, PageSearch.Complete);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_Threesome(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "Threesome", NextRandomPage(), PageSearch.Complete);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_BlowjobCumshotAss(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "Blowjob Cumshot Ass", 10000, PageSearch.Empty);
+    }
+
+    [Theory]
+    [ClassData(typeof(PornWebsiteData))]
+    public async Task Search_OK_Azertyuiop(PornWebsite website) {
         await CheckSearchOn3PagesAsync(website, "azertyuiop", 1, PageSearch.Empty);
     }
 
