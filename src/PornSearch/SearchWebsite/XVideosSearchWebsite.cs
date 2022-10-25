@@ -138,16 +138,18 @@ namespace PornSearch
         private static void FillVideoFromHeaderContent(string content, ref PornVideo video) {
             const string pattern = "<meta property=\"og:title\" content=\"([^\"]*)\" />[\\s\\S]*?"
                                    + "<meta property=\"og:url\" content=\"([^0-9]+([0-9]+)/[^\"]*)\" />[\\s\\S]*?"
+                                   + "<meta property=\"og:duration\" content=\"([^\"]*)\" />[\\s\\S]*?"
                                    + "<meta property=\"og:image\" content=\"([^\"]*)\" />[\\s\\S]*?"
                                    + ",\"page_main_cat\":\"([^\"]*)";
             Match match = Regex.Match(content, pattern);
             if (match.Success) {
-                Enum.TryParse(match.Groups[5].Value, true, out PornSexOrientation sexOrientation);
+                Enum.TryParse(match.Groups[6].Value, true, out PornSexOrientation sexOrientation);
                 video.SexOrientation = sexOrientation;
                 video.Id = match.Groups[3].Value;
                 video.Title = HtmlDecode(match.Groups[1].Value);
-                video.SmallThumbnailUrl = match.Groups[4].Value;
+                video.SmallThumbnailUrl = match.Groups[5].Value;
                 video.PageUrl = match.Groups[2].Value;
+                video.Duration = TimeSpan.FromSeconds(ConvertToInt(match.Groups[4].Value));
             }
         }
 
@@ -170,7 +172,7 @@ namespace PornSearch
             }
             int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
             content = content.Substring(startIndex, endIndex - startIndex);
-            const string pattern = "<a href=\"([^\"]*)\" class=\"[^\"]*profile hover-name\"><span.*?>([^<]*)";
+            const string pattern = "<a href=\"([^\"]*)\" class=\"[^\"]*profile hover-name.*?\"><span.*?>([^<]*)";
             MatchCollection matches = Regex.Matches(content, pattern);
             video.Actors = matches.Cast<Match>()
                                   .Select(m => new PornIdName {

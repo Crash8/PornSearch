@@ -13,6 +13,7 @@ namespace PornSearch
         public string ThumbnailUrl { get; set; }
         public string SmallThumbnailUrl { get; set; }
         public string PageUrl { get; set; }
+        public TimeSpan Duration { get; set; }
         public List<PornIdName> Categories { get; set; }
         public List<PornIdName> Tags { get; set; }
         public List<PornIdName> Actors { get; set; }

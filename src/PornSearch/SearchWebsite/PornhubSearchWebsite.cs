@@ -144,16 +144,18 @@ namespace PornSearch
             const string pattern = "<meta property=\"og:url\" content=\"([^?]*[?]viewkey=([^\"]*))\" />[\\s\\S]*?"
                                    + "<meta property=\"og:title\" content=\"([^\"]*)\" />[\\s\\S]*?"
                                    + "<meta property=\"og:image\" content=\"([^\"]*)\" />[\\s\\S]*?"
+                                   + "<meta property=\"video:duration\" content=\"([^\"]*)\" />[\\s\\S]*?"
                                    + "phOrientationSegment.*?= \"([^\"]*)[\\s\\S]*?" + "ga[(]'set', 'dimension14', '([^']*)";
             Match match = Regex.Match(content, pattern);
             if (match.Success) {
-                Enum.TryParse(match.Groups[5].Value, true, out PornSexOrientation sexOrientation);
+                Enum.TryParse(match.Groups[6].Value, true, out PornSexOrientation sexOrientation);
                 video.SexOrientation = sexOrientation;
                 video.Id = match.Groups[2].Value;
                 video.Title = HtmlDecode(match.Groups[3].Value);
                 video.ThumbnailUrl = match.Groups[4].Value;
                 video.PageUrl = match.Groups[1].Value;
-                video.Date = DateTime.ParseExact(match.Groups[6].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
+                video.Duration = TimeSpan.FromSeconds(ConvertToInt(match.Groups[5].Value));
+                video.Date = DateTime.ParseExact(match.Groups[7].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
             }
         }
 

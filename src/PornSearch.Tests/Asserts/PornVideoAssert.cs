@@ -22,6 +22,7 @@ namespace PornSearch.Tests.Asserts
             Assert_Video_ThumbnailUrl(video.ThumbnailUrl, website);
             Assert_Video_SmallThumbnailUrl(video.SmallThumbnailUrl, website);
             Assert_Video_PageUrl(video.PageUrl, website);
+            Assert_Video_Duration(video.Duration);
             Assert_Video_Categories(video.Categories, website, sexOrientation);
             Assert_Video_Tags(video.Tags, website, sexOrientation);
             Assert_Video_Actors(video.Actors, website);
@@ -120,6 +121,11 @@ namespace PornSearch.Tests.Asserts
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
+        }
+
+        private static void Assert_Video_Duration(TimeSpan duration) {
+            Assert.NotNull(duration);
+            Assert.True(duration.TotalSeconds > 0);
         }
 
         [AssertionMethod]
@@ -572,6 +578,7 @@ namespace PornSearch.Tests.Asserts
                     break;
             }
             Assert.Equal(video1.PageUrl, video2.PageUrl);
+            Assert.Equal(video1.Duration, video2.Duration);
             if (video1.Categories == null) {
                 Assert.Null(video2.Categories);
             }
