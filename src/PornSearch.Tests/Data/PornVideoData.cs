@@ -855,8 +855,8 @@ namespace PornSearch.Tests.Data
                     Id = "39773111",
                     Title = "Petite princess Sasha Rose fingers her delicious pink & rides her sex toy",
                     Channel = new PornIdName {
-                        Id = "/1by-day",
-                        Name = "1By-Day"
+                        Id = "/pornworld_sexy_world",
+                        Name = "Porn World Sexy World"
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169lll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
@@ -961,6 +961,56 @@ namespace PornSearch.Tests.Data
                     NbViews = 42507,
                     NbLikes = 67,
                     NbDislikes = 50
+                },
+                // Fix no NbViews
+                new PornVideo {
+                    Website = PornWebsite.XVideos,
+                    SexOrientation = PornSexOrientation.Straight,
+                    Id = "64398615",
+                    Title = "E-girl saborosa, apetitosa na manteiga",
+                    Channel = new PornIdName {
+                        Id = "/wasler",
+                        Name = "Wasler"
+                    },
+                    ThumbnailUrl =
+                        "https://img-cf.xvideos-cdn.com/videos/thumbs169poster/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
+                    SmallThumbnailUrl =
+                        "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
+                    PageUrl = "https://www.xvideos.com/video64398615/e-girl_saborosa_apetitosa_na_manteiga",
+                    Tags = new List<PornIdName> {
+                        new PornIdName {
+                            Id = "/tags/beautiful",
+                            Name = "beautiful"
+                        },
+                        new PornIdName {
+                            Id = "/tags/beauty",
+                            Name = "beauty"
+                        },
+                        new PornIdName {
+                            Id = "/tags/big-tits",
+                            Name = "big-tits"
+                        },
+                        new PornIdName {
+                            Id = "/tags/gostosa",
+                            Name = "gostosa"
+                        },
+                        new PornIdName {
+                            Id = "/tags/big-boobs",
+                            Name = "big-boobs"
+                        },
+                        new PornIdName {
+                            Id = "/tags/egirl",
+                            Name = "egirl"
+                        },
+                        new PornIdName {
+                            Id = "/tags/e-girl",
+                            Name = "e-girl"
+                        }
+                    },
+                    Actors = new List<PornIdName>(),
+                    NbViews = 0,
+                    NbLikes = 157,
+                    NbDislikes = 39
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1143,7 +1193,7 @@ namespace PornSearch.Tests.Data
                             Name = "Raul Costa"
                         },
                         new PornIdName {
-                            Id = "/models/josephine-jackson",
+                            Id = "/pornstars/josephine-jackson",
                             Name = "Josephine Jackson"
                         }
                     },
@@ -1162,7 +1212,7 @@ namespace PornSearch.Tests.Data
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
                     Id = "63543339",
-                    Title = "Fireworks In His Ass For Father's Day",
+                    Title = "Fireworks In His Ass For Day",
                     Channel = new PornIdName {
                         Id = "/youngperps",
                         Name = "YoungPerps"
@@ -1171,7 +1221,7 @@ namespace PornSearch.Tests.Data
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169poster/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
                     SmallThumbnailUrl =
                         "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
-                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_father_s_day",
+                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_day",
                     Tags = new List<PornIdName> {
                         new PornIdName {
                             Id = "/tags/t:gay/anal",
@@ -1210,10 +1260,6 @@ namespace PornSearch.Tests.Data
                             Name = "bareback"
                         },
                         new PornIdName {
-                            Id = "/tags/t:gay/daddy",
-                            Name = "daddy"
-                        },
-                        new PornIdName {
                             Id = "/tags/t:gay/bear",
                             Name = "bear"
                         },
@@ -1238,10 +1284,6 @@ namespace PornSearch.Tests.Data
                             Name = "step-brother"
                         },
                         new PornIdName {
-                            Id = "/tags/t:gay/daddy-fuck-boy",
-                            Name = "daddy-fuck-boy"
-                        },
-                        new PornIdName {
                             Id = "/tags/t:gay/drake-magnum",
                             Name = "drake-magnum"
                         },
@@ -1252,10 +1294,6 @@ namespace PornSearch.Tests.Data
                         new PornIdName {
                             Id = "/tags/t:gay/alex-killian",
                             Name = "alex-killian"
-                        },
-                        new PornIdName {
-                            Id = "/tags/t:gay/father-and-apos-s-day",
-                            Name = "father-and-apos-s-day"
                         }
                     },
                     Actors = new List<PornIdName>(),

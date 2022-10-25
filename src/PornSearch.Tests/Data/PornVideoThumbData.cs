@@ -141,8 +141,8 @@ namespace PornSearch.Tests.Data
                     Id = "39773111",
                     Title = "Petite princess Sasha Rose fingers her delicious pink & rides her sex toy",
                     Channel = new PornIdName {
-                        Id = "/1by-day",
-                        Name = "1By-Day"
+                        Id = "/pornworld_sexy_world",
+                        Name = "Porn World Sexy World"
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/64/5a/cd/645acd983be57e6ca59f9389e13e5a69/645acd983be57e6ca59f9389e13e5a69.7.jpg",
@@ -162,6 +162,20 @@ namespace PornSearch.Tests.Data
                     ThumbnailUrl =
                         "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
                     PageUrl = "https://www.xvideos.com/video63965375/why_is_this_pussy_wet_vol_72"
+                },
+                // Fix no NbViews
+                new PornVideoThumb {
+                    Website = PornWebsite.XVideos,
+                    SexOrientation = PornSexOrientation.Straight,
+                    Id = "64398615",
+                    Title = "E-girl saborosa, apetitosa na manteiga",
+                    Channel = new PornIdName {
+                        Id = "/wasler",
+                        Name = "Wasler"
+                    },
+                    ThumbnailUrl =
+                        "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
+                    PageUrl = "https://www.xvideos.com/video64398615/e-girl_saborosa_apetitosa_na_manteiga"
                 },
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
@@ -202,14 +216,14 @@ namespace PornSearch.Tests.Data
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
                     Id = "63543339",
-                    Title = "Fireworks In His Ass For Father's Day",
+                    Title = "Fireworks In His Ass For Day",
                     Channel = new PornIdName {
                         Id = "/youngperps",
                         Name = "YoungPerps"
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
-                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_father_s_day"
+                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_day"
                 },
                 // Fix the value "\u00A0" in the title
                 new PornVideoThumb {

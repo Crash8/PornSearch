@@ -70,7 +70,7 @@ namespace PornSearch.Tests.Asserts
             Assert.Equal(website, videoThumb.Website);
             Assert.Equal(sexOrientation, videoThumb.SexOrientation);
             Assert_VideoThumb_Id(videoThumb.Id, website);
-            Assert_VideoThumb_Title(videoThumb.Title);
+            Assert_VideoThumb_Title(videoThumb.Title, website);
             Assert.NotNull(videoThumb.Channel);
             Assert_VideoThumb_Channel_Id(videoThumb.Channel.Id, website);
             Assert_VideoThumb_Channel_Name(videoThumb.Channel.Name);
@@ -94,9 +94,10 @@ namespace PornSearch.Tests.Asserts
             }
         }
 
-        private static void Assert_VideoThumb_Title(string title) {
+        private static void Assert_VideoThumb_Title(string title, PornWebsite website) {
             Assert.NotNull(title);
-            Assert.NotEqual("", title.Trim());
+            if (website != PornWebsite.XVideos)
+                Assert.NotEqual("", title.Trim());
             Assert.Equal(HttpUtility.HtmlDecode(title), title);
             Assert.DoesNotContain("\u00A0", title);
         }
@@ -129,7 +130,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);

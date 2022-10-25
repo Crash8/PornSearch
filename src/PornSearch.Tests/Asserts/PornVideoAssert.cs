@@ -25,7 +25,7 @@ namespace PornSearch.Tests.Asserts
             Assert_Video_Categories(video.Categories, website, sexOrientation);
             Assert_Video_Tags(video.Tags, website, sexOrientation);
             Assert_Video_Actors(video.Actors, website);
-            Assert_Video_NbViews(video.NbViews);
+            Assert_Video_NbViews(video.NbViews, website);
             Assert_Video_NbLikes(video.NbLikes);
             Assert_Video_NbDislikes(video.NbDislikes);
             Assert_Video_Date(video.Date, website);
@@ -85,7 +85,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    thumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -100,7 +100,7 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", smallThumbnailUrl);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                    Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                    smallThumbnailUrl);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -196,18 +196,7 @@ namespace PornSearch.Tests.Asserts
                     break;
                 }
                 case PornWebsite.XVideos: {
-                    switch (sexOrientation) {
-                        case PornSexOrientation.Straight:
-                            Assert.Matches("^/tags/[^\\s]+$", tagId);
-                            break;
-                        case PornSexOrientation.Gay:
-                            Assert.Matches("^/tags/t:gay/[^\\s]+$", tagId);
-                            break;
-                        case PornSexOrientation.Trans:
-                            Assert.Matches("^/tags/t:shemale/[^\\s]+$", tagId);
-                            break;
-                        default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
-                    }
+                    Assert.Matches("^/tags/[^\\s]+$", tagId);
                     break;
                 }
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -249,8 +238,16 @@ namespace PornSearch.Tests.Asserts
             Assert.Equal(HttpUtility.HtmlDecode(actorName), actorName);
         }
 
-        private static void Assert_Video_NbViews(int nbViews) {
-            Assert.True(nbViews > 0);
+        private static void Assert_Video_NbViews(int? nbViews, PornWebsite website) {
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.True(nbViews > 0);
+                    break;
+                case PornWebsite.XVideos:
+                    Assert.True(nbViews >= 0);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
         }
 
         private static void Assert_Video_NbLikes(int nbLikes) {
@@ -321,9 +318,11 @@ namespace PornSearch.Tests.Asserts
         }
 
         private static void Assert_Video_Link_NbViews_NbLikes_NbDislikes(int nbViews, int nbLikes, int nbDislikes) {
-            Assert.True(nbViews >= nbLikes);
-            Assert.True(nbViews >= nbDislikes);
-            Assert.True(nbViews >= nbLikes + nbDislikes);
+            if (nbViews > 0) {
+                Assert.True(nbViews >= nbLikes);
+                Assert.True(nbViews >= nbDislikes);
+                Assert.True(nbViews >= nbLikes + nbDislikes);
+            }
         }
 
         [AssertionMethod]
@@ -504,7 +503,7 @@ namespace PornSearch.Tests.Asserts
             Assert.Equal(video1.Website, videoThumb.Website);
             Assert.Equal(video1.SexOrientation, videoThumb.SexOrientation);
             Assert.Equal(video1.Id, videoThumb.Id);
-            Assert.Equal(video1.Title, videoThumb.Title);
+            Assert.Equal(CleanTitle(video1.Title, video1.Website), CleanTitle(videoThumb.Title, videoThumb.Website));
             Assert.Equal(video1.Channel.Id, videoThumb.Channel.Id);
             Assert.Equal(CleanChannelName(video1.Channel.Name, video1.Website),
                          CleanChannelName(videoThumb.Channel.Name, videoThumb.Website));
@@ -631,6 +630,27 @@ namespace PornSearch.Tests.Asserts
             if (website == PornWebsite.Pornhub && sexOrientation == PornSexOrientation.Gay && tagName.StartsWith("Gay "))
                 return tagName.Substring(4);
             return tagName;
+        }
+
+        private static string CleanTitle(string title, PornWebsite website) {
+            if (website == PornWebsite.XVideos) {
+                List<string> terms = new List<string> {
+                    "mom",
+                    "moms",
+                    "cousin",
+                    "father",
+                    "father's",
+                    "grandma",
+                    "sister",
+                    "daddy",
+                    "tears",
+                    "sleepyhead",
+                    "son",
+                    "bros"
+                };
+                return Regex.Replace(title, $"\\b({string.Join("|", terms)})\\b", "", RegexOptions.IgnoreCase).Replace("  ", " ").Trim();
+            }
+            return title;
         }
 
         private static string CleanChannelName(string channelName, PornWebsite website) {
