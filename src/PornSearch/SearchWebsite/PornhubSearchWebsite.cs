@@ -77,6 +77,10 @@ namespace PornSearch
             return content.IndexOf("<div class=\"noResultsWrapper\">", StringComparison.Ordinal) > 0;
         }
 
+        protected override string GetHttpHeaderAcceptLanguage() {
+            return "en";
+        }
+
         protected override List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter) {
             int startIndex = content.IndexOf("<ul id=\"videoSearchResult\"", StringComparison.Ordinal);
             if (startIndex < 0)

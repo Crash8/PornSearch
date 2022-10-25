@@ -59,13 +59,15 @@ namespace PornSearch
 
         protected abstract int? GetPageActiveInContentPagination(string contentPagination);
 
-        protected static async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
+        protected async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
             await WaitIfError429FromUrlAsync(url);
+            string acceptLanguage = GetHttpHeaderAcceptLanguage();
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url)) {
                 request.Headers.Add("User-Agent", "PornSearch/1.0");
                 request.Headers.Add("Referer", url);
                 request.Headers.Add("Cookie", cookie);
-                request.Headers.Add("Accept-Language", "en");
+                if (!string.IsNullOrEmpty(acceptLanguage))
+                    request.Headers.Add("Accept-Language", acceptLanguage);
                 using (HttpResponseMessage response = await HttpClient.SendAsync(request)) {
                     if (response.IsSuccessStatusCode)
                         return await response.Content.ReadAsStringAsync();
@@ -106,6 +108,10 @@ namespace PornSearch
             return match.Groups[1].Value.ToLower();
         }
 
+        protected virtual string GetHttpHeaderAcceptLanguage() {
+            return null;
+        }
+
         protected abstract List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter);
 
         protected static string HtmlDecode(string htmlText) {
@@ -127,11 +133,13 @@ namespace PornSearch
         protected abstract PornVideo ExtractVideo(string content);
 
         protected static int ConvertToInt(string number) {
+            if (string.IsNullOrEmpty(number))
+                return 0;
             if (number.EndsWith("k", StringComparison.OrdinalIgnoreCase))
                 return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000);
             if (number.EndsWith("m", StringComparison.OrdinalIgnoreCase))
                 return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000 * 1000);
-            return Convert.ToInt32(number.Replace(",", ""));
+            return Convert.ToInt32(number.Replace(",", "").Replace(".", "").Replace(" ", ""));
         }
 
         protected static string ToTitleCase(string text) {
