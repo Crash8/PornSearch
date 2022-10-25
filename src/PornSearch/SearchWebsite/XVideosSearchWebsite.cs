@@ -205,13 +205,13 @@ namespace PornSearch
         }
 
         private static void FillVideoFromBelowContent(string content, ref PornVideo video) {
-            const string pattern = "<div id=\"v-views\".*?<strong.*?>([^<]*).*?" + "<span class=\"rating-good-nbr\">([^<]*).*?"
+            const string pattern = "(<div id=\"v-views\".*?<strong.*?>([^<]*).*?)?" + "<span class=\"rating-good-nbr\">([^<]*).*?"
                                                                                  + "<span class=\"rating-bad-nbr\">([^<]*)";
             Match match = Regex.Match(content, pattern);
             if (match.Success) {
-                video.NbViews = ConvertToInt(match.Groups[1].Value);
-                video.NbLikes = ConvertToInt(match.Groups[2].Value);
-                video.NbDislikes = ConvertToInt(match.Groups[3].Value);
+                video.NbViews = ConvertToInt(match.Groups[2].Value);
+                video.NbLikes = ConvertToInt(match.Groups[3].Value);
+                video.NbDislikes = ConvertToInt(match.Groups[4].Value);
             }
         }
 
