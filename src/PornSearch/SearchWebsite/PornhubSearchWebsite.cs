@@ -13,7 +13,7 @@ namespace PornSearch
         private string _cookie;
 
         private const string RegExVideoThumb = "<li.*?class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
-                                               + " title=\"(.*?)\"[\\s\\S]*?data-src = \"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
+                                               + " title=\"(.*?)\"[\\s\\S]*?data-mediumthumb=\"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
                                                + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
 
         public override List<PornSexOrientation> GetSexOrientations() {
@@ -126,7 +126,8 @@ namespace PornSearch
 
         protected override bool IsVideoContentNotFound(string content) {
             return content.IndexOf("<div class=\"geoBlocked\">", StringComparison.Ordinal) > 0
-                   || content.IndexOf("<section class=\"noVideo\">", StringComparison.Ordinal) > 0;
+                   || content.IndexOf("<section class=\"noVideo\">", StringComparison.Ordinal) > 0
+                   || content.IndexOf("<div class=\"removed\">", StringComparison.Ordinal) > 0;
         }
 
         protected override PornVideo ExtractVideo(string content) {
