@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace PornSearch
 {
@@ -123,7 +124,7 @@ namespace PornSearch
             return false;
         }
 
-        protected override PornVideo ExtractVideo(string content) {
+        protected override Task<PornVideo> ExtractVideoAsync(string content) {
             PornVideo video = new PornVideo { Website = PornWebsite.XVideos };
             FillVideoFromHeaderContent(content, ref video);
             FillVideoFromAboveContent(content, ref video);

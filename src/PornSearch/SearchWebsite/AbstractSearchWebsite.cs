@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AngleSharp;
+using AngleSharp.Dom;
 
 namespace PornSearch
 {
@@ -123,14 +125,20 @@ namespace PornSearch
         public async Task<PornVideo> GetVideoByIdAsync(string videoId) {
             string url = MakeUrlVideo(videoId);
             string content = await GetPageContentAsync(url);
-            return content == null || IsVideoContentNotFound(content) ? null : ExtractVideo(content);
+            return content == null || IsVideoContentNotFound(content) ? null : await ExtractVideoAsync(content);
         }
 
         protected abstract string MakeUrlVideo(string videoId);
 
         protected abstract bool IsVideoContentNotFound(string content);
 
-        protected abstract PornVideo ExtractVideo(string content);
+        protected abstract Task<PornVideo> ExtractVideoAsync(string content);
+
+        protected static async Task<IDocument> ConvertToDocumentAsync(string content) {
+            IConfiguration config = Configuration.Default;
+            IBrowsingContext context = BrowsingContext.New(config);
+            return await context.OpenAsync(req => req.Content(content));
+        }
 
         protected static int ConvertToInt(string number) {
             if (string.IsNullOrEmpty(number))
