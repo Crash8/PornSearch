@@ -84,25 +84,27 @@ namespace PornSearch
             return Convert.ToInt32(matchPageActive.Groups[1].Value);
         }
 
-        protected override List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter) {
+        protected override Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter) {
             int startIndex = content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal);
             int endIndex = content.IndexOf("<div id=\"footer", startIndex, StringComparison.Ordinal);
             string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            return Regex.Matches(contentItems, RegExVideoThumb)
-                        .Cast<Match>()
-                        .Select(m => new PornVideoThumb {
-                                    Website = searchFilter.Website,
-                                    SexOrientation = searchFilter.SexOrientation,
-                                    Id = m.Groups[3].Value,
-                                    Title = HtmlDecode(m.Groups[4].Value),
-                                    Channel = new PornIdName {
-                                        Id = m.Groups[5].Value,
-                                        Name = HtmlDecode(m.Groups[6].Value)
-                                    },
-                                    ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1"),
-                                    PageUrl = $"https://www.xvideos.com{m.Groups[2].Value.Replace("/THUMBNUM", "")}"
-                                })
-                        .ToList();
+            List<PornVideoThumb> videoThumbs = Regex.Matches(contentItems, RegExVideoThumb)
+                                                    .Cast<Match>()
+                                                    .Select(m => new PornVideoThumb {
+                                                                Website = searchFilter.Website,
+                                                                SexOrientation = searchFilter.SexOrientation,
+                                                                Id = m.Groups[3].Value,
+                                                                Title = HtmlDecode(m.Groups[4].Value),
+                                                                Channel = new PornIdName {
+                                                                    Id = m.Groups[5].Value,
+                                                                    Name = HtmlDecode(m.Groups[6].Value)
+                                                                },
+                                                                ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1"),
+                                                                PageUrl =
+                                                                    $"https://www.xvideos.com{m.Groups[2].Value.Replace("/THUMBNUM", "")}"
+                                                            })
+                                                    .ToList();
+            return Task.FromResult(videoThumbs);
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {

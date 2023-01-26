@@ -33,7 +33,7 @@ namespace PornSearch
             string content = await GetPageContentAsync(url);
             return content == null || IsContentNotFound(content) || IsBeyondLastPageContent(content, searchFilter)
                 ? new List<PornVideoThumb>()
-                : ExtractVideoThumbs(content, searchFilter);
+                : await ExtractVideoThumbsAsync(content, searchFilter);
         }
 
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
@@ -114,7 +114,7 @@ namespace PornSearch
             return null;
         }
 
-        protected abstract List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter);
+        protected abstract Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter);
 
         protected static string HtmlDecode(string htmlText) {
             return HTML5Decode.Utility.HtmlDecode(htmlText).Replace("\u00A0", " ").Trim();

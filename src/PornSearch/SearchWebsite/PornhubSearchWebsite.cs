@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using Jint;
 
 namespace PornSearch
@@ -11,10 +12,6 @@ namespace PornSearch
     internal class PornhubSearchWebsite : AbstractSearchWebsite
     {
         private string _cookie;
-
-        private const string RegExVideoThumb = "<li.*?class=\"pcVideoListItem[\\s\\S]*?data-video-vkey=\"(.*?)\"[\\s\\S]*?<a href=\"(.*?)\""
-                                               + " title=\"(.*?)\"[\\s\\S]*?data-mediumthumb=\"(.*?)\"[\\s\\S]*?<div class=\"usernameWrap\">"
-                                               + "[\\s\\S]*?<(?:a|span)(?:.*?href=\"(.*?)\")?.*?>(.*?)<";
 
         public override List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
@@ -81,32 +78,22 @@ namespace PornSearch
             return "en";
         }
 
-        protected override List<PornVideoThumb> ExtractVideoThumbs(string content, PornSearchFilter searchFilter) {
-            int startIndex = content.IndexOf("<ul id=\"videoSearchResult\"", StringComparison.Ordinal);
-            if (startIndex < 0)
-                startIndex = content.IndexOf("<ul id=\"videoCategory\"", StringComparison.Ordinal);
-            int otherStartIndex = content.IndexOf("<ul ", startIndex + 4, StringComparison.Ordinal);
-            int endIndex = content.IndexOf("</ul>", startIndex, StringComparison.Ordinal);
-            if (endIndex > otherStartIndex)
-                endIndex = content.IndexOf("</ul>", endIndex + 5, StringComparison.Ordinal);
-            string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            return Regex.Matches(contentItems, RegExVideoThumb)
-                        .Cast<Match>()
-                        // If the search filter is empty, Channel Id may be empty if the video is not available in your country
-                        .Where(m => m.Groups[5].Value != "")
-                        .Select(m => new PornVideoThumb {
-                                    Website = searchFilter.Website,
-                                    SexOrientation = searchFilter.SexOrientation,
-                                    Id = m.Groups[1].Value,
-                                    Title = HtmlDecode(m.Groups[3].Value),
-                                    Channel = new PornIdName {
-                                        Id = m.Groups[5].Value,
-                                        Name = HtmlDecode(m.Groups[6].Value)
-                                    },
-                                    ThumbnailUrl = m.Groups[4].Value,
-                                    PageUrl = $"https://www.pornhub.com{m.Groups[2].Value}"
-                                })
-                        .ToList();
+        protected override async Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter) {
+            IDocument document = await ConvertToDocumentAsync(content);
+            const string selector = "ul#videoSearchResult > li.pcVideoListItem, ul#videoCategory > li.pcVideoListItem";
+            IEnumerable<IHtmlListItemElement> elements = document.QuerySelectorAll<IHtmlListItemElement>(selector);
+            return elements.Select(li => new PornhubVideoThumbParser(li))
+                           .Where(p => p.IsAvailable())
+                           .Select(p => new PornVideoThumb {
+                                       Website = p.Website(),
+                                       SexOrientation = searchFilter.SexOrientation,
+                                       Id = p.Id(),
+                                       Title = p.Title(),
+                                       Channel = p.Channel(),
+                                       ThumbnailUrl = p.ThumbnailUrl(),
+                                       PageUrl = p.PageUrl()
+                                   })
+                           .ToList();
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
