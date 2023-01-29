@@ -6,11 +6,11 @@ namespace PornSearch.Extensions
     internal static class StringExtensions
     {
         public static string ToHtmlDecode(this string text) {
-            return HTML5Decode.Utility.HtmlDecode(text).Replace("\u00A0", " ").Trim();
+            return string.IsNullOrEmpty(text) ? text : HTML5Decode.Utility.HtmlDecode(text).Replace("\u00A0", " ").Trim();
         }
 
         public static string ToTitleCase(this string text) {
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
+            return string.IsNullOrEmpty(text) ? text : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
         }
 
         public static int TransformToInt(this string text) {

@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 
 namespace PornSearch
 {
     internal class XVideosSearchWebsite : AbstractSearchWebsite
     {
-        private const string RegExVideoThumb =
-            "<div.*class=\"thumb-block.*<img.*?data-src=\"(.*?)\".*?<a href=\"(/video([0-9]+).*?)\" title=\"(.*?)\".*"
-            + "<a href=\"/[^/]*(.*?)\">" + "<span.*?>(.*?)<";
-
         public override List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
                 PornSexOrientation.Straight,
@@ -84,27 +82,22 @@ namespace PornSearch
             return Convert.ToInt32(matchPageActive.Groups[1].Value);
         }
 
-        protected override Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter) {
-            int startIndex = content.IndexOf("<div class=\"mozaique", StringComparison.Ordinal);
-            int endIndex = content.IndexOf("<div id=\"footer", startIndex, StringComparison.Ordinal);
-            string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            List<PornVideoThumb> videoThumbs = Regex.Matches(contentItems, RegExVideoThumb)
-                                                    .Cast<Match>()
-                                                    .Select(m => new PornVideoThumb {
-                                                                Website = searchFilter.Website,
-                                                                SexOrientation = searchFilter.SexOrientation,
-                                                                Id = m.Groups[3].Value,
-                                                                Title = HtmlDecode(m.Groups[4].Value),
-                                                                Channel = new PornIdName {
-                                                                    Id = m.Groups[5].Value,
-                                                                    Name = HtmlDecode(m.Groups[6].Value)
-                                                                },
-                                                                ThumbnailUrl = m.Groups[1].Value.Replace("THUMBNUM", "1"),
-                                                                PageUrl =
-                                                                    $"https://www.xvideos.com{m.Groups[2].Value.Replace("/THUMBNUM", "")}"
-                                                            })
-                                                    .ToList();
-            return Task.FromResult(videoThumbs);
+        protected override async Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter) {
+            IDocument document = await ConvertToDocumentAsync(content);
+            const string selector = "div.mozaique > div[data-id]";
+            IEnumerable<IHtmlDivElement> elements = document.QuerySelectorAll<IHtmlDivElement>(selector);
+            return elements.Select(div => new XVideosVideoThumbParser(div))
+                           .Where(p => p.IsAvailable())
+                           .Select(p => new PornVideoThumb {
+                                       Website = p.Website(),
+                                       SexOrientation = searchFilter.SexOrientation,
+                                       Id = p.Id(),
+                                       Title = p.Title(),
+                                       Channel = p.Channel(),
+                                       ThumbnailUrl = p.ThumbnailUrl(),
+                                       PageUrl = p.PageUrl()
+                                   })
+                           .ToList();
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
@@ -126,127 +119,29 @@ namespace PornSearch
             return false;
         }
 
-        protected override Task<PornVideo> ExtractVideoAsync(string content) {
-            PornVideo video = new PornVideo { Website = PornWebsite.XVideos };
-            FillVideoFromHeaderContent(content, ref video);
-            FillVideoFromAboveContent(content, ref video);
-            FillVideo_Actors(content, ref video);
-            FillVideo_Tags(content, ref video);
-            FillVideoFromCenterContent(content, ref video);
-            FillVideoFromBelowContent(content, ref video);
-            FillVideo_RelatedVideos(content, ref video);
+        protected override async Task<PornVideo> ExtractVideoAsync(string content) {
+            IDocument document = await ConvertToDocumentAsync(content);
+            IPornVideoParser videoParser = new XVideosVideoParser(document);
+            PornVideo video = new PornVideo {
+                Website = videoParser.Website(),
+                SexOrientation = videoParser.SexOrientation(),
+                Id = videoParser.Id(),
+                Title = videoParser.Title(),
+                Channel = videoParser.Channel(),
+                ThumbnailUrl = videoParser.ThumbnailUrl(),
+                SmallThumbnailUrl = videoParser.SmallThumbnailUrl(),
+                PageUrl = videoParser.PageUrl(),
+                Duration = videoParser.Duration(),
+                Categories = videoParser.Categories(),
+                Tags = videoParser.Tags(),
+                Actors = videoParser.Actors(),
+                NbViews = videoParser.NbViews(),
+                NbLikes = videoParser.NbLikes(),
+                NbDislikes = videoParser.NbDislikes(),
+                Date = videoParser.Date(),
+                RelatedVideos = videoParser.RelatedVideos()
+            };
             return video;
-        }
-
-        private static void FillVideoFromHeaderContent(string content, ref PornVideo video) {
-            const string pattern = "<meta property=\"og:title\" content=\"([^\"]*)\" />[\\s\\S]*?"
-                                   + "<meta property=\"og:url\" content=\"([^0-9]+([0-9]+)/[^\"]*)\" />[\\s\\S]*?"
-                                   + "<meta property=\"og:duration\" content=\"([^\"]*)\" />[\\s\\S]*?"
-                                   + "<meta property=\"og:image\" content=\"([^\"]*)\" />[\\s\\S]*?"
-                                   + ",\"page_main_cat\":\"([^\"]*)";
-            Match match = Regex.Match(content, pattern);
-            if (match.Success) {
-                Enum.TryParse(match.Groups[6].Value, true, out PornSexOrientation sexOrientation);
-                video.SexOrientation = sexOrientation;
-                video.Id = match.Groups[3].Value;
-                video.Title = HtmlDecode(match.Groups[1].Value);
-                video.SmallThumbnailUrl = match.Groups[5].Value;
-                video.PageUrl = match.Groups[2].Value;
-                video.Duration = TimeSpan.FromSeconds(ConvertToInt(match.Groups[4].Value));
-            }
-        }
-
-        private static void FillVideoFromAboveContent(string content, ref PornVideo video) {
-            const string pattern =
-                "<a href=\"/[^/]*([^\"]*)\" class=\"[^\"]*?label main uploader-tag hover-name\"><span.*?>([^<]*)";
-            Match match = Regex.Match(content, pattern);
-            if (match.Success)
-                video.Channel = new PornIdName {
-                    Id = match.Groups[1].Value,
-                    Name = HtmlDecode(match.Groups[2].Value)
-                };
-        }
-
-        private static void FillVideo_Actors(string content, ref PornVideo video) {
-            int startIndex = content.IndexOf("<div class=\"video-metadata ", StringComparison.Ordinal);
-            if (startIndex < 0) {
-                video.Actors = new List<PornIdName>();
-                return;
-            }
-            int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
-            content = content.Substring(startIndex, endIndex - startIndex);
-            const string pattern = "<a href=\"([^\"]*)\" class=\"[^\"]*profile hover-name.*?\"><span.*?>([^<]*)";
-            MatchCollection matches = Regex.Matches(content, pattern);
-            video.Actors = matches.Cast<Match>()
-                                  .Select(m => new PornIdName {
-                                              Id = m.Groups[1].Value,
-                                              Name = HtmlDecode(m.Groups[2].Value)
-                                          })
-                                  .ToList();
-        }
-
-        private static void FillVideo_Tags(string content, ref PornVideo video) {
-            int startIndex = content.IndexOf("<div class=\"video-metadata ", StringComparison.Ordinal);
-            if (startIndex < 0) {
-                video.Tags = new List<PornIdName>();
-                return;
-            }
-            int endIndex = content.IndexOf("</div>", startIndex, StringComparison.Ordinal);
-            content = content.Substring(startIndex, endIndex - startIndex);
-            MatchCollection matches = Regex.Matches(content, "<a href=\"(/tags/[^\"]*)\".*?>([^<]*)");
-            video.Tags = matches.Cast<Match>()
-                                .Select(m => new PornIdName {
-                                            Id = m.Groups[1].Value,
-                                            Name = HtmlDecode(m.Groups[2].Value)
-                                        })
-                                .ToList();
-        }
-
-        private static void FillVideoFromCenterContent(string content, ref PornVideo video) {
-            const string pattern = "html5player[.]setThumbUrl169[(]'([^']*)";
-            Match match = Regex.Match(content, pattern);
-            if (match.Success)
-                video.ThumbnailUrl = match.Groups[1].Value;
-        }
-
-        private static void FillVideoFromBelowContent(string content, ref PornVideo video) {
-            const string pattern = "(<div id=\"v-views\".*?<strong.*?>([^<]*).*?)?" + "<span class=\"rating-good-nbr\">([^<]*).*?"
-                                                                                 + "<span class=\"rating-bad-nbr\">([^<]*)";
-            Match match = Regex.Match(content, pattern);
-            if (match.Success) {
-                video.NbViews = ConvertToInt(match.Groups[2].Value);
-                video.NbLikes = ConvertToInt(match.Groups[3].Value);
-                video.NbDislikes = ConvertToInt(match.Groups[4].Value);
-            }
-        }
-
-        private static void FillVideo_RelatedVideos(string content, ref PornVideo video) {
-            int startIndex = content.IndexOf("<script>var video_related=", StringComparison.Ordinal);
-            if (startIndex < 0) {
-                video.RelatedVideos = new List<PornVideoThumb>();
-                return;
-            }
-            int endIndex = content.IndexOf("</script>", startIndex, StringComparison.Ordinal);
-            string contentItems = content.Substring(startIndex, endIndex - startIndex);
-            PornWebsite website = video.Website;
-            PornSexOrientation sexOrientation = video.SexOrientation;
-            const string pattern = "{\"id\":([^,]*).*?,\"u\":\"([^\"]*)\".*?,\"i\":\"([^\"]*)\".*?,\"tf\":\"([^\"]*)\".*?"
-                                   + ",\"pn\":\"([^\"]*)\".*?,\"pu\":\"\\\\/[^/]*([^\"]*)";
-            video.RelatedVideos = Regex.Matches(contentItems, pattern)
-                                       .Cast<Match>()
-                                       .Select(m => new PornVideoThumb {
-                                                   Website = website,
-                                                   SexOrientation = sexOrientation,
-                                                   Id = m.Groups[1].Value,
-                                                   Title = HtmlDecode(m.Groups[4].Value),
-                                                   Channel = new PornIdName {
-                                                       Id = m.Groups[6].Value.Replace("\\/", "/"),
-                                                       Name = HtmlDecode(m.Groups[5].Value)
-                                                   },
-                                                   ThumbnailUrl = m.Groups[3].Value.Replace("\\/", "/"),
-                                                   PageUrl = $"https://www.xvideos.com{m.Groups[2].Value.Replace("\\/", "/")}"
-                                               })
-                                       .ToList();
         }
     }
 }

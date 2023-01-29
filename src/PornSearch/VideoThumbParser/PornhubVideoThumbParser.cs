@@ -1,4 +1,3 @@
-using System.Linq;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
