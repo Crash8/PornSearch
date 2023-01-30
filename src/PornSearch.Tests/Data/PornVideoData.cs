@@ -266,6 +266,58 @@ namespace PornSearch.Tests.Data
                     NbDislikes = 708,
                     Date = new DateTime(2019, 7, 27)
                 },
+                // Fix no tags
+                new PornVideo {
+                    Website = PornWebsite.Pornhub,
+                    SexOrientation = PornSexOrientation.Straight,
+                    Id = "ph61d1f5079ab42",
+                    Title = "hard pounding with a view of nice ass",
+                    Channel = new PornIdName {
+                        Id = "/model/stevenlucasxxx",
+                        Name = "stevenlucasxxx"
+                    },
+                    ThumbnailUrl = "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eaAaGwObaaaa)(mh=AZ_I8xVgFxXW6yjl)1.jpg",
+                    SmallThumbnailUrl =
+                        "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42",
+                    Duration = new TimeSpan(0, 0, 52),
+                    Categories = new List<PornIdName> {
+                        new PornIdName {
+                            Id = "/video?c=13",
+                            Name = "Blowjob"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=15",
+                            Name = "Creampie"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=16",
+                            Name = "Cumshot"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=115",
+                            Name = "Exclusive"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=93",
+                            Name = "Feet"
+                        },
+                        new PornIdName {
+                            Id = "/hd",
+                            Name = "HD Porn"
+                        },
+                        new PornIdName {
+                            Id = "/video?c=138",
+                            Name = "Verified Amateurs"
+                        }
+                    },
+                    Tags = new List<PornIdName>(),
+                    Actors = new List<PornIdName>(),
+                    NbViews = 26872,
+                    NbLikes = 5,
+                    NbDislikes = 1,
+                    Date = new DateTime(2022, 1, 2)
+                },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Straight,
@@ -550,71 +602,6 @@ namespace PornSearch.Tests.Data
                     NbLikes = 509,
                     NbDislikes = 162,
                     Date = new DateTime(2019, 8, 1)
-                },
-                // Fix no tags
-                new PornVideo {
-                    Website = PornWebsite.Pornhub,
-                    SexOrientation = PornSexOrientation.Gay,
-                    Id = "ph61d1f5079ab42",
-                    Title = "hard pounding with a view of nice ass",
-                    Channel = new PornIdName {
-                        Id = "/model/stevenlucasxxx",
-                        Name = "stevenlucasxxx"
-                    },
-                    ThumbnailUrl =
-                        "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eaAaGwObaaaa)(mh=AZ_I8xVgFxXW6yjl)1.jpg",
-                    SmallThumbnailUrl =
-                    "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
-                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42",
-                    Duration = new TimeSpan(0, 0, 52),
-                    Categories = new List<PornIdName> {
-                        new PornIdName {
-                            Id = "/gay/video?c=40",
-                            Name = "Bareback"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=56",
-                            Name = "Blowjob"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=71",
-                            Name = "Creampie"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=352",
-                            Name = "Cumshot"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=412",
-                            Name = "Feet"
-                        },
-                        new PornIdName {
-                            Id = "/gayporn",
-                            Name = "Gay"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=107",
-                            Name = "HD Porn"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=322",
-                            Name = "Jock"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=51",
-                            Name = "Muscle"
-                        },
-                        new PornIdName {
-                            Id = "/gay/video?c=731",
-                            Name = "Verified Amateurs"
-                        }
-                    },
-                    Tags = new List<PornIdName>(),
-                    Actors = new List<PornIdName>(),
-                    NbViews = 26800,
-                    NbLikes = 5,
-                    NbDislikes = 1,
-                    Date = new DateTime(2022, 1, 2)
                 },
                 new PornVideo {
                     Website = PornWebsite.Pornhub,
@@ -982,9 +969,9 @@ namespace PornSearch.Tests.Data
                         Name = "Wasler"
                     },
                     ThumbnailUrl =
-                        "https://img-cf.xvideos-cdn.com/videos/thumbs169poster/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
+                        "https://img-cf.xvideos-cdn.com/videos/thumbs169poster/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-2/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
                     SmallThumbnailUrl =
-                        "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
+                        "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-2/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
                     PageUrl = "https://www.xvideos.com/video64398615/e-girl_saborosa_apetitosa_na_manteiga",
                     Duration = new TimeSpan(0, 0, 20),
                     Tags = new List<PornIdName> {
@@ -1200,10 +1187,6 @@ namespace PornSearch.Tests.Data
                         }
                     },
                     Actors = new List<PornIdName> {
-                        new PornIdName {
-                            Id = "/pornstars/raul-costa-1",
-                            Name = "Raul Costa"
-                        },
                         new PornIdName {
                             Id = "/pornstars/josephine-jackson",
                             Name = "Josephine Jackson"

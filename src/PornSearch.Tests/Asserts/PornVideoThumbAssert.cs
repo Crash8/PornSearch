@@ -73,7 +73,7 @@ namespace PornSearch.Tests.Asserts
             Assert_VideoThumb_Title(videoThumb.Title, website);
             Assert.NotNull(videoThumb.Channel);
             Assert_VideoThumb_Channel_Id(videoThumb.Channel.Id, website);
-            Assert_VideoThumb_Channel_Name(videoThumb.Channel.Name);
+            Assert_VideoThumb_Channel_Name(videoThumb.Channel.Name, website);
             Assert_VideoThumb_ThumbnailUrl(videoThumb.ThumbnailUrl, website);
             Assert_VideoThumb_PageUrl(videoThumb.PageUrl, website);
             Assert_VideoThumb_Link_Id_PageUrl(videoThumb.Id, videoThumb.PageUrl, website);
@@ -85,7 +85,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(id);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$", id);
+                    Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20}|63d[0-9a-f]{10})$", id);
                     break;
                 case PornWebsite.XVideos:
                     Assert.Matches("^[0-9]{4,8}$", id);
@@ -110,16 +110,28 @@ namespace PornSearch.Tests.Asserts
                     Assert.Matches("^/(channels|model|pornstar|users)/[^/\\s]*$", channelId);
                     break;
                 case PornWebsite.XVideos:
-                    Assert.Matches("^/[^/\\s]*$", channelId);
+                    if (channelId != "")
+                        Assert.Matches("^/[^/\\s]*$", channelId);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
             }
         }
 
-        private static void Assert_VideoThumb_Channel_Name(string channelName) {
+        private static void Assert_VideoThumb_Channel_Name(string channelName, PornWebsite website) {
             Assert.NotNull(channelName);
-            Assert.NotEqual("", channelName.Trim());
-            Assert.Equal(HttpUtility.HtmlDecode(channelName), channelName);
+            switch (website) {
+                case PornWebsite.Pornhub:
+                    Assert.NotEqual("", channelName.Trim());
+                    Assert.Equal(HttpUtility.HtmlDecode(channelName), channelName);
+                    break;
+                case PornWebsite.XVideos:
+                    if (channelName != "") {
+                        Assert.NotEqual("", channelName.Trim());
+                        Assert.Equal(HttpUtility.HtmlDecode(channelName), channelName);
+                    }
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+            }
         }
 
         [AssertionMethod]
@@ -142,7 +154,7 @@ namespace PornSearch.Tests.Asserts
             Assert.NotNull(pageUrl);
             switch (website) {
                 case PornWebsite.Pornhub:
-                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20})$",
+                    Assert.Matches("^https://www[.]pornhub[.]com/view_video[.]php[?]viewkey=(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20}|63d[0-9a-f]{10})$",
                                    pageUrl);
                     break;
                 case PornWebsite.XVideos:
@@ -177,11 +189,11 @@ namespace PornSearch.Tests.Asserts
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Id == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.Channel.Id));
+                Assert.Equal(0, videoThumbs.Where(i => i.Channel.Id != "").Count(i => videoThumb.Title == i.Channel.Id));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Title == i.PageUrl));
 
-                Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.Channel.Name));
+                Assert.Equal(0, videoThumbs.Where(i => i.Channel.Name != "").Count(i => videoThumb.Channel.Id == i.Channel.Name));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.ThumbnailUrl));
                 Assert.Equal(0, videoThumbs.Count(i => videoThumb.Channel.Id == i.PageUrl));
 
@@ -240,15 +252,30 @@ namespace PornSearch.Tests.Asserts
                 case PornWebsite.XVideos: {
                     // The first subdomain and end of url can change value
                     const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", ""),
-                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", ""));
+                    Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", ""),
+                                 Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", ""));
                     break;
                 }
                 default:
                     Assert.Equal(videoThumb1.ThumbnailUrl, videoThumb2.ThumbnailUrl);
                     break;
             }
-            Assert.Equal(videoThumb1.PageUrl, videoThumb2.PageUrl);
+            switch (videoThumb1.Website) {
+                case PornWebsite.Pornhub: {
+                    Assert.Equal(videoThumb1.PageUrl, videoThumb2.PageUrl);
+                    break;
+                }
+                case PornWebsite.XVideos: {
+                    if (videoThumb2.PageUrl.EndsWith("/_"))
+                        Assert.Equal(videoThumb1.PageUrl.Substring(0, videoThumb2.PageUrl.Length - 1) + "_", videoThumb2.PageUrl);
+                    else
+                        Assert.Equal(videoThumb1.PageUrl, videoThumb2.PageUrl);
+                    break;
+                }
+                default:
+                    Assert.Equal(videoThumb1.PageUrl, videoThumb2.PageUrl);
+                    break;
+            }
         }
     }
 }

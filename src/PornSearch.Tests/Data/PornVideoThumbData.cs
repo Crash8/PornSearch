@@ -59,6 +59,18 @@ namespace PornSearch.Tests.Data
                 new PornVideoThumb {
                     Website = PornWebsite.Pornhub,
                     SexOrientation = PornSexOrientation.Straight,
+                    Id = "ph61d1f5079ab42",
+                    Title = "hard pounding with a view of nice ass",
+                    Channel = new PornIdName {
+                        Id = "/model/stevenlucasxxx",
+                        Name = "stevenlucasxxx"
+                    },
+                    ThumbnailUrl = "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
+                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42"
+                },
+                new PornVideoThumb {
+                    Website = PornWebsite.Pornhub,
+                    SexOrientation = PornSexOrientation.Straight,
                     Id = "ph5a2f7e4f9c48a",
                     Title = "PropertySex - Hot property manager fucks pissed off tenant",
                     Channel = new PornIdName {
@@ -88,19 +100,6 @@ namespace PornSearch.Tests.Data
                     ThumbnailUrl =
                         "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d432ce7a448c"
-                },
-                new PornVideoThumb {
-                    Website = PornWebsite.Pornhub,
-                    SexOrientation = PornSexOrientation.Gay,
-                    Id = "ph61d1f5079ab42",
-                    Title = "hard pounding with a view of nice ass",
-                    Channel = new PornIdName {
-                        Id = "/model/stevenlucasxxx",
-                        Name = "stevenlucasxxx"
-                    },
-                    ThumbnailUrl =
-                    "https://di.phncdn.com/videos/202201/02/400626481/original/(m=eafTGgaaaa)(mh=9j4PqjygN1L2pill)1.jpg",
-                    PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42"
                 },
                 new PornVideoThumb {
                     Website = PornWebsite.Pornhub,

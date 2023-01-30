@@ -152,9 +152,9 @@ public partial class PornSearch_Search_Tests
                                          && sexOrientation == PornSexOrientation.Straight;
 
                 if (isSameSexOrientation || otherwiseStraight) {
-                    Assert.True(videoThumbs.Count >= nbVideoMax[0]);
-                    Assert.True(videoThumbs.Count <= nbVideoMax[1]);
-                    Assert.True(nbVideoActor >= videoThumbs.Count / 2);
+                    Assert.True(videoThumbs.Count >= nbVideoMax[0], $"{videoThumbs.Count} >= {nbVideoMax[0]}");
+                    Assert.True(videoThumbs.Count <= nbVideoMax[1], $"{videoThumbs.Count} >= {nbVideoMax[0]}");
+                    Assert.True(nbVideoActor >= videoThumbs.Count / 2, $"{nbVideoActor} >= {videoThumbs.Count / 2}");
                 }
                 else {
                     if (videoThumbs.Count > nbVideoMax[1] / 3)

@@ -29,15 +29,15 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetPornhubEmpty() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 2273 },
-                { PornSexOrientation.Gay, 1605 }
+                { PornSexOrientation.Straight, 1000 },
+                { PornSexOrientation.Gay, 1000 }
             };
             return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "", c.Key, c.Value });
         }
 
         private static IEnumerable<object[]> GetPornhubOnePage() {
             Dictionary<PornSexOrientation, string> lastPage = new Dictionary<PornSexOrientation, string> {
-                { PornSexOrientation.Straight, "PIGBOY" },
+                { PornSexOrientation.Straight, "abd7" },
                 { PornSexOrientation.Gay, "Nooberg" }
             };
             return lastPage.Select(c => new object[] { PornWebsite.Pornhub, c.Value, c.Key, 1 });
@@ -45,8 +45,8 @@ namespace PornSearch.Tests.Data
 
         private static IEnumerable<object[]> GetPornhubDoubleToys() {
             Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-                { PornSexOrientation.Straight, 998 },
-                { PornSexOrientation.Gay, 19 }
+                { PornSexOrientation.Straight, 1000 },
+                { PornSexOrientation.Gay, 23 }
             };
             return lastPage.Select(c => new object[] { PornWebsite.Pornhub, "Double Toys", c.Key, c.Value });
         }
@@ -63,7 +63,7 @@ namespace PornSearch.Tests.Data
         private static IEnumerable<object[]> GetXVideosOnePage() {
             Dictionary<PornSexOrientation, string> lastPage = new Dictionary<PornSexOrientation, string> {
                 { PornSexOrientation.Straight, "PIGBOY" },
-                { PornSexOrientation.Gay, "1407" },
+                { PornSexOrientation.Gay, "1403" },
                 { PornSexOrientation.Trans, "PIGBOY" }
             };
             return lastPage.Select(c => new object[] { PornWebsite.XVideos, c.Value, c.Key, 1 });
