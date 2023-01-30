@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -31,9 +31,22 @@ namespace PornSearch
                 return null;
             string url = MakeUrl(searchFilter);
             string content = await GetPageContentAsync(url);
-            return content == null || IsContentNotFound(content) || IsBeyondLastPageContent(content, searchFilter)
+            IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
+            IPornSearchParser searchParser = document != null ? GetSearchParser(document) : null;
+            return searchParser == null || !searchParser.IsAvailableContent() || IsBeyondLastPageContent(searchParser, searchFilter)
                 ? new List<PornVideoThumb>()
-                : await ExtractVideoThumbsAsync(content, searchFilter);
+                : searchParser.GetVideoThumbs()
+                              .Where(p => p.IsAvailable())
+                              .Select(p => new PornVideoThumb {
+                                          Website = p.Website(),
+                                          SexOrientation = searchFilter.SexOrientation,
+                                          Id = p.Id(),
+                                          Title = p.Title(),
+                                          Channel = p.Channel(),
+                                          ThumbnailUrl = p.ThumbnailUrl(),
+                                          PageUrl = p.PageUrl()
+                                      })
+                              .ToList();
         }
 
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
@@ -42,24 +55,17 @@ namespace PornSearch
             return await GetHtmlContentWithCookieAsync(url, null);
         }
 
-        protected abstract bool IsContentNotFound(string content);
+        protected abstract IPornSearchParser GetSearchParser(IDocument document);
 
-        private bool IsBeyondLastPageContent(string content, PornSearchFilter searchFilter) {
-            string contentPagination = GetContentPaginationInContent(content);
-            if (!string.IsNullOrWhiteSpace(contentPagination)) {
-                if (IsNextButtonInContentPagination(contentPagination))
+        private static bool IsBeyondLastPageContent(IPornSearchParser searchParser, PornSearchFilter searchFilter) {
+            if (searchParser.IsAvailablePagination()) {
+                if (searchParser.IsAvailableNextButton())
                     return false;
-                int? pageActive = GetPageActiveInContentPagination(contentPagination);
+                int? pageActive = searchParser.GetCurrentPageNumber();
                 return pageActive == null || searchFilter.Page > pageActive.Value;
             }
             return searchFilter.Page > 1;
         }
-
-        protected abstract string GetContentPaginationInContent(string content);
-
-        protected abstract bool IsNextButtonInContentPagination(string contentPagination);
-
-        protected abstract int? GetPageActiveInContentPagination(string contentPagination);
 
         protected async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
             await WaitIfError429FromUrlAsync(url);
@@ -114,44 +120,45 @@ namespace PornSearch
             return null;
         }
 
-        protected abstract Task<List<PornVideoThumb>> ExtractVideoThumbsAsync(string content, PornSearchFilter searchFilter);
-
-        protected static string HtmlDecode(string htmlText) {
-            return HTML5Decode.Utility.HtmlDecode(htmlText).Replace("\u00A0", " ").Trim();
-        }
-
         public abstract PornSourceVideo GetSourceVideo(string url);
 
         public async Task<PornVideo> GetVideoByIdAsync(string videoId) {
             string url = MakeUrlVideo(videoId);
             string content = await GetPageContentAsync(url);
-            return content == null || IsVideoContentNotFound(content) ? null : await ExtractVideoAsync(content);
+            IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
+            IPornVideoParser videoParser = document != null ? GetVideoParser(document) : null;
+            PornVideo video = !videoParser?.IsAvailable() ?? true
+                ? null
+                : new PornVideo {
+                    Website = videoParser.Website(),
+                    SexOrientation = videoParser.SexOrientation(),
+                    Id = videoParser.Id(),
+                    Title = videoParser.Title(),
+                    Channel = videoParser.Channel(),
+                    ThumbnailUrl = videoParser.ThumbnailUrl(),
+                    SmallThumbnailUrl = videoParser.SmallThumbnailUrl(),
+                    PageUrl = videoParser.PageUrl(),
+                    Duration = videoParser.Duration(),
+                    Categories = videoParser.Categories(),
+                    Tags = videoParser.Tags(),
+                    Actors = videoParser.Actors(),
+                    NbViews = videoParser.NbViews(),
+                    NbLikes = videoParser.NbLikes(),
+                    NbDislikes = videoParser.NbDislikes(),
+                    Date = videoParser.Date(),
+                    RelatedVideos = videoParser.RelatedVideos()
+                };
+            return video;
         }
 
-        protected abstract string MakeUrlVideo(string videoId);
-
-        protected abstract bool IsVideoContentNotFound(string content);
-
-        protected abstract Task<PornVideo> ExtractVideoAsync(string content);
-
-        protected static async Task<IDocument> ConvertToDocumentAsync(string content) {
+        private static async Task<IDocument> ConvertToDocumentAsync(string content) {
             IConfiguration config = Configuration.Default;
             IBrowsingContext context = BrowsingContext.New(config);
             return await context.OpenAsync(req => req.Content(content));
         }
 
-        protected static int ConvertToInt(string number) {
-            if (string.IsNullOrEmpty(number))
-                return 0;
-            if (number.EndsWith("k", StringComparison.OrdinalIgnoreCase))
-                return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000);
-            if (number.EndsWith("m", StringComparison.OrdinalIgnoreCase))
-                return (int)(Convert.ToSingle(number.Substring(0, number.Length - 1)) * 1000 * 1000);
-            return Convert.ToInt32(number.Replace(",", "").Replace(".", "").Replace(" ", ""));
-        }
+        protected abstract IPornVideoParser GetVideoParser(IDocument document);
 
-        protected static string ToTitleCase(string text) {
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
-        }
+        protected abstract string MakeUrlVideo(string videoId);
     }
 }

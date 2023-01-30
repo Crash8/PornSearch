@@ -5,6 +5,7 @@ namespace PornSearch
 {
     internal interface IPornVideoParser
     {
+        bool IsAvailable();
         PornWebsite Website();
         PornSexOrientation SexOrientation();
         string Id();

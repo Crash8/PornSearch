@@ -17,6 +17,10 @@ namespace PornSearch
             _document = document;
         }
 
+        public bool IsAvailable() {
+            return true;
+        }
+
         public PornWebsite Website() {
             return PornWebsite.XVideos;
         }
@@ -166,25 +170,7 @@ internal class XVideosJsonRelatedVideos
     public int id { get; set; }
     public string u { get; set; }
     public string i { get; set; }
-    public int c { get; set; }
     public string tf { get; set; }
-    public string t { get; set; }
-    public string d { get; set; }
-    public string r { get; set; }
-    public string n { get; set; }
-    public int v { get; set; }
-    public int vim { get; set; }
-    public int hm { get; set; }
-    public int h { get; set; }
-    public int hp { get; set; }
-    public int td { get; set; }
-    public int fk { get; set; }
-    public int ve { get; set; }
-    public int ui { get; set; }
-    public string p { get; set; }
     public string pn { get; set; }
     public string pu { get; set; }
-    public bool ch { get; set; }
-    public bool pm { get; set; }
-    public bool ut { get; set; }
 }

@@ -17,6 +17,13 @@ namespace PornSearch
             _document = document;
         }
 
+        public bool IsAvailable() {
+            IElement geoBlocked = _document.QuerySelector("div.geoBlocked");
+            IElement noVideo = _document.QuerySelector("section.noVideo");
+            IElement removed = _document.QuerySelector("div.removed");
+            return geoBlocked == null && noVideo == null && removed == null;
+        }
+
         public PornWebsite Website() {
             return PornWebsite.Pornhub;
         }
