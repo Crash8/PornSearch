@@ -276,20 +276,10 @@ namespace PornSearch.Tests.Asserts
             Assert.True(nbDislikes >= 0);
         }
 
-        private static void Assert_Video_Date(DateTime? date, PornWebsite website) {
-            switch (website) {
-                case PornWebsite.Pornhub:
-                    Assert.NotNull(date);
-                    break;
-                case PornWebsite.XVideos:
-                    Assert.Null(date);
-                    break;
-                default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
-            }
-            if (date != null) {
-                Assert.True(date < DateTime.Now);
-                Assert.True(date > new DateTime(2000, 1, 1));
-            }
+        private static void Assert_Video_Date(DateTime? date) {
+            Assert.NotNull(date);
+            Assert.True(date < DateTime.Now);
+            Assert.True(date > new DateTime(2000, 1, 1));
         }
 
         private static void Assert_Video_RelatedVideos(List<PornVideoThumb> relatedVideos, PornWebsite website,

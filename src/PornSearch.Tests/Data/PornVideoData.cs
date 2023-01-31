@@ -905,7 +905,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 267041,
                     NbLikes = 528,
-                    NbDislikes = 27
+                    NbDislikes = 27,
+                    Date = new DateTime(2018, 9, 21)
                 },
                 // Fix the value "\u00A0" in the title
                 new PornVideo {
@@ -956,7 +957,8 @@ namespace PornSearch.Tests.Data
                     Actors = new List<PornIdName>(),
                     NbViews = 42507,
                     NbLikes = 67,
-                    NbDislikes = 50
+                    NbDislikes = 50,
+                    Date = new DateTime(2021, 7, 10)
                 },
                 // Fix no NbViews
                 new PornVideo {
@@ -1007,7 +1009,8 @@ namespace PornSearch.Tests.Data
                     Actors = new List<PornIdName>(),
                     NbViews = 0,
                     NbLikes = 157,
-                    NbDislikes = 39
+                    NbDislikes = 39,
+                    Date = new DateTime(2021, 7, 30)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1094,7 +1097,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 717980,
                     NbLikes = 922,
-                    NbDislikes = 363
+                    NbDislikes = 363,
+                    Date = new DateTime(2017, 2, 1)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1194,7 +1198,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 1407786,
                     NbLikes = 3800,
-                    NbDislikes = 2000
+                    NbDislikes = 2000,
+                    Date = new DateTime(2021, 7, 6)
                 }
             };
             return videos.Select(i => new object[] { i });
@@ -1300,7 +1305,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 105551,
                     NbLikes = 320,
-                    NbDislikes = 132
+                    NbDislikes = 132,
+                    Date = new DateTime(2021, 6, 16)
                 },
                 // Fix the value "\u00A0" in the title
                 new PornVideo {
@@ -1367,7 +1373,8 @@ namespace PornSearch.Tests.Data
                     Actors = new List<PornIdName>(),
                     NbViews = 6675,
                     NbLikes = 1,
-                    NbDislikes = 0
+                    NbDislikes = 0,
+                    Date = new DateTime(2014, 4, 30)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1461,7 +1468,8 @@ namespace PornSearch.Tests.Data
                     Actors = new List<PornIdName>(),
                     NbViews = 73931,
                     NbLikes = 142,
-                    NbDislikes = 38
+                    NbDislikes = 38,
+                    Date = new DateTime(2020, 12, 14)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1540,7 +1548,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 859997,
                     NbLikes = 1300,
-                    NbDislikes = 337
+                    NbDislikes = 337,
+                    Date = new DateTime(2014, 10, 21)
                 }
             };
             return videos.Select(i => new object[] { i });
@@ -1618,7 +1627,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 349157,
                     NbLikes = 359,
-                    NbDislikes = 93
+                    NbDislikes = 93,
+                    Date = new DateTime(2016, 2, 24)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1705,7 +1715,8 @@ namespace PornSearch.Tests.Data
                     },
                     NbViews = 320062,
                     NbLikes = 1300,
-                    NbDislikes = 250
+                    NbDislikes = 250,
+                    Date = new DateTime(2021, 7, 5)
                 },
                 new PornVideo {
                     Website = PornWebsite.XVideos,
@@ -1776,7 +1787,8 @@ namespace PornSearch.Tests.Data
                     Actors = new List<PornIdName>(),
                     NbViews = 281052,
                     NbLikes = 768,
-                    NbDislikes = 315
+                    NbDislikes = 315,
+                    Date = new DateTime(2021, 7, 18)
                 }
             };
             return videos.Select(i => new object[] { i });

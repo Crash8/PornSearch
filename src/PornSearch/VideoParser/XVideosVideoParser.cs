@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
@@ -137,7 +138,12 @@ namespace PornSearch
         }
 
         public DateTime? Date() {
-            return null;
+            const string searchTerm = "\"uploadDate\":";
+            const string pattern = "\"uploadDate\": \"([^T]*)";
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", pattern);
+            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyy-MM-dd", CultureInfo.InvariantCulture) : (DateTime?)null;
         }
 
         public List<PornVideoThumb> RelatedVideos() {
