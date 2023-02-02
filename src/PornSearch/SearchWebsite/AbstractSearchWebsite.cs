@@ -138,6 +138,7 @@ namespace PornSearch
                     ThumbnailUrl = videoParser.ThumbnailUrl(),
                     SmallThumbnailUrl = videoParser.SmallThumbnailUrl(),
                     PageUrl = videoParser.PageUrl(),
+                    VideoEmbedUrl = videoParser.VideoEmbedUrl(),
                     Duration = videoParser.Duration(),
                     Categories = videoParser.Categories(),
                     Tags = videoParser.Tags(),

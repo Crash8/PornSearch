@@ -77,6 +77,11 @@ namespace PornSearch
             return element?.Content;
         }
 
+        public string VideoEmbedUrl() {
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:video:url']");
+            return element?.Content;
+        }
+
         public TimeSpan Duration() {
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='video:duration']");
             string duration = element?.Content;

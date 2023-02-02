@@ -49,6 +49,7 @@ namespace PornSearch
             return element?.Content?.ToHtmlDecode();
         }
 
+        // unreliable data
         public PornIdName Channel() {
             IHtmlAnchorElement element = _document.QuerySelector<IHtmlAnchorElement>("li.main-uploader > a");
             string url = element?.GetAttribute("href") ?? "/";
@@ -76,6 +77,12 @@ namespace PornSearch
         public string PageUrl() {
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:url']");
             return element?.Content;
+        }
+
+        public string VideoEmbedUrl() {
+            IHtmlInputElement element = _document.QuerySelector<IHtmlInputElement>("input#copy-video-embed");
+            Match match = Regex.Match(element?.Value ?? "", " src=\"([^\"]*)");
+            return match.Success ? match.Groups[1].Value : null;
         }
 
         public TimeSpan Duration() {
@@ -137,6 +144,7 @@ namespace PornSearch
             return element?.Text().TransformToInt() ?? 0;
         }
 
+        // unreliable data
         public DateTime? Date() {
             const string searchTerm = "\"uploadDate\":";
             const string pattern = "\"uploadDate\": \"([^T]*)";
@@ -151,9 +159,9 @@ namespace PornSearch
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div > script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.StartsWith(searchTerm));
             string text = element?.TextContent.Substring(searchTerm.Length) ?? "[]";
-            int endIndex = text.LastIndexOf("}];", StringComparison.Ordinal);
+            int endIndex = text.LastIndexOf("];", StringComparison.Ordinal);
             if (endIndex > 0)
-                text = text.Substring(0, endIndex + 2);
+                text = text.Substring(0, endIndex + 1);
             return JsonConvert.DeserializeObject<List<XVideosJsonRelatedVideos>>(text)
                               .Select(r => new XVideosVideoThumbParser(r))
                               .Where(p => p.IsAvailable())

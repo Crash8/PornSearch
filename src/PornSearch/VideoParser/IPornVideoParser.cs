@@ -14,6 +14,7 @@ namespace PornSearch
         string ThumbnailUrl();
         string SmallThumbnailUrl();
         string PageUrl();
+        string VideoEmbedUrl();
         TimeSpan Duration();
         List<PornIdName> Categories();
         List<PornIdName> Tags();
