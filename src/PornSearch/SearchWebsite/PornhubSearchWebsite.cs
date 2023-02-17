@@ -59,6 +59,11 @@ namespace PornSearch
             return "en";
         }
 
+        protected override string GetHttpHeaderUserAgent() {
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) "
+                   + "Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.70";
+        }
+
         public override PornSourceVideo GetSourceVideo(string url) {
             const string pattern = "^https://[a-z]{2,3}[.]pornhub[.]com/view_video[.]php[?]viewkey=([^\\s]+)$";
             Match match = Regex.Match(url, pattern);

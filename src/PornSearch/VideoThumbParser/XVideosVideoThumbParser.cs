@@ -26,6 +26,10 @@ namespace PornSearch
             return PornWebsite.XVideos;
         }
 
+        public bool? IsFreePremium() {
+            return null;
+        }
+
         public string Id() {
             return _jsonRoot != null ? _jsonRoot.id.ToString() : _divRoot.Dataset["id"];
         }

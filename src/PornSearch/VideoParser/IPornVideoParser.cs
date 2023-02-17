@@ -8,6 +8,7 @@ namespace PornSearch
         bool IsAvailable();
         PornWebsite Website();
         PornSexOrientation SexOrientation();
+        bool? IsFreePremium();
         string Id();
         string Title();
         PornIdName Channel();

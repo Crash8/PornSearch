@@ -40,6 +40,7 @@ namespace PornSearch
                               .Select(p => new PornVideoThumb {
                                           Website = p.Website(),
                                           SexOrientation = searchFilter.SexOrientation,
+                                          IsFreePremium = p.IsFreePremium(),
                                           Id = p.Id(),
                                           Title = p.Title(),
                                           Channel = p.Channel(),
@@ -71,7 +72,7 @@ namespace PornSearch
             await WaitIfError429FromUrlAsync(url);
             string acceptLanguage = GetHttpHeaderAcceptLanguage();
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url)) {
-                request.Headers.Add("User-Agent", "PornSearch/1.0");
+                request.Headers.Add("User-Agent", GetHttpHeaderUserAgent());
                 request.Headers.Add("Referer", url);
                 request.Headers.Add("Cookie", cookie);
                 if (!string.IsNullOrEmpty(acceptLanguage))
@@ -120,6 +121,10 @@ namespace PornSearch
             return null;
         }
 
+        protected virtual string GetHttpHeaderUserAgent() {
+            return "PornSearch/1.0";
+        }
+
         public abstract PornSourceVideo GetSourceVideo(string url);
 
         public async Task<PornVideo> GetVideoByIdAsync(string videoId) {
@@ -132,6 +137,7 @@ namespace PornSearch
                 : new PornVideo {
                     Website = videoParser.Website(),
                     SexOrientation = videoParser.SexOrientation(),
+                    IsFreePremium = videoParser.IsFreePremium(),
                     Id = videoParser.Id(),
                     Title = videoParser.Title(),
                     Channel = videoParser.Channel(),

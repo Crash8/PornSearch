@@ -37,6 +37,10 @@ namespace PornSearch
             return (PornSexOrientation)Enum.Parse(typeof(PornSexOrientation), sexOrientation, true);
         }
 
+        public bool? IsFreePremium() {
+            return null;
+        }
+
         public string Id() {
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:url']");
             string url = element?.Content ?? "";
