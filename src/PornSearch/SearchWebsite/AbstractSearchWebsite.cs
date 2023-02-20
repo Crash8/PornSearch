@@ -80,7 +80,7 @@ namespace PornSearch
                 using (HttpResponseMessage response = await HttpClient.SendAsync(request)) {
                     if (response.IsSuccessStatusCode)
                         return await response.Content.ReadAsStringAsync();
-                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
                         return null;
                     if ((int)response.StatusCode == 429) {
                         await WaitDelayFromUrlAsync(url, 30000);
