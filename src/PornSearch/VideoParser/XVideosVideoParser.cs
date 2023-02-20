@@ -119,23 +119,9 @@ namespace PornSearch
                            .ToList();
         }
 
-        // unreliable data
         public int NbViews() {
-            int nbViews;
             IElement element = _document.QuerySelector("div#v-views > strong.mobile-hide");
-            if (element != null) {
-                nbViews = element.Text().TransformToInt();
-            }
-            else {
-                const string searchTerm = "userInteractionCount";
-                const string pattern = "\"userInteractionCount\": ([^\\n]*)";
-                IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
-                element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
-                Match match = Regex.Match(element?.TextContent ?? "", pattern);
-                string userInteractionCount = match.Success ? match.Groups[1].Value : null;
-                nbViews = (userInteractionCount?.TransformToInt() ?? 0) + NbLikes() + NbDislikes();
-            }
-            return nbViews;
+            return element?.Text().TransformToInt() ?? 0;
         }
 
         public int NbLikes() {
