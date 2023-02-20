@@ -53,7 +53,6 @@ namespace PornSearch
             return element?.Content?.ToHtmlDecode();
         }
 
-        // unreliable data
         public PornIdName Channel() {
             IHtmlAnchorElement element = _document.QuerySelector<IHtmlAnchorElement>("li.main-uploader > a");
             string url = element?.GetAttribute("href") ?? "/";
@@ -100,7 +99,8 @@ namespace PornSearch
         }
 
         public List<PornIdName> Tags() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.video-metadata li > a[href^='/tags/']");
+            const string selector = "div.video-metadata li > a[href^='/tags/'], div.video-metadata li > a[href^='/verified/videos']";
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll(selector);
             return elements.OfType<IHtmlAnchorElement>()
                            .Select(anchor => new PornIdName {
                                        Id = anchor.GetAttribute("href"),
@@ -149,13 +149,16 @@ namespace PornSearch
         }
 
         // unreliable data
-        public DateTime? Date() {
+        public DateTime Date() {
             const string searchTerm = "\"uploadDate\":";
             const string pattern = "\"uploadDate\": \"([^T]*)";
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
             Match match = Regex.Match(element?.TextContent ?? "", pattern);
-            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyy-MM-dd", CultureInfo.InvariantCulture) : (DateTime?)null;
+            DateTime date = DateTime.MinValue;
+            if (match.Success)
+                date = DateTime.ParseExact(match.Groups[1].Value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return date;
         }
 
         public List<PornVideoThumb> RelatedVideos() {

@@ -141,11 +141,11 @@ namespace PornSearch
             return element?.Dataset["rating"].TransformToInt() ?? 0;
         }
 
-        public DateTime? Date() {
+        public DateTime Date() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("'dimension14'", StringComparison.Ordinal) > 0);
             Match match = Regex.Match(element?.TextContent ?? "", "'dimension14', '([^']*)");
-            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture) : (DateTime?)null;
+            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture) : DateTime.MinValue;
         }
 
         public List<PornVideoThumb> RelatedVideos() {

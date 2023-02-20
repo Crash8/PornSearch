@@ -23,7 +23,7 @@ namespace PornSearch
         int NbViews();
         int NbLikes();
         int NbDislikes();
-        DateTime? Date();
+        DateTime Date();
         List<PornVideoThumb> RelatedVideos();
     }
 }
