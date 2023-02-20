@@ -146,7 +146,7 @@ public partial class PornSearch_Search_Tests
 
                 int nbVideoActor = videoThumbs.Count(i => i.Title.Contains(channel, StringComparison.OrdinalIgnoreCase)
                                                           || i.Channel.Name == channel);
-                int[] nbVideoMax = PornVideoThumbAssert.GetNbVideoMaxByPage(website, channel, page, PageSearch.Channel);
+                int[] nbVideoMax = PornVideoThumbAssert.GetNbVideoMaxByPage(website, channel, page, sexOrientation, PageSearch.Channel);
                 bool isSameSexOrientation = channelSexOrientation == sexOrientation;
                 bool otherwiseStraight = !source.SexOrientations.Contains(channelSexOrientation)
                                          && sexOrientation == PornSexOrientation.Straight;

@@ -38,8 +38,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/miss-daisy-diamond",
                         Name = "Miss Daisy Diamond"
                     },
-                    ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/202011/27/374175402/original/(m=eafTGgaaaa)(mh=AaHrhQhPfrLPy5_3)14.jpg",
+                    ThumbnailUrl = "https://ci.phncdn.com/videos/202011/27/374175402/original/(m=eafTGgaaaa)(mh=AaHrhQhPfrLPy5_3)14.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5fc04dbacd1e6"
                 },
                 // Fix the value "\u00A0" in the title
@@ -52,8 +51,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/purple-bitch",
                         Name = "Purple Bitch"
                     },
-                    ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/201907/27/237967581/original/(m=eafTGgaaaa)(mh=wsgEJN05BpMhMC7D)14.jpg",
+                    ThumbnailUrl = "https://ci.phncdn.com/videos/201907/27/237967581/original/(m=eafTGgaaaa)(mh=wsgEJN05BpMhMC7D)14.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0"
                 },
                 new PornVideoThumb {
@@ -77,8 +75,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/property-sex",
                         Name = "Property Sex"
                     },
-                    ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/201712/12/145091652/original/(m=eafTGgaaaa)(mh=dKfuDl_TV80fS7Wi)3.jpg",
+                    ThumbnailUrl = "https://ei.phncdn.com/videos/201712/12/145091652/original/(m=eafTGgaaaa)(mh=dKfuDl_TV80fS7Wi)3.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5a2f7e4f9c48a"
                 }
             };
@@ -97,8 +94,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/gay-wire",
                         Name = "Gay Wire"
                     },
-                    ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg",
+                    ThumbnailUrl = "https://ei.phncdn.com/videos/201908/01/239007621/original/(m=eafTGgaaaa)(mh=WYH3Zbs0FETrZK0h)10.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph5d432ce7a448c"
                 },
                 new PornVideoThumb {
@@ -110,8 +106,7 @@ namespace PornSearch.Tests.Data
                         Id = "/channels/lucasentertainment",
                         Name = "Lucas Entertainment"
                     },
-                    ThumbnailUrl =
-                        "https://ci.phncdn.com/videos/202105/19/388272921/original/(m=eafTGgaaaa)(mh=fVKLwQqYceEaETFL)11.jpg",
+                    ThumbnailUrl = "https://ci.phncdn.com/videos/202105/19/388272921/original/(m=eafTGgaaaa)(mh=fVKLwQqYceEaETFL)11.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph60a518bb2da8a"
                 },
                 new PornVideoThumb {
@@ -123,8 +118,7 @@ namespace PornSearch.Tests.Data
                         Id = "/model/hornyjohny66",
                         Name = "hornyjohny66"
                     },
-                    ThumbnailUrl =
-                        "https://ei.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eafTGgaaaa)(mh=zrFKt_bp3k54N8-K)16.jpg",
+                    ThumbnailUrl = "https://ei.phncdn.com/videos/202108/07/392562291/thumbs_5/(m=eafTGgaaaa)(mh=zrFKt_bp3k54N8-K)16.jpg",
                     PageUrl = "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91"
                 }
             };
@@ -176,6 +170,20 @@ namespace PornSearch.Tests.Data
                         "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
                     PageUrl = "https://www.xvideos.com/video64398615/e-girl_saborosa_apetitosa_na_manteiga"
                 },
+                // Fix verified profile tag
+                new() {
+                    Website = PornWebsite.XVideos,
+                    SexOrientation = PornSexOrientation.Straight,
+                    Id = "51984073",
+                    Title = "Hot Blonde and a Lucky *** My Free ChatRoom www.siswetlive.com/siswet19",
+                    Channel = new PornIdName {
+                        Id = "/siswet",
+                        Name = "Siswet Official"
+                    },
+                    ThumbnailUrl =
+                        "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/8d/60/f4/8d60f41d9d89d9d7f3777bd0c8c1d37e/8d60f41d9d89d9d7f3777bd0c8c1d37e.3.jpg",
+                    PageUrl = "https://www.xvideos.com/video51984073/hot_blonde_and_a_lucky_my_free_chatroom_www.siswetlive.com_siswet19"
+                },
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
@@ -193,8 +201,7 @@ namespace PornSearch.Tests.Data
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Straight,
                     Id = "63909971",
-                    Title =
-                        "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
+                    Title = "(Raul Costa) Waits With His Big Cock Out For Petite (Josephine Jackson) To Finish Her Yoga - Reality Kings",
                     Channel = new PornIdName {
                         Id = "/reality-kings-channel",
                         Name = "Reality Kings"
@@ -215,14 +222,14 @@ namespace PornSearch.Tests.Data
                     Website = PornWebsite.XVideos,
                     SexOrientation = PornSexOrientation.Gay,
                     Id = "63543339",
-                    Title = "Fireworks In His Ass For Day",
+                    Title = "Fireworks In His Ass For Father's Day",
                     Channel = new PornIdName {
                         Id = "/youngperps",
                         Name = "YoungPerps"
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/5d/00/30/5d003011fae8c3df1c3bb9529c7dbeff/5d003011fae8c3df1c3bb9529c7dbeff.24.jpg",
-                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_day"
+                    PageUrl = "https://www.xvideos.com/video63543339/fireworks_in_his_ass_for_father_s_day"
                 },
                 // Fix the value "\u00A0" in the title
                 new PornVideoThumb {
@@ -236,8 +243,7 @@ namespace PornSearch.Tests.Data
                     },
                     ThumbnailUrl =
                         "https://img-hw.xvideos-cdn.com/videos/thumbs169ll/12/9e/9c/129e9c59afac7c1afc2729e7b916ad6f/129e9c59afac7c1afc2729e7b916ad6f.8.jpg",
-                    PageUrl =
-                        "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t"
+                    PageUrl = "https://www.xvideos.com/video7859351/gay_orgy_they_re_loving_it_so_much_in_fact_that_they_just_can_t"
                 },
                 new PornVideoThumb {
                     Website = PornWebsite.XVideos,
