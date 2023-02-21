@@ -142,10 +142,18 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 
 _(1) Empty value possible_
 
-## Get informations of a video from its url
+## Get information about a video
 
 ```cs
-PornVideo video = await pornSearch.GetVideoAsync("https://www.pornhub.com/view_video.php?viewkey=ph5d0bc9474a26b");
+PornVideo video1 = await pornSearch.GetVideoAsync("https://www.pornhub.com/view_video.php?viewkey=ph5d0bc9474a26b");
+
+// Or
+
+PornSourceVideo sourceVideo = new() {
+    Website = PornWebsite.Pornhub,
+    Id = "ph5d0bc9474a26b"
+};
+PornVideo video2 = await pornSearch.GetVideoAsync(sourceVideo);
 ```
 
 | Name | Description |
@@ -203,5 +211,9 @@ PornVideo video = await pornSearch.GetVideoAsync("https://www.pornhub.com/view_v
 | RelatedVideos | :white_check_mark: | :white_check_mark: |
 
 _(1) Empty value possible / (2) Unreliable value / (3) Approximate value_
+
+```GetVideoAsync``` returns ```null``` if the video is deleted, video not available in its country or url which does not correspond to the available websites.
+
+***
 
 _coming soon_
