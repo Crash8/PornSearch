@@ -8,8 +8,8 @@ namespace PornSearch.Extensions
         public static IServiceCollection AddPornSearch(this IServiceCollection serviceCollection) {
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
-            serviceCollection.AddTransient<PornSearch>();
-            serviceCollection.AddTransient<IPornSearch, PornSearch>();
+            serviceCollection.AddTransient<PornSearchEngine>();
+            serviceCollection.AddTransient<IPornSearch, PornSearchEngine>();
             return serviceCollection;
         }
     }
