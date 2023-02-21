@@ -142,4 +142,66 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 
 _(1) Empty value possible_
 
+## Get informations of a video from its url
+
+```cs
+PornVideo video = await pornSearch.GetVideoAsync("https://www.pornhub.com/view_video.php?viewkey=ph5d0bc9474a26b");
+```
+
+| Name | Description |
+| :--- | :---------- |
+| Website | Source website |
+| SexOrientation | Sexual orientation |
+| IsFreePremium | Is video free premium |
+| Id | Video Id |
+| Title | Video Title |
+| Channel > Id | Channel Id |
+| Channel > Name | Channel Name |
+| ThumbnailUrl | Video thumbnail url |
+| SmallThumbnailUrl | Video small thumbnail url |
+| PageUrl | Video page url |
+| VideoEmbedUrl | Video embed url |
+| Duration | Video duration |
+| Categories[] > Id | Category id |
+| Categories[] > Name | Category name |
+| Tags[] > Id | Tag id |
+| Tags[] > Name | Tag name |
+| Actors[] > Id | Actor id |
+| Actors[] > Name | Actor name |
+| NbViews | Number of views |
+| NbLikes | number of likes |
+| NbDislikes | number of dislikes |
+| Date | Upload date |
+| RelatedVideos | List of related videos  |
+
+**Available values by website**
+
+|    | Pornhub | XVideos |
+| :- | :-----: | :-----: |
+| Website | :white_check_mark: | :white_check_mark: |
+| SexOrientation | :white_check_mark: | :white_check_mark: _(2)_ |
+| IsFreePremium | :white_check_mark: | |
+| Id | :white_check_mark: | :white_check_mark: |
+| Title | :white_check_mark: | :white_check_mark: _(1)_ |
+| Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ |
+| Channel > Name | :white_check_mark: | :white_check_mark: _(1)_ |
+| ThumbnailUrl | :white_check_mark: | :white_check_mark: |
+| SmallThumbnailUrl | :white_check_mark: | :white_check_mark: |
+| PageUrl | :white_check_mark: | :white_check_mark: |
+| VideoEmbedUrl | :white_check_mark: | :white_check_mark: |
+| Duration | :white_check_mark: | :white_check_mark: |
+| Categories[] > Id | :white_check_mark: | |
+| Categories[] > Name | :white_check_mark: | |
+| Tags[] > Id | :white_check_mark: | :white_check_mark: |
+| Tags[] > Name | :white_check_mark: | :white_check_mark: |
+| Actors[] > Id | :white_check_mark: | :white_check_mark: |
+| Actors[] > Name | :white_check_mark: | :white_check_mark: |
+| NbViews | :white_check_mark: | :white_check_mark: _(1)_ |
+| NbLikes | :white_check_mark: | :white_check_mark: _(3)_ |
+| NbDislikes | :white_check_mark: | :white_check_mark: _(3)_ |
+| Date | :white_check_mark: | :white_check_mark: |
+| RelatedVideos | :white_check_mark: | :white_check_mark: |
+
+_(1) Empty value possible / (2) Unreliable value / (3) Approximate value_
+
 _coming soon_
