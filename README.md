@@ -2,6 +2,14 @@
 
 Simple library to search adult content.
 
+## Summary
+- [Installation](#installation)
+- [Starting point](#starting-point)
+- [List of source websites and sexual orientations](#list-of-source-websites-and-sexual-orientations)
+- [How to search ?](#how-to-search-)
+- [Get information about a video](#get-information-about-a-video)
+- [How to check that the URL of the video is correct ?](#how-to-check-that-the-url-of-the-video-is-correct-)
+
 ## Installation
 
 Add the following Nuget packages:
@@ -119,10 +127,10 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 | Website | Source website |
 | SexOrientation | Sexual orientation |
 | IsFreePremium | Is video free premium |
-| Id | Video Id |
-| Title | Video Title |
-| Channel > Id | Channel Id |
-| Channel > Name | Channel Name |
+| Id | Video id |
+| Title | Video title |
+| Channel > Id | Channel id |
+| Channel > Name | Channel name |
 | ThumbnailUrl | Video thumbnail url |
 | PageUrl | Video page url |
 
@@ -161,10 +169,10 @@ PornVideo video2 = await pornSearch.GetVideoAsync(sourceVideo);
 | Website | Source website |
 | SexOrientation | Sexual orientation |
 | IsFreePremium | Is video free premium |
-| Id | Video Id |
-| Title | Video Title |
-| Channel > Id | Channel Id |
-| Channel > Name | Channel Name |
+| Id | Video id |
+| Title | Video title |
+| Channel > Id | Channel id |
+| Channel > Name | Channel name |
 | ThumbnailUrl | Video thumbnail url |
 | SmallThumbnailUrl | Video small thumbnail url |
 | PageUrl | Video page url |
@@ -214,6 +222,13 @@ _(1) Empty value possible / (2) Unreliable value / (3) Approximate value_
 
 ```GetVideoAsync``` returns ```null``` if the video is deleted, video not available in its country or url which does not correspond to the available websites.
 
-***
+## How to check that the URL of the video is correct ?
 
-_coming soon_
+```cs
+PornSourceVideo sourceVideo = pornSearch.GetSourceVideo("https://www.pornhub.com/view_video.php?viewkey=ph5d0bc9474a26b");
+```
+
+| Name | Description |
+| :--- | :---------- |
+| Website | Source website |
+| Id | Video id |
