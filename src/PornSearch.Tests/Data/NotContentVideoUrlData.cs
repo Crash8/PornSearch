@@ -17,6 +17,9 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
                 case PornWebsite.XVideos:
                     badUrlVideo.AddRange(GetXVideosUrl());
                     break;
+                case PornWebsite.YouPorn:
+                    badUrlVideo.AddRange(GetYouPornUrl());
+                    break;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
@@ -39,6 +42,15 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
             "https://www.xvideos.com/video57788343/",
             "https://www.xvideos.com/video179088343/",
             "https://www.xvideos.com/video27488043/test"
+        };
+        return urls.Select(u => new object[] { u });
+    }
+
+    private static IEnumerable<object[]> GetYouPornUrl() {
+        List<string> urls = new List<string> {
+            "https://www.youporn.com/watch/16325190/", // This page is not available in your country
+            "https://www.youporn.com/watch/16492415/",
+            "https://www.youporn.com/watch/XXXX/"
         };
         return urls.Select(u => new object[] { u });
     }

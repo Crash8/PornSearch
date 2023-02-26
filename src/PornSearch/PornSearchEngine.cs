@@ -34,6 +34,7 @@ namespace PornSearch
                 switch (website) {
                     case PornWebsite.Pornhub: return new PornhubSearchWebsite();
                     case PornWebsite.XVideos: return new XVideosSearchWebsite();
+                    case PornWebsite.YouPorn: return new YouPornSearchWebsite();
                     default:                  throw new NotImplementedException();
                 }
             });

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ public class PornSearch_GetVideo_Tests
 
     [Fact]
     public async Task GetVideo_ArgumentNullException() {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.GetVideoAsync((string)null));
         await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.GetVideoAsync((PornSourceVideo)null));
@@ -25,7 +24,7 @@ public class PornSearch_GetVideo_Tests
     [Theory]
     [ClassData(typeof(BadVideoUrlData))]
     public async Task GetVideo_Null_BadVideoUrl(string url) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         PornVideo video = await pornSearch.GetVideoAsync(url);
 
@@ -35,7 +34,7 @@ public class PornSearch_GetVideo_Tests
     [Theory]
     [ClassData(typeof(NotContentVideoUrlData))]
     public async Task GetVideo_Null_NotContentVideoUrl(string url) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         PornVideo video = await pornSearch.GetVideoAsync(url);
 
@@ -83,7 +82,7 @@ public class PornSearch_GetVideo_Tests
     }
 
     private static async Task CheckVideosInSearchOnPagesAsync(PornWebsite website, string filter, int pageMin) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
         foreach (PornSexOrientation sexOrientation in source.SexOrientations) {
@@ -93,7 +92,7 @@ public class PornSearch_GetVideo_Tests
     }
 
     private static async Task SearchVideosAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter, int page) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSearchFilter searchFilter = new PornSearchFilter {
             Website = website,
             SexOrientation = sexOrientation,
@@ -107,7 +106,7 @@ public class PornSearch_GetVideo_Tests
                                     try {
                                         await semaphoreSlim.WaitAsync();
                                         PornVideo video = await pornSearch.GetVideoAsync(videoThumb.PageUrl);
-                                        
+
                                         Assert.True(video != null, $"{sexOrientation}/{filter}/{page} - {videoThumb.PageUrl}");
 
                                         // Bad detection sex orientation for XVideos
@@ -129,7 +128,7 @@ public class PornSearch_GetVideo_Tests
     [Theory]
     [ClassData(typeof(MultipleVideoUrlData))]
     public async Task GetVideo_MultipleVideoUrl(string[] urls, PornSourceVideo sourceVideo) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         List<PornVideo> videos = new List<PornVideo>();
 
         foreach (string url in urls) {
@@ -151,7 +150,7 @@ public class PornSearch_GetVideo_Tests
     [Theory]
     [ClassData(typeof(PornVideoData))]
     public async Task GetVideo_Video(PornVideo videoSource) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         PornVideo video = await pornSearch.GetVideoAsync(videoSource.PageUrl);
 
@@ -161,26 +160,22 @@ public class PornSearch_GetVideo_Tests
 
     [Theory]
     [ClassData(typeof(PornRelatedVideoData))]
-    public async Task GetVideo_NbRelatedVideos(int nbRelatedVideos, string pageUrl) {
-        IPornSearch pornSearch = new PornSearch();
+    public async Task GetVideo_NbRelatedVideos(int nbRelatedVideosMin, int nbRelatedVideosMax, string pageUrl) {
+        IPornSearch pornSearch = new PornSearchEngine();
 
         PornVideo video = await pornSearch.GetVideoAsync(pageUrl);
 
         Assert.NotNull(video?.RelatedVideos);
-        Assert.Equal(nbRelatedVideos, video.RelatedVideos.Count);
+        Assert.True(video.RelatedVideos.Count >= nbRelatedVideosMin, video.RelatedVideos.Count.ToString());
+        Assert.True(video.RelatedVideos.Count <= nbRelatedVideosMax, video.RelatedVideos.Count.ToString());
     }
 
     [Fact]
     public async Task TEST() {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornVideo video = await pornSearch.GetVideoAsync(new PornSourceVideo {
-            Website = PornWebsite.Pornhub,
-            //Id = "ph62c4873391c44"
-            Id = "ph628ae482a2c46"
-            //Id="ph6360471ea2482"
-            //Id="ph639c6f6822ba2"
-            // Id = "54073021" // RED
-            //Id = "63770025"
+            Website = PornWebsite.YouPorn,
+            Id = "15121589"
         });
         Assert.NotNull(video);
 
@@ -188,7 +183,7 @@ public class PornSearch_GetVideo_Tests
             //Filter = "PLEASE CUM IN ME IN THE ASS! Stella_vegas",
             Filter = "Emmanuelle Worley",
             Page = 1,
-            Website = PornWebsite.Pornhub,
+            Website = PornWebsite.YouPorn,
             SexOrientation = PornSexOrientation.Straight
         });
 

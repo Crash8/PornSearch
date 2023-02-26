@@ -1,10 +1,9 @@
-namespace PornSearch.Tests.Enums
+namespace PornSearch.Tests.Enums;
+
+public enum PageSearch
 {
-    public enum PageSearch
-    {
-        Empty,
-        Complete,
-        Channel,
-        Partial
-    }
+    Empty,
+    Complete,
+    Channel,
+    Partial
 }

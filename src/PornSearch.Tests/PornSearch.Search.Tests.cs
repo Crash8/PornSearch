@@ -16,7 +16,7 @@ public partial class PornSearch_Search_Tests
     [Theory]
     [ClassData(typeof(PornWebsiteData))]
     public async Task Search_ArgumentException(PornWebsite website) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         foreach (PornSexOrientation sexOrientation in Enum.GetValues(typeof(PornSexOrientation))) {
             for (int page = -1; page <= 0; page++) {
@@ -33,7 +33,7 @@ public partial class PornSearch_Search_Tests
 
     [Fact]
     public async Task Search_ArgumentNullException() {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
 
         await Assert.ThrowsAsync<ArgumentNullException>(async () => await pornSearch.SearchAsync(null));
     }
@@ -41,7 +41,7 @@ public partial class PornSearch_Search_Tests
     [Theory]
     [ClassData(typeof(PornWebsiteData))]
     public async Task Search_Null(PornWebsite website) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
         foreach (PornSexOrientation sexOrientation in Enum.GetValues(typeof(PornSexOrientation))) {
@@ -61,7 +61,7 @@ public partial class PornSearch_Search_Tests
     [Theory]
     [ClassData(typeof(PornWebsiteData))]
     public async Task Search_EmptyFilter(PornWebsite website) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSource source = pornSearch.GetSources().First(s => s.Website == website);
         int[] pages = { 1, 2, NextRandomPage() };
         string[] filters = { null, "", "  " };
@@ -134,7 +134,7 @@ public partial class PornSearch_Search_Tests
     [Theory]
     [ClassData(typeof(PornWebsiteChannelData))]
     public async Task Search_SexOrientation(PornWebsite website, string channel, PornSexOrientation channelSexOrientation) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSource source = pornSearch.GetSources().First(s => s.Website == website);
         const PageSearch pageSearch = PageSearch.Channel;
 
@@ -192,7 +192,7 @@ public partial class PornSearch_Search_Tests
     }
 
     private static async Task CheckSearchOn3PagesAsync(PornWebsite website, string filter, int pageMin, PageSearch pageSearch) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSource source = pornSearch.GetSources().First(s => s.Website == website);
 
         foreach (PornSexOrientation sexOrientation in source.SexOrientations) {
@@ -209,7 +209,7 @@ public partial class PornSearch_Search_Tests
 
     private static async Task<List<PornVideoThumb>> SearchAsync(PornWebsite website, PornSexOrientation sexOrientation, string filter,
                                                                 int page, PageSearch pageSearch) {
-        IPornSearch pornSearch = new PornSearch();
+        IPornSearch pornSearch = new PornSearchEngine();
         PornSearchFilter searchFilter = new PornSearchFilter {
             Website = website,
             SexOrientation = sexOrientation,
@@ -226,6 +226,6 @@ public partial class PornSearch_Search_Tests
     }
 
     private int NextRandomPage() {
-        return _random.Next(100) + 1;
+        return _random.Next(70) + 1;
     }
 }
