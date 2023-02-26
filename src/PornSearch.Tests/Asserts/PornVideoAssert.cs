@@ -29,8 +29,8 @@ public static class PornVideoAssert
         Assert_Video_Tags(video.Tags, website, sexOrientation);
         Assert_Video_Actors(video.Actors, website);
         Assert_Video_NbViews(video.NbViews, website);
-        Assert_Video_NbLikes(video.NbLikes);
-        Assert_Video_NbDislikes(video.NbDislikes);
+        Assert_Video_NbLikes(video.NbLikes, website);
+        Assert_Video_NbDislikes(video.NbDislikes, website);
         Assert_Video_Date(video.Date);
         Assert_Video_RelatedVideos(video.RelatedVideos, website, sexOrientation);
         Assert_Video_Link_Id_PageUrl(video.Id, video.PageUrl, website);
@@ -328,12 +328,38 @@ public static class PornVideoAssert
         }
     }
 
-    private static void Assert_Video_NbLikes(int nbLikes) {
-        Assert.True(nbLikes >= 0);
+    private static void Assert_Video_NbLikes(int? nbLikes, PornWebsite website) {
+        switch (website) {
+            case PornWebsite.Pornhub:
+                Assert.NotNull(nbLikes);
+                Assert.True(nbLikes >= 0);
+                break;
+            case PornWebsite.XVideos:
+                Assert.NotNull(nbLikes);
+                Assert.True(nbLikes >= 0);
+                break;
+            case PornWebsite.YouPorn:
+                Assert.Null(nbLikes);
+                break;
+            default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+        }
     }
 
-    private static void Assert_Video_NbDislikes(int nbDislikes) {
-        Assert.True(nbDislikes >= 0);
+    private static void Assert_Video_NbDislikes(int? nbDislikes, PornWebsite website) {
+        switch (website) {
+            case PornWebsite.Pornhub:
+                Assert.NotNull(nbDislikes);
+                Assert.True(nbDislikes >= 0);
+                break;
+            case PornWebsite.XVideos:
+                Assert.NotNull(nbDislikes);
+                Assert.True(nbDislikes >= 0);
+                break;
+            case PornWebsite.YouPorn:
+                Assert.Null(nbDislikes);
+                break;
+            default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
+        }
     }
 
     private static void Assert_Video_Date(DateTime date) {
@@ -406,8 +432,8 @@ public static class PornVideoAssert
         }
     }
 
-    private static void Assert_Video_Link_NbViews_NbLikes_NbDislikes(int nbViews, int nbLikes, int nbDislikes) {
-        if (nbViews > 0) {
+    private static void Assert_Video_Link_NbViews_NbLikes_NbDislikes(int nbViews, int? nbLikes, int? nbDislikes) {
+        if (nbViews > 0 && nbLikes != null && nbDislikes != null) {
             Assert.True(nbViews >= nbLikes);
             Assert.True(nbViews >= nbDislikes);
             Assert.True(nbViews >= nbLikes + nbDislikes);
@@ -737,8 +763,14 @@ public static class PornVideoAssert
             }
         }
         Assert.True(video1.NbViews <= video2.NbViews);
-        Assert.True(video1.NbLikes <= video2.NbLikes);
-        Assert.True(video1.NbDislikes <= video2.NbDislikes);
+        if (video1.NbLikes == null)
+            Assert.Null(video2.NbLikes);
+        else
+            Assert.True(video1.NbLikes <= video2.NbLikes);
+        if (video1.NbDislikes == null)
+            Assert.Null(video2.NbDislikes);
+        else
+            Assert.True(video1.NbDislikes <= video2.NbDislikes);
         Assert.Equal(video1.Date, video2.Date);
         if (video1.RelatedVideos != null) {
             Assert.Equal(video1.RelatedVideos.Count, video2.RelatedVideos.Count);

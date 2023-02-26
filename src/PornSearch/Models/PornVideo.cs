@@ -20,8 +20,8 @@ namespace PornSearch
         public List<PornIdName> Tags { get; set; }
         public List<PornIdName> Actors { get; set; }
         public int NbViews { get; set; }
-        public int NbLikes { get; set; }
-        public int NbDislikes { get; set; }
+        public int? NbLikes { get; set; }
+        public int? NbDislikes { get; set; }
         public DateTime Date { get; set; }
         public List<PornVideoThumb> RelatedVideos { get; set; }
     }

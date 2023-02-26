@@ -131,12 +131,12 @@ namespace PornSearch
             return match.Success ? match.Groups[1].Value.TransformToInt() : 0;
         }
 
-        public int NbLikes() {
+        public int? NbLikes() {
             IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("span.votesUp");
             return element?.Dataset["rating"].TransformToInt() ?? 0;
         }
 
-        public int NbDislikes() {
+        public int? NbDislikes() {
             IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("span.votesDown");
             return element?.Dataset["rating"].TransformToInt() ?? 0;
         }

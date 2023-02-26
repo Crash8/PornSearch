@@ -124,12 +124,12 @@ namespace PornSearch
             return element?.Text().TransformToInt() ?? 0;
         }
 
-        public int NbLikes() {
+        public int? NbLikes() {
             IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("span.rating-good-nbr");
             return element?.Text().TransformToInt() ?? 0;
         }
 
-        public int NbDislikes() {
+        public int? NbDislikes() {
             IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("span.rating-bad-nbr");
             return element?.Text().TransformToInt() ?? 0;
         }

@@ -21,8 +21,8 @@ namespace PornSearch
         List<PornIdName> Tags();
         List<PornIdName> Actors();
         int NbViews();
-        int NbLikes();
-        int NbDislikes();
+        int? NbLikes();
+        int? NbDislikes();
         DateTime Date();
         List<PornVideoThumb> RelatedVideos();
     }

@@ -118,12 +118,12 @@ namespace PornSearch
             return element?.Dataset["value"].TransformToInt() ?? 0;
         }
 
-        public int NbLikes() {
-            return 0;
+        public int? NbLikes() {
+            return null;
         }
 
-        public int NbDislikes() {
-            return 0;
+        public int? NbDislikes() {
+            return null;
         }
 
         public DateTime Date() {
