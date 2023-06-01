@@ -90,11 +90,11 @@ List<PornSource> sources = pornSearch.GetSources();
 
 **Available values by website**
 
-|    | Pornhub | XVideos |
-| :- | :-----: | :-----: |
-| Straight | :white_check_mark: | :white_check_mark: |
-| Gay | :white_check_mark: | :white_check_mark: |
-| Trans |  | :white_check_mark: |
+|    | Pornhub | XVideos | YouPorn |
+| :- | :-----: | :-----: | :-----: |
+| Straight | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Gay | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Trans |  | :white_check_mark: | |
 
 ## How to search ?
 
@@ -136,17 +136,17 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 
 **Available values by website**
 
-|    | Pornhub | XVideos |
-| :- | :-----: | :-----: |
-| Website | :white_check_mark: | :white_check_mark: |
-| SexOrientation | :white_check_mark: | :white_check_mark: |
-| IsFreePremium | :white_check_mark: | |
-| Id | :white_check_mark: | :white_check_mark: |
-| Title | :white_check_mark: | :white_check_mark: _(1)_ |
-| Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ |
-| Channel > Name | :white_check_mark: | :white_check_mark: _(1)_ |
-| ThumbnailUrl | :white_check_mark: | :white_check_mark: |
-| PageUrl | :white_check_mark: | :white_check_mark: |
+|    | Pornhub | XVideos | YouPorn |
+| :- | :-----: | :-----: | :-----: |
+| Website | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| SexOrientation | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| IsFreePremium | :white_check_mark: | | |
+| Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Title | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
+| Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: _(1)_ |
+| Channel > Name | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: _(1)_ |
+| ThumbnailUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| PageUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 _(1) Empty value possible_
 
@@ -192,31 +192,31 @@ PornVideo video2 = await pornSearch.GetVideoAsync(sourceVideo);
 
 **Available values by website**
 
-|    | Pornhub | XVideos |
-| :- | :-----: | :-----: |
+|    | Pornhub | XVideos | YouPorn
+| :- | :-----: | :-----: | :-----: |
 | Website | :white_check_mark: | :white_check_mark: |
-| SexOrientation | :white_check_mark: | :white_check_mark: _(2)_ |
-| IsFreePremium | :white_check_mark: | |
-| Id | :white_check_mark: | :white_check_mark: |
-| Title | :white_check_mark: | :white_check_mark: _(1)_ |
-| Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ |
-| Channel > Name | :white_check_mark: | :white_check_mark: _(1)_ |
-| ThumbnailUrl | :white_check_mark: | :white_check_mark: |
-| SmallThumbnailUrl | :white_check_mark: | :white_check_mark: |
-| PageUrl | :white_check_mark: | :white_check_mark: |
-| VideoEmbedUrl | :white_check_mark: | :white_check_mark: |
-| Duration | :white_check_mark: | :white_check_mark: |
-| Categories[] > Id | :white_check_mark: | |
-| Categories[] > Name | :white_check_mark: | |
-| Tags[] > Id | :white_check_mark: | :white_check_mark: |
-| Tags[] > Name | :white_check_mark: | :white_check_mark: |
-| Actors[] > Id | :white_check_mark: | :white_check_mark: |
-| Actors[] > Name | :white_check_mark: | :white_check_mark: |
-| NbViews | :white_check_mark: | :white_check_mark: _(1)_ |
-| NbLikes | :white_check_mark: | :white_check_mark: _(3)_ |
-| NbDislikes | :white_check_mark: | :white_check_mark: _(3)_ |
-| Date | :white_check_mark: | :white_check_mark: |
-| RelatedVideos | :white_check_mark: | :white_check_mark: |
+| SexOrientation | :white_check_mark: | :white_check_mark: _(2)_ | :white_check_mark: |
+| IsFreePremium | :white_check_mark: | | |
+| Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Title | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
+| Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
+| Channel > Name | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
+| ThumbnailUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| SmallThumbnailUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| PageUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| VideoEmbedUrl | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Duration | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Categories[] > Id | :white_check_mark: | | :white_check_mark: |
+| Categories[] > Name | :white_check_mark: | | :white_check_mark: |
+| Tags[] > Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Tags[] > Name | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Actors[] > Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Actors[] > Name | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| NbViews | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
+| NbLikes | :white_check_mark: | :white_check_mark: _(3)_ | |
+| NbDislikes | :white_check_mark: | :white_check_mark: _(3)_ | |
+| Date | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| RelatedVideos | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 _(1) Empty value possible / (2) Unreliable value / (3) Approximate value_
 
