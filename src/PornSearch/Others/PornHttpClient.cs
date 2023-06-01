@@ -36,7 +36,7 @@ namespace PornSearch
                 }
                 catch (TrySendException ex) {
                     tryCount++;
-                    if (tryCount >= 2)
+                    if (tryCount >= 4)
                         throw ex.InnerException ?? new Exception("Http Error");
                     await WaitDelayFromUrlAsync(url, 10000);
                 }
