@@ -10,7 +10,7 @@ namespace PornSearch
 {
     internal class PornhubSearchWebsite : AbstractSearchWebsite
     {
-        private string _cookie;
+        private string _cookie = "accessAgeDisclaimerPH=1";
 
         public override List<PornSexOrientation> GetSexOrientations() {
             return new List<PornSexOrientation> {
@@ -48,7 +48,7 @@ namespace PornSearch
             content = content.Substring(content.IndexOf("function leastFactor", StringComparison.Ordinal));
             content = content.Substring(0, content.IndexOf("//-->", StringComparison.Ordinal));
             content = content.Replace("document.cookie=", "return ");
-            return new Engine().Execute(content).GetValue("go").Invoke().ToString();
+            return new Engine().Execute(content).GetValue("go").Invoke().ToString() + "; accessAgeDisclaimerPH=1";
         }
 
         protected override IPornSearchParser GetSearchParser(IDocument document) {
