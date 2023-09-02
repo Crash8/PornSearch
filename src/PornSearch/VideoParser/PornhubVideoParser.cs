@@ -37,7 +37,7 @@ namespace PornSearch
         }
 
         public bool? IsFreePremium() {
-            return _document.QuerySelector("h1#videoTitle > a.freePremiumVideo") != null;
+            return _document.QuerySelector("h1#videoTitle > div.freePremiumVideo") != null;
         }
 
         public string Id() {
