@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
@@ -25,16 +26,19 @@ namespace PornSearch
         }
 
         public string Id() {
-            return _root.Dataset["video-id"];
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a");
+            string href = element?.GetAttribute("href") ?? "";
+            Match match = Regex.Match(href, "/watch/([0-9]*)/");
+            return match.Success ? match.Groups[1].Value : "";
         }
 
         public string Title() {
-            IHtmlDivElement element = _root.QuerySelector<IHtmlDivElement>("div.video-box-title");
-            return element?.Title?.ToHtmlDecode();
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.video-title");
+            return element?.TextContent.ToHtmlDecode();
         }
 
         public PornIdName Channel() {
-            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("span.channelTitle > a");
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("span.channel-title > a");
             return new PornIdName {
                 Id = element?.GetAttribute("href") ?? "",
                 Name = element?.Text.ToHtmlDecode() ?? ""
@@ -43,8 +47,7 @@ namespace PornSearch
 
         public string ThumbnailUrl() {
             IHtmlImageElement element = _root.QuerySelector<IHtmlImageElement>("img");
-            string url = element?.Dataset["thumbnail"] ?? "";
-            return url.Replace("/videos/stage/", "/videos/");
+            return element?.Dataset["src"] ?? "";
         }
 
         public string PageUrl() {
