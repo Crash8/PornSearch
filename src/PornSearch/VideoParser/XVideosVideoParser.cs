@@ -19,7 +19,7 @@ namespace PornSearch
         }
 
         public bool IsAvailable() {
-            return _document.QuerySelector("a#site-logo-red-link") == null;
+            return _document.QuerySelector("span#site-logo-red") == null;
         }
 
         public PornWebsite Website() {
