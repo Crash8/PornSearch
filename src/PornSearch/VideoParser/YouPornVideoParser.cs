@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
@@ -80,8 +82,8 @@ namespace PornSearch
             return !string.IsNullOrEmpty(url) ? $"https://www.youporn.com{url}" : "";
         }
 
-        public bool CanVideoEmbedInIframe() {
-            return true;
+        public Task<bool> CanVideoEmbedInIframe() {
+            return Task.FromResult(true);
         }
 
         public TimeSpan Duration() {

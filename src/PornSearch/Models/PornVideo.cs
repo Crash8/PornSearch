@@ -15,6 +15,7 @@ namespace PornSearch
         public string SmallThumbnailUrl { get; set; }
         public string PageUrl { get; set; }
         public string VideoEmbedUrl { get; set; }
+        public bool CanVideoEmbedInIframe { get; set; }
         public TimeSpan Duration { get; set; }
         public List<PornIdName> Categories { get; set; }
         public List<PornIdName> Tags { get; set; }

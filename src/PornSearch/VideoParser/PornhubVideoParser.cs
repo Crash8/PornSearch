@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
@@ -84,6 +86,15 @@ namespace PornSearch
         public string VideoEmbedUrl() {
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:video:url']");
             return element?.Content;
+        }
+
+        public async Task<bool> CanVideoEmbedInIframe() {
+            PornHttpClient httpClient = new PornHttpClient();
+            string content = await httpClient.SendAsync(VideoEmbedUrl());
+            IConfiguration config = Configuration.Default;
+            IBrowsingContext context = BrowsingContext.New(config);
+            IDocument documentVideoEmbed = await context.OpenAsync(req => req.Content(content));
+            return documentVideoEmbed.QuerySelector<IHtmlDivElement>("div.userMessageSection") == null;
         }
 
         public TimeSpan Duration() {

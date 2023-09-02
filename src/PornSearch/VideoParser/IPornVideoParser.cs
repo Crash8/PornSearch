@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PornSearch
 {
@@ -16,6 +17,7 @@ namespace PornSearch
         string SmallThumbnailUrl();
         string PageUrl();
         string VideoEmbedUrl();
+        Task<bool> CanVideoEmbedInIframe();
         TimeSpan Duration();
         List<PornIdName> Categories();
         List<PornIdName> Tags();

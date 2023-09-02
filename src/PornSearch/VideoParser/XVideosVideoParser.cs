@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Newtonsoft.Json;
@@ -86,6 +87,10 @@ namespace PornSearch
             IHtmlInputElement element = _document.QuerySelector<IHtmlInputElement>("input#copy-video-embed");
             Match match = Regex.Match(element?.Value ?? "", " src=\"([^\"]*)");
             return match.Success ? match.Groups[1].Value : null;
+        }
+
+        public Task<bool> CanVideoEmbedInIframe() {
+            return Task.FromResult(true);
         }
 
         public TimeSpan Duration() {
