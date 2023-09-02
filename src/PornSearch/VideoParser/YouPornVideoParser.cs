@@ -17,7 +17,8 @@ namespace PornSearch
         }
 
         public bool IsAvailable() {
-            return _document.QuerySelector("div.box-404") == null && _document.QuerySelector("div.geo-blocked-content") == null;
+            return _document.QuerySelector("div.box-404") == null && _document.QuerySelector("div.geo-blocked-content") == null
+                                                                  && _document.QuerySelector("div.video-inactive-wrapper") == null;
         }
 
         public PornWebsite Website() {
@@ -26,8 +27,8 @@ namespace PornSearch
 
         public PornSexOrientation SexOrientation() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
-            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("site_orientation", StringComparison.Ordinal) > 0);
-            Match match = Regex.Match(element?.TextContent ?? "", "'site_orientation': '([^\']*)");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("page_params.segment", StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", "page_params.segment = '([^\']*)");
             string sexOrientation = match.Success ? match.Groups[1].Value : "straight";
             return (PornSexOrientation)Enum.Parse(typeof(PornSexOrientation), sexOrientation, true);
         }
@@ -59,15 +60,13 @@ namespace PornSearch
         }
 
         public string ThumbnailUrl() {
-            IHtmlLinkElement element = _document.QuerySelector<IHtmlLinkElement>("head > link[rel='preload']");
-            string url = element?.Href ?? "";
-            return url.Replace("/videos/stage/", "/videos/");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:image']");
+            return element?.Content ?? "";
         }
 
         public string SmallThumbnailUrl() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:image']");
-            string url = element?.Content ?? "";
-            return url.Replace("/videos/stage/", "/videos/");
+            IHtmlVideoElement element = _document.QuerySelector<IHtmlVideoElement>("div#videoContainer video");
+            return element?.Source ?? "";
         }
 
         public string PageUrl() {
@@ -76,8 +75,13 @@ namespace PornSearch
         }
 
         public string VideoEmbedUrl() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:video:url']");
-            return element?.Content;
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[name='twitter:player']");
+            string url = element?.Content ?? "";
+            return !string.IsNullOrEmpty(url) ? $"https://www.youporn.com{url}" : "";
+        }
+
+        public bool CanVideoEmbedInIframe() {
+            return true;
         }
 
         public TimeSpan Duration() {
@@ -87,7 +91,7 @@ namespace PornSearch
         }
 
         public List<PornIdName> Categories() {
-            return _document.QuerySelectorAll<IHtmlAnchorElement>("a[data-espnode='category_tag']")
+            return _document.QuerySelectorAll<IHtmlAnchorElement>("a.categories-tags")
                             .Select(anchor => new PornIdName {
                                         Id = anchor.GetAttribute("href"),
                                         Name = anchor.Text.ToHtmlDecode()
@@ -96,7 +100,7 @@ namespace PornSearch
         }
 
         public List<PornIdName> Tags() {
-            return _document.QuerySelectorAll<IHtmlAnchorElement>("a[data-espnode='porntag_tag']")
+            return _document.QuerySelectorAll<IHtmlAnchorElement>("a.pink-border.tm_carousel_tag")
                             .Select(anchor => new PornIdName {
                                         Id = anchor.GetAttribute("href"),
                                         Name = anchor.Text.ToHtmlDecode()
@@ -105,7 +109,7 @@ namespace PornSearch
         }
 
         public List<PornIdName> Actors() {
-            return _document.QuerySelectorAll<IHtmlAnchorElement>("a[data-espnode='pornstar_tag']")
+            return _document.QuerySelectorAll<IHtmlAnchorElement>("a.tm_carousel_tag:not(.pink-border):not(.categories-tags)")
                             .Select(anchor => new PornIdName {
                                         Id = anchor.GetAttribute("href"),
                                         Name = anchor.Text.ToHtmlDecode()
@@ -114,8 +118,10 @@ namespace PornSearch
         }
 
         public int NbViews() {
-            IHtmlDivElement element = _document.QuerySelector<IHtmlDivElement>("div.js_videoInfoViews");
-            return element?.Dataset["value"].TransformToInt() ?? 0;
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("interactionCount", StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", ",\"interactionCount\":([^}]*)");
+            return match.Success ? match.Groups[1].Value.TransformToInt() : 0;
         }
 
         public int? NbLikes() {
@@ -127,13 +133,19 @@ namespace PornSearch
         }
 
         public DateTime Date() {
-            IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("div.video-uploaded span");
-            string date = (element?.Text() ?? "").Replace("th", "").Replace("nd", "").Replace("st", "").Replace("rd", "");
-            return DateTime.ParseExact(date, "MMM d yyyy", null);
+            const string searchTerm = "\"uploadDate\":";
+            const string pattern = "\"uploadDate\":\"([^T]*)";
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", pattern);
+            DateTime date = DateTime.MinValue;
+            if (match.Success)
+                date = DateTime.ParseExact(match.Groups[1].Value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return date;
         }
 
         public List<PornVideoThumb> RelatedVideos() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div#relatedVideosCntr div[data-espnode='videobox']");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div#relatedVideosWrapper div.video-box");
             return elements.OfType<IHtmlDivElement>()
                            .Select(div => new YouPornVideoThumbParser(div))
                            .Where(p => p.IsAvailable())
