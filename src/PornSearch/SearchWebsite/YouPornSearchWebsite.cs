@@ -17,7 +17,7 @@ namespace PornSearch
         }
 
         protected override string MakeUrl(PornSearchFilter searchFilter) {
-            string url = $"https://www.youporn.com{(searchFilter.SexOrientation == PornSexOrientation.Gay ? "/gay" : "/")}";
+            string url = $"https://www.youporn.com{(searchFilter.SexOrientation == PornSexOrientation.Gay ? "/gay/" : "/")}";
             if (!string.IsNullOrWhiteSpace(searchFilter.Filter))
                 url += "search/";
             List<string> queries = new List<string>();
@@ -39,7 +39,7 @@ namespace PornSearch
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
-            const string pattern = "^https://[a-z]{2,3}[.](youporn|you-porn|youporngay)[.]com/watch/([0-9]+)/[^\\s]+$";
+            const string pattern = "^https://[a-z]{2,3}[.](youporn|you-porn|youporngay)[.]com/watch/([0-9]+)/[^\\s]*$";
             Match match = Regex.Match(url, pattern);
             return !match.Success
                 ? null
