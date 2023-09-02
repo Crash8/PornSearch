@@ -33,10 +33,8 @@ namespace PornSearch
         }
 
         public IEnumerable<IPornVideoThumbParser> GetVideoThumbs() {
-            const string selector = "div[data-espnode='video_list'] div[data-espnode='videobox']";
+            const string selector = "div.full-row-thumbs:not(.tm_recommended_videos_section) div.video-box";
             List<IHtmlDivElement> elements = _document.QuerySelectorAll<IHtmlDivElement>(selector).ToList();
-            if (elements.Count == 0)
-                elements = _document.QuerySelectorAll<IHtmlDivElement>("div[data-espnode='videobox']").ToList();
             return elements.Select(div => new YouPornVideoThumbParser(div));
         }
     }
