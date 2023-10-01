@@ -9,7 +9,6 @@ namespace PornSearch
         bool IsAvailable();
         PornWebsite Website();
         PornSexOrientation SexOrientation();
-        bool? IsFreePremium();
         string Id();
         string Title();
         PornIdName Channel();
@@ -17,7 +16,6 @@ namespace PornSearch
         string SmallThumbnailUrl();
         string PageUrl();
         string VideoEmbedUrl();
-        Task<bool> CanVideoEmbedInIframe();
         TimeSpan Duration();
         List<PornIdName> Categories();
         List<PornIdName> Tags();

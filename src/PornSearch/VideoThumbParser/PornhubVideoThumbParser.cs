@@ -23,10 +23,6 @@ namespace PornSearch
             return PornWebsite.Pornhub;
         }
 
-        public bool? IsFreePremium() {
-            return _root.QuerySelector("span.phpFreeBlock") != null;
-        }
-
         public string Id() {
             return _root.Dataset["video-vkey"];
         }

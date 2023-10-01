@@ -7,7 +7,6 @@ namespace PornSearch
     {
         public PornWebsite Website { get; set; }
         public PornSexOrientation SexOrientation { get; set; }
-        public bool? IsFreePremium { get; set; }
         public string Id { get; set; }
         public string Title { get; set; }
         public PornIdName Channel { get; set; }
@@ -15,7 +14,6 @@ namespace PornSearch
         public string SmallThumbnailUrl { get; set; }
         public string PageUrl { get; set; }
         public string VideoEmbedUrl { get; set; }
-        public bool CanVideoEmbedInIframe { get; set; }
         public TimeSpan Duration { get; set; }
         public List<PornIdName> Categories { get; set; }
         public List<PornIdName> Tags { get; set; }

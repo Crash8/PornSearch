@@ -4,7 +4,6 @@ namespace PornSearch
     {
         bool IsAvailable();
         PornWebsite Website();
-        bool? IsFreePremium();
         string Id();
         string Title();
         PornIdName Channel();

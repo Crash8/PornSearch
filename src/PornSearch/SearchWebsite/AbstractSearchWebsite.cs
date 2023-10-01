@@ -27,7 +27,6 @@ namespace PornSearch
                               .Select(p => new PornVideoThumb {
                                           Website = p.Website(),
                                           SexOrientation = searchFilter.SexOrientation,
-                                          IsFreePremium = p.IsFreePremium(),
                                           Id = p.Id(),
                                           Title = p.Title(),
                                           Channel = p.Channel(),
@@ -78,7 +77,6 @@ namespace PornSearch
                 : new PornVideo {
                     Website = videoParser.Website(),
                     SexOrientation = videoParser.SexOrientation(),
-                    IsFreePremium = videoParser.IsFreePremium(),
                     Id = videoParser.Id(),
                     Title = videoParser.Title(),
                     Channel = videoParser.Channel(),
@@ -86,7 +84,6 @@ namespace PornSearch
                     SmallThumbnailUrl = videoParser.SmallThumbnailUrl(),
                     PageUrl = videoParser.PageUrl(),
                     VideoEmbedUrl = videoParser.VideoEmbedUrl(),
-                    CanVideoEmbedInIframe = await videoParser.CanVideoEmbedInIframe(),
                     Duration = videoParser.Duration(),
                     Categories = videoParser.Categories(),
                     Tags = videoParser.Tags(),
@@ -109,5 +106,7 @@ namespace PornSearch
         protected abstract IPornVideoParser GetVideoParser(IDocument document);
 
         protected abstract string MakeUrlVideo(string videoId);
+        
+        public abstract Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video);
     }
 }

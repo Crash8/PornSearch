@@ -21,10 +21,6 @@ namespace PornSearch
             return PornWebsite.YouPorn;
         }
 
-        public bool? IsFreePremium() {
-            return null;
-        }
-
         public string Id() {
             IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a");
             string href = element?.GetAttribute("href") ?? "";

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
@@ -33,10 +32,6 @@ namespace PornSearch
             Match match = Regex.Match(element?.TextContent ?? "", "page_params.segment = '([^\']*)");
             string sexOrientation = match.Success ? match.Groups[1].Value : "straight";
             return (PornSexOrientation)Enum.Parse(typeof(PornSexOrientation), sexOrientation, true);
-        }
-
-        public bool? IsFreePremium() {
-            return null;
         }
 
         public string Id() {
@@ -80,10 +75,6 @@ namespace PornSearch
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[name='twitter:player']");
             string url = element?.Content ?? "";
             return !string.IsNullOrEmpty(url) ? $"https://www.youporn.com{url}" : "";
-        }
-
-        public Task<bool> CanVideoEmbedInIframe() {
-            return Task.FromResult(true);
         }
 
         public TimeSpan Duration() {
