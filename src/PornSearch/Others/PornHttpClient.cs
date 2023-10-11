@@ -17,7 +17,11 @@ namespace PornSearch
 
         private class TrySendException : Exception
         {
-            public TrySendException(Exception innerException) : base(null, innerException) { }
+            public TrySendException(Exception innerException, int delay) : base(null, innerException) {
+                DelayBeforeTry = delay;
+            }
+
+            public int DelayBeforeTry { get; }
         }
 
         public void SetHeaderCookie(string cookie) {
@@ -36,9 +40,9 @@ namespace PornSearch
                 }
                 catch (TrySendException ex) {
                     tryCount++;
-                    if (tryCount >= 4)
+                    if (tryCount >= 3)
                         throw ex.InnerException ?? new Exception("Http Error");
-                    await WaitDelayFromUrlAsync(url, 10000);
+                    await WaitDelayFromUrlAsync(url, ex.DelayBeforeTry);
                 }
             }
         }
@@ -57,10 +61,8 @@ namespace PornSearch
                         return await response.Content.ReadAsStringAsync();
                     if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
                         return null;
-                    if ((int)response.StatusCode == 429) {
-                        await WaitDelayFromUrlAsync(url, 30000);
-                        throw new TrySendException(GetHttpRequestException(response.ReasonPhrase, response.StatusCode));
-                    }
+                    if ((int)response.StatusCode == 429)
+                        throw new TrySendException(GetHttpRequestException(response.ReasonPhrase, response.StatusCode), delay: 30000);
                     throw GetHttpRequestException(response.ReasonPhrase, response.StatusCode);
                 }
             }
@@ -106,7 +108,7 @@ namespace PornSearch
                 return await HttpClient.SendAsync(request);
             }
             catch (Exception ex) {
-                throw new TrySendException(ex);
+                throw new TrySendException(ex, delay: 0);
             }
         }
     }
