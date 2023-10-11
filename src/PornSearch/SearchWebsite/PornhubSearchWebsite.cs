@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AngleSharp;
 using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using Jint;
 
 namespace PornSearch
@@ -48,7 +50,7 @@ namespace PornSearch
             content = content.Substring(content.IndexOf("function leastFactor", StringComparison.Ordinal));
             content = content.Substring(0, content.IndexOf("//-->", StringComparison.Ordinal));
             content = content.Replace("document.cookie=", "return ");
-            return new Engine().Execute(content).GetValue("go").Invoke().ToString() + "; accessAgeDisclaimerPH=1";
+            return new Engine().Execute(content).GetValue("go").Invoke() + "; accessAgeDisclaimerPH=1";
         }
 
         protected override IPornSearchParser GetSearchParser(IDocument document) {
@@ -76,6 +78,18 @@ namespace PornSearch
 
         protected override IPornVideoParser GetVideoParser(IDocument document) {
             return new PornhubVideoParser(document);
+        }
+
+        public override async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+            string url = video.VideoEmbedUrl;
+            if (string.IsNullOrEmpty(url))
+                return false;
+            PornHttpClient httpClient = new PornHttpClient();
+            string content = await httpClient.SendAsync(url);
+            IConfiguration config = Configuration.Default;
+            IBrowsingContext context = BrowsingContext.New(config);
+            IDocument documentVideoEmbed = await context.OpenAsync(req => req.Content(content));
+            return documentVideoEmbed.QuerySelector<IHtmlDivElement>("div.userMessageSection") == null;
         }
     }
 }

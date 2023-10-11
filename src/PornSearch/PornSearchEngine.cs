@@ -98,5 +98,12 @@ namespace PornSearch
                     select GetSearchWebsite(website) into searchWebsite
                     select searchWebsite.GetSourceVideo(url)).FirstOrDefault(sourceVideo => sourceVideo != null);
         }
+
+        public async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+            if (video == null)
+                throw new ArgumentNullException(nameof(video));
+            IPornSearchWebsite searchWebsite = GetSearchWebsite(video.Website);
+            return await searchWebsite.CheckIfCanVideoEmbedInIframeAsync(video);
+        }
     }
 }

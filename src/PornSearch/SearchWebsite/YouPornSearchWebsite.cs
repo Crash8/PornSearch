@@ -56,5 +56,10 @@ namespace PornSearch
         protected override IPornVideoParser GetVideoParser(IDocument document) {
             return new YouPornVideoParser(document);
         }
+
+        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+            bool ok = !(video.Title?.Contains('"') ?? false);
+            return Task.FromResult(ok);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace PornSearch
         Task<PornVideo> GetVideoAsync(string url);
         Task<PornVideo> GetVideoAsync(PornSourceVideo sourceVideo);
         PornSourceVideo GetSourceVideo(string url);
+        Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video);
     }
 }

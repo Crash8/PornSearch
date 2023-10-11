@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AngleSharp.Dom;
 
 namespace PornSearch
@@ -79,6 +80,10 @@ namespace PornSearch
 
         protected override IPornVideoParser GetVideoParser(IDocument document) {
             return new XVideosVideoParser(document);
+        }
+
+        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+            return Task.FromResult(true);
         }
     }
 }
