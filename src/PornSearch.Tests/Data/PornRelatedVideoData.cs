@@ -61,7 +61,7 @@ public class PornRelatedVideoData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetYouPornStraight() {
         List<object[]> nbRelatedVideos = new List<object[]> {
             new object[] {
-                59, 60, "https://www.youporn.com/watch/16242150/seductive-slut-amel-annoga-gets-all-her-holes-fucked-wolf-wagner/"
+                24, 24, "https://www.youporn.com/watch/16242150/seductive-slut-amel-annoga-gets-all-her-holes-fucked-wolf-wagner/"
             }
         };
         return nbRelatedVideos;
@@ -70,7 +70,7 @@ public class PornRelatedVideoData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetYouPornGay() {
         List<object[]> nbRelatedVideos = new List<object[]> {
             new object[] {
-                59, 60, "https://www.youporn.com/watch/16030794/gaywire-four-sexy-european-studs-breeding-great-dp-action-for-your-face/"
+                24, 24, "https://www.youporn.com/watch/16030794/gaywire-four-sexy-european-studs-breeding-great-dp-action-for-your-face/"
             }
         };
         return nbRelatedVideos;

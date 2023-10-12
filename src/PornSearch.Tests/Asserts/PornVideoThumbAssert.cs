@@ -56,11 +56,8 @@ public static class PornVideoThumbAssert
                 return sexOrientation == PornSexOrientation.Trans ? new[] { 33, 33 } : new[] { 48, 48 };
             return new[] { 26, 27 };
         }
-        if (website == PornWebsite.YouPorn) {
-            if (string.IsNullOrWhiteSpace(filter))
-                return page == 1 ? new[] { 16, 16 } : new[] { 36, 36 };
-            return new[] { 32, 32 };
-        }
+        if (website == PornWebsite.YouPorn)
+            return string.IsNullOrWhiteSpace(filter) ? new[] { 36, 36 } : new[] { 32, 32 };
         throw new NotImplementedException();
     }
 
@@ -164,11 +161,11 @@ public static class PornVideoThumbAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                thumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/)?[0-9]{6}/[0-9]{2}/[0-9]{4,9}/[^\\s.]*[.]jpg$",
+                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/|m=eafT8f/)?[0-9]{6}/[0-9]{2}/[0-9]{4,9}/[^\\s.]*[.]jpg$",
                                thumbnailUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -287,8 +284,10 @@ public static class PornVideoThumbAssert
             case PornWebsite.XVideos: {
                 // The first subdomain and end of url can change value
                 const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", ""),
-                             Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", ""));
+                Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", "")
+                                  .Replace("thumbs169ll", "thumbs169"),
+                             Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", "")
+                                  .Replace("thumbs169ll", "thumbs169"));
                 break;
             }
             case PornWebsite.YouPorn: {

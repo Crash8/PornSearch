@@ -57,7 +57,8 @@ public class BadVideoUrlData : IEnumerable<object[]>
             "https://www.xvideos.com/video64117055",
             "https://www.xvideos.com/video64117056/",
             "https://www.xvideos.com/video/",
-            "https://www.xvideos.com/video/test"
+            "https://www.xvideos.com/video/test",
+            "https://www.xvideos.red/video71164191/a" // XVideos RED
         };
         return urls.Select(u => new object[] { u });
     }
@@ -68,7 +69,6 @@ public class BadVideoUrlData : IEnumerable<object[]>
             "https://www.youporn.com/?page=2",
             "https://www.youporn.com/gay/?page=3",
             "https://www.youporn.com/watch/",
-            "https://www.youporn.com/watch/16492416",
             "https://www.youporn.com/watch/ko"
         };
         return urls.Select(u => new object[] { u });

@@ -57,6 +57,8 @@ public class MultipleVideoUrlData : IEnumerable<object[]>
             "https://www.youporn.com/watch/16409220/hot-german-fucks-her-tight-ass/",
             "https://www.youporn.com/watch/16409220/hot-german",
             "https://www.youporn.com/watch/16409220/_",
+            "https://www.youporn.com/watch/16409220/",
+            "https://www.youporn.com/watch/16409220",
             "https://www.you-porn.com/watch/16409220/test",
             "https://www.youporngay.com/watch/16409220/p",
             "https://fr.youporn.com/watch/16409220/fr"

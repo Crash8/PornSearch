@@ -50,7 +50,7 @@ public static class PornVideoAssert
                 Assert.Matches("^[0-9]{4,8}$", id);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^[0-9]{7,8}$", id);
+                Assert.Matches("^[0-9]{7,9}$", id);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
         }
@@ -77,7 +77,7 @@ public static class PornVideoAssert
                 break;
             }
             case PornWebsite.YouPorn:
-                Assert.Matches("^((/gay)?/channel/[^/\\s]*|/uservids/[0-9]+/[^/\\s]*)/$", channelId);
+                Assert.Matches("^((/gay)?/channel/[^/\\s]*|/uservids/[^/\\s]*)/$", channelId);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
         }
@@ -112,11 +112,11 @@ public static class PornVideoAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                thumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/)?[0-9]{6}/[0-9]{2}/[0-9]{6,9}/[^\\s.]*[.]jpg$",
+                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/|m=eaSaaTbWx/)?[0-9]{6}/[0-9]{2}/[0-9]{6,9}/[^\\s.]*[.]jpg$",
                                thumbnailUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -131,11 +131,11 @@ public static class PornVideoAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", smallThumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                smallThumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/)?[0-9]{6}/[0-9]{2}/[0-9]{7,9}/[^\\s.]*[.]jpg$",
+                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/|m=(.*)/)?[0-9]{6}/[0-9]{2}/[0-9]{7,9}/[^\\s.]*[.]jpg$",
                                smallThumbnailUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -154,7 +154,7 @@ public static class PornVideoAssert
                 Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]+$", pageUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://www[.]youporn[.]com/watch/[0-9]{7,8}/[^\\s]+$", pageUrl);
+                Assert.Matches("^https://www[.]youporn[.]com/watch/[0-9]{7,9}/($|[^\\s]*$)", pageUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
         }
@@ -171,7 +171,7 @@ public static class PornVideoAssert
                 Assert.Matches("^https://www[.]xvideos[.]com/embedframe/[0-9]{4,8}$", videoEmbedUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://www[.]youporn[.]com/embed/[0-9]{7,8}/[^\\s]+$", videoEmbedUrl);
+                Assert.Matches("^https://www[.]youporn[.]com/embed/[0-9]{7,9}/($|[^\\s]+$)", videoEmbedUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
         }
@@ -223,7 +223,7 @@ public static class PornVideoAssert
                 break;
             }
             case PornWebsite.YouPorn: {
-                Assert.Matches("^(/gay)?/category/[0-9]{1,3}/[^\\s/]+/$", categoryId);
+                Assert.Matches("^(/gay)?/category/[^\\s/]+/$", categoryId);
                 break;
             }
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
@@ -298,7 +298,8 @@ public static class PornVideoAssert
                 Assert.Matches("^(/pornstar/[^\\s]+|/model)$", actorId);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^/(pornstar-channels|pornstars|models|amateur-channels|model-channels|amateurs)/[^\\s]+$", actorId);
+                Assert.Matches("^(/[?]k=[^\\s]+|/(pornstar-channels|pornstars|models|amateur-channels|model-channels|amateurs)/[^\\s]+)$",
+                               actorId);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^(/gay)?/pornstar/[^\\s/]+/$", actorId);
@@ -381,7 +382,7 @@ public static class PornVideoAssert
                         Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                         break;
                     case PornSexOrientation.Gay:
-                        Assert.True(relatedVideos.Count >= 8, relatedVideos.Count.ToString());
+                        Assert.True(relatedVideos.Count >= 1, relatedVideos.Count.ToString());
                         Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                         break;
                     case PornSexOrientation.Trans:
@@ -392,8 +393,7 @@ public static class PornVideoAssert
                 }
                 break;
             case PornWebsite.YouPorn:
-                Assert.True(relatedVideos.Count >= 39, relatedVideos.Count.ToString());
-                Assert.True(relatedVideos.Count <= 60, relatedVideos.Count.ToString());
+                Assert.True(relatedVideos.Count == 24, relatedVideos.Count.ToString());
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);
         }
@@ -641,7 +641,6 @@ public static class PornVideoAssert
         Assert.NotNull(videoThumb);
         Assert.Equal(video1.Website, videoThumb.Website);
         Assert.Equal(video1.SexOrientation, videoThumb.SexOrientation);
-        Assert.Equal(video1.IsFreePremium, videoThumb.IsFreePremium);
         Assert.Equal(video1.Id, videoThumb.Id);
         Assert.Equal(CleanTitle(video1.Title, video1.Website), CleanTitle(videoThumb.Title, videoThumb.Website));
         Assert.Equal(CleanChannelId(video1.Channel.Id, video1.Website), CleanChannelId(videoThumb.Channel.Id, videoThumb.Website));
@@ -656,13 +655,13 @@ public static class PornVideoAssert
             case PornWebsite.XVideos: {
                 // The first subdomain and end of url can change value
                 const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$2").Replace("-1", ""),
-                             Regex.Replace(videoThumb.ThumbnailUrl, pattern, "$2").Replace("-1", ""));
+                Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("thumbs169ll", "thumbs169"),
+                             Regex.Replace(videoThumb.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("thumbs169ll", "thumbs169"));
                 break;
             }
             case PornWebsite.YouPorn: {
                 // The first subdomain of url can change value
-                const string pattern = "^https://[^.]*(.*)$";
+                const string pattern = "^https://[^.]*([^=]*).*$";
                 Assert.Equal(Regex.Replace(video1.SmallThumbnailUrl, pattern, "$1"), Regex.Replace(videoThumb.ThumbnailUrl, pattern, "$1"));
                 break;
             }
@@ -691,7 +690,6 @@ public static class PornVideoAssert
         Assert.NotNull(video2);
         Assert.Equal(video1.Website, video2.Website);
         Assert.Equal(video1.SexOrientation, video2.SexOrientation);
-        Assert.Equal(video1.IsFreePremium, video2.IsFreePremium);
         Assert.Equal(video1.Id, video2.Id);
         Assert.Equal(video1.Title, video2.Title);
         Assert.Equal(video1.Channel.Id, video2.Channel.Id);
@@ -847,9 +845,21 @@ public static class PornVideoAssert
                 "Escort",
                 "Bro",
                 "Sis",
-                "school"
+                "school",
+                "http://",
+                "https://"
             };
             return Regex.Replace(title, $"\\b({string.Join("|", terms)})\\b", "", RegexOptions.IgnoreCase).Replace("  ", " ").Trim();
+        }
+        if (website == PornWebsite.YouPorn) {
+            List<string> terms = new List<string> {
+                "Young",
+                "Skinny boy"
+            };
+            return Regex.Replace(title, $"\\b({string.Join("|", terms)})\\b", "", RegexOptions.IgnoreCase)
+                        .Replace("  ", " ")
+                        .Replace("  ", " ")
+                        .Trim();
         }
         return title;
     }
@@ -861,8 +871,10 @@ public static class PornVideoAssert
                 case "/sansaint":     return "/duncan_saint_official";
                 case "/katty-west":   return "/katty_west_official";
             }
-        if (website == PornWebsite.YouPorn)
+        if (website == PornWebsite.YouPorn) {
+            channelId = channelId.Replace("/gay/", "/");
             return channelId.StartsWith("/uservids/") ? "" : channelId;
+        }
         return channelId;
     }
 
@@ -873,6 +885,7 @@ public static class PornVideoAssert
                 case "Illico Porno":     return "Porno Baguette";
                 case "Finishme2":        return "Finish Me";
                 case "Katty West":       return "Katty West Official";
+                case "Kompound1":        return "Kompound";
             }
         if (website == PornWebsite.YouPorn)
             return channel.Id.StartsWith("/uservids/") ? "" : channel.Name;

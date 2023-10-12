@@ -85,8 +85,8 @@ public class PornSearchLastPageData : IEnumerable<object[]>
 
     private static IEnumerable<object[]> GetYouPornEmpty() {
         Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-            { PornSexOrientation.Straight, 6740 },
-            { PornSexOrientation.Gay, 790 }
+            { PornSexOrientation.Straight, 7914 },
+            { PornSexOrientation.Gay, 990 }
         };
         return lastPage.Select(c => new object[] { PornWebsite.YouPorn, "", c.Key, c.Value });
     }
@@ -94,15 +94,15 @@ public class PornSearchLastPageData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetYouPornOnePage() {
         Dictionary<PornSexOrientation, string> lastPage = new Dictionary<PornSexOrientation, string> {
             { PornSexOrientation.Straight, "amap" },
-            { PornSexOrientation.Gay, "abd7" }
+            { PornSexOrientation.Gay, "abd" }
         };
         return lastPage.Select(c => new object[] { PornWebsite.YouPorn, c.Value, c.Key, 1 });
     }
 
     private static IEnumerable<object[]> GetYouPornDoubleToys() {
         Dictionary<PornSexOrientation, int> lastPage = new Dictionary<PornSexOrientation, int> {
-            { PornSexOrientation.Straight, 87 },
-            { PornSexOrientation.Gay, 3 }
+            { PornSexOrientation.Straight, 132 },
+            { PornSexOrientation.Gay, 2 }
         };
         return lastPage.Select(c => new object[] { PornWebsite.YouPorn, "Double Toys", c.Key, c.Value });
     }

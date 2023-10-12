@@ -39,6 +39,7 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetXVideosUrl() {
         List<string> urls = new List<string> {
             "https://www.xvideos.com/video39855197/_",  // The uploader has not made this video available in your country
+            "https://www.xvideos.com/video71164191/a",  // XVideos RED
             "https://www.xvideos.com/video57788343/",
             "https://www.xvideos.com/video179088343/",
             "https://www.xvideos.com/video27488043/test"
@@ -48,7 +49,8 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
 
     private static IEnumerable<object[]> GetYouPornUrl() {
         List<string> urls = new List<string> {
-            "https://www.youporn.com/watch/16325190/", // This page is not available in your country
+            "https://www.youporn.com/watch/16325190/",  // This page is not available in your country
+            "https://www.youporn.com/watch/17150251/",  // This video has been deactivated.
             "https://www.youporn.com/watch/16492415/",
             "https://www.youporn.com/watch/XXXX/"
         };
