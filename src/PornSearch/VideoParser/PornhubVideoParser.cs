@@ -109,11 +109,11 @@ namespace PornSearch
         }
 
         public List<PornIdName> Actors() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.pornstarsWrapper > a[data-mxptype='Pornstar']");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.pornstarsWrapper > a[data-label='Pornstar']");
             return elements.OfType<IHtmlAnchorElement>()
                            .Select(anchor => new PornIdName {
                                        Id = anchor.GetAttribute("href"),
-                                       Name = anchor.Dataset["mxptext"].ToHtmlDecode()
+                                       Name = anchor.Text.ToHtmlDecode()
                                    })
                            .ToList();
         }
