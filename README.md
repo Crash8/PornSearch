@@ -126,7 +126,6 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 | :--- | :---------- |
 | Website | Source website |
 | SexOrientation | Sexual orientation |
-| IsFreePremium | Is video free premium |
 | Id | Video id |
 | Title | Video title |
 | Channel > Id | Channel id |
@@ -140,7 +139,6 @@ List<PornVideoThumb> videoThumbs = await pornSearch.SearchAsync(searchFilter);
 | :- | :-----: | :-----: | :-----: |
 | Website | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | SexOrientation | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| IsFreePremium | :white_check_mark: | | |
 | Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | Title | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
 | Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: _(1)_ |
@@ -168,7 +166,6 @@ PornVideo video2 = await pornSearch.GetVideoAsync(sourceVideo);
 | :--- | :---------- |
 | Website | Source website |
 | SexOrientation | Sexual orientation |
-| IsFreePremium | Is video free premium |
 | Id | Video id |
 | Title | Video title |
 | Channel > Id | Channel id |
@@ -196,7 +193,6 @@ PornVideo video2 = await pornSearch.GetVideoAsync(sourceVideo);
 | :- | :-----: | :-----: | :-----: |
 | Website | :white_check_mark: | :white_check_mark: |
 | SexOrientation | :white_check_mark: | :white_check_mark: _(2)_ | :white_check_mark: |
-| IsFreePremium | :white_check_mark: | | |
 | Id | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | Title | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
 | Channel > Id | :white_check_mark: | :white_check_mark: _(1)_ | :white_check_mark: |
