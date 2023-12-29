@@ -73,8 +73,7 @@ namespace PornSearch
 
         public string VideoEmbedUrl() {
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[name='twitter:player']");
-            string url = element?.Content ?? "";
-            return !string.IsNullOrEmpty(url) ? $"https://www.youporn.com{url}" : "";
+            return element?.Content ?? "";
         }
 
         public TimeSpan Duration() {
