@@ -40,13 +40,12 @@ public class MultipleVideoUrlData : IEnumerable<object[]>
 
     private static object[] GetXVideosUrl() {
         List<string> urls = new List<string> {
-            "https://www.xvideos.com/video36423251/dick_sucked_shemale_cums",
-            "https://www.xvideos.COM/video36423251/dick_sucked",
-            "https://www.xvideos.com/video36423251/a",
-            "https://www.xvideos.com/video36423251/test"
+            "https://www.xvideos.com/video.iibcpok6ba4/dick_suce_transexuelle_cums",
+            "https://www.xvideos.com/video.iibcpok6ba4/dick_suce",
+            "https://www.xvideos.com/video.iibcpok6ba4/a"
         };
         PornSourceVideo sourceVideo = new PornSourceVideo {
-            Id = "36423251",
+            Id = "iibcpok6ba4",
             Website = PornWebsite.XVideos
         };
         return new object[] { urls, sourceVideo };

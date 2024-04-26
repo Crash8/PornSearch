@@ -16,9 +16,8 @@ public static class PornVideoThumbAssert
         PornWebsite website = searchFilter.Website;
         string filter = searchFilter.Filter;
         int page = searchFilter.Page;
-        PornSexOrientation sexOrientation = searchFilter.SexOrientation;
         string description = $"{website}, '{filter}', {page}, {searchFilter.SexOrientation}";
-        int[] nbVideoMax = GetNbVideoMaxByPage(website, filter, page, sexOrientation, pageSearch);
+        int[] nbVideoMax = GetNbVideoMaxByPage(website, filter, page, pageSearch);
         switch (pageSearch) {
             case PageSearch.Empty:
                 Assert.True(0 == nbVideo, $"Value = 0, Value: {nbVideo} - {description}");
@@ -42,23 +41,15 @@ public static class PornVideoThumbAssert
         }
     }
 
-    public static int[] GetNbVideoMaxByPage(PornWebsite website, string filter, int page, PornSexOrientation sexOrientation,
-                                            PageSearch pageSearch) {
-        if (website == PornWebsite.Pornhub) {
-            if (string.IsNullOrWhiteSpace(filter))
-                return page == 1 ? new[] { 32, 32 } : new[] { 44, 44 };
-            if (pageSearch == PageSearch.Channel && page == 1)
-                return new[] { 30, 30 };
-            return page == 1 ? new[] { 32, 32 } : new[] { 44, 44 };
-        }
-        if (website == PornWebsite.XVideos) {
-            if (string.IsNullOrWhiteSpace(filter) && page == 1)
-                return sexOrientation == PornSexOrientation.Trans ? new[] { 33, 33 } : new[] { 48, 48 };
-            return new[] { 26, 27 };
-        }
-        if (website == PornWebsite.YouPorn)
-            return string.IsNullOrWhiteSpace(filter) ? new[] { 36, 36 } : new[] { 32, 32 };
-        throw new NotImplementedException();
+    public static int[] GetNbVideoMaxByPage(PornWebsite website, string filter, int page, PageSearch pageSearch) {
+        return website switch {
+            PornWebsite.Pornhub when string.IsNullOrWhiteSpace(filter) => page == 1 ? new[] { 32, 32 } : new[] { 44, 44 },
+            PornWebsite.Pornhub when pageSearch == PageSearch.Channel && page == 1 => new[] { 30, 30 },
+            PornWebsite.Pornhub => page == 1 ? new[] { 31, 32 } : new[] { 43, 44 },
+            PornWebsite.XVideos => string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 47, 48 } : new[] { 26, 27 },
+            PornWebsite.YouPorn => string.IsNullOrWhiteSpace(filter) ? new[] { 36, 36 } : new[] { 32, 32 },
+            _ => throw new NotImplementedException()
+        };
     }
 
     [AssertionMethod]
@@ -94,7 +85,7 @@ public static class PornVideoThumbAssert
                 Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20}|[0-9a-f]{13})$", id);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^[0-9]{3,8}$", id);
+                Assert.Matches("^[a-z0-9]{7,11}$", id);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^[0-9]{4,9}$", id);
@@ -161,7 +152,7 @@ public static class PornVideoThumbAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc|gcore-pic)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                thumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
@@ -181,7 +172,7 @@ public static class PornVideoThumbAssert
                                pageUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]+$", pageUrl);
+                Assert.Matches("^https://www[.]xvideos[.]com/video[.][a-z0-9]{7,11}/[^\\s]+$", pageUrl);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^https://www[.]youporn[.]com/watch/[0-9]{4,9}[^\\s]+$", pageUrl);
@@ -197,7 +188,7 @@ public static class PornVideoThumbAssert
                 Assert.Equal($"https://www.pornhub.com/view_video.php?viewkey={id}", pageUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.StartsWith($"https://www.xvideos.com/video{id}/", pageUrl);
+                Assert.StartsWith($"https://www.xvideos.com/video.{id}/", pageUrl);
                 break;
             case PornWebsite.YouPorn:
                 Assert.StartsWith($"https://www.youporn.com/watch/{id}/", pageUrl);

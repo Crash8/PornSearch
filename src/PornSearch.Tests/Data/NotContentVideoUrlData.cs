@@ -30,6 +30,8 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
         List<string> urls = new List<string> {
             "https://www.pornhub.com/view_video.php?viewkey=ph5b902a4e1a5b5", // This content is unavailable in France
             "https://fr.pornhub.com/view_video.php?viewkey=ph60851ff8c987c",  // This content is unavailable in France
+            "https://www.pornhub.com/view_video.php?viewkey=ph5fc04dbacd1e6", // This content is unavailable in France
+            "https://fr.pornhub.com/view_video.php?viewkey=ph620fea09ca64b",  // This content is unavailable in France
             "https://en.pornhub.com/view_video.php?viewkey=XXXX",
             "https://www.pornhub.com/view_video.php?viewkey=ph40851ff8c987d"
         };

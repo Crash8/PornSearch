@@ -32,7 +32,7 @@ public class PornRelatedVideoData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetPornhubStraight() {
         List<object[]> nbRelatedVideos = new List<object[]> {
             new object[] { 45, 45, "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0" },
-            new object[] { 46, 46, "https://www.pornhub.com/view_video.php?viewkey=ph5f734d9e8a4c8" }
+            new object[] { 45, 45, "https://www.pornhub.com/view_video.php?viewkey=ph5f734d9e8a4c8" }
         };
         return nbRelatedVideos;
     }
@@ -44,17 +44,17 @@ public class PornRelatedVideoData : IEnumerable<object[]>
     }
 
     private static IEnumerable<object[]> GetXVideosStraight() {
-        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video26195069/_" } };
+        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video.hlfbumd4167/_" } };
         return nbRelatedVideos;
     }
 
     private static IEnumerable<object[]> GetXVideosGay() {
-        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video59864125/_" } };
+        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video.kvhmukd804d/_" } };
         return nbRelatedVideos;
     }
 
     private static IEnumerable<object[]> GetXVideosTrans() {
-        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video63886273/_" } };
+        List<object[]> nbRelatedVideos = new List<object[]> { new object[] { 40, 40, "https://www.xvideos.com/video.utipmab84dd/_" } };
         return nbRelatedVideos;
     }
 

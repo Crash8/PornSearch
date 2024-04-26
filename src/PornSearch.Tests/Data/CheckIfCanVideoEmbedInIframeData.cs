@@ -28,10 +28,10 @@ public class CheckIfCanVideoEmbedInIframeData : IEnumerable<object[]>
     private static IEnumerable<object[]> GetPornhub() {
         return new List<object[]> {
             // Straight
-            new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph5fc04dbacd1e6", true },
+            new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph61d1f5079ab42", true },
             new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0", true },
             new object[] { "https://www.pornhub.com/view_video.php?viewkey=63dd6adb2b748", false },
-            new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph5de7d12f4fa33", false },
+            new object[] { "https://www.pornhub.com/view_video.php?viewkey=6541870bb8228", false },
             // Gay
             new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph5d432ce7a448c", true },
             new object[] { "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91", true }
@@ -48,7 +48,7 @@ public class CheckIfCanVideoEmbedInIframeData : IEnumerable<object[]>
             new object[] { "https://www.xvideos.com/video7859351/_", true },
             // Trans
             new object[] { "https://www.xvideos.com/video18936599/_", true },
-            new object[] { "https://www.xvideos.com/video63886273/_", true }
+            new object[] { "https://www.xvideos.com/video.utipmab84dd/_", true }
         };
     }
 

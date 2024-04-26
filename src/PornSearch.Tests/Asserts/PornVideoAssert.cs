@@ -47,7 +47,7 @@ public static class PornVideoAssert
                 Assert.Matches("^(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20}|[0-9a-f]{13})$", id);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^[0-9]{4,8}$", id);
+                Assert.Matches("^[a-z0-9]{7,11}$", id);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^[0-9]{7,9}$", id);
@@ -112,7 +112,7 @@ public static class PornVideoAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", thumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc|gcore-pic)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                thumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
@@ -131,7 +131,7 @@ public static class PornVideoAssert
                 Assert.Matches("^https://[bcde]i[.]phncdn[.]com/videos[^\\s]*[.]jpg$", smallThumbnailUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
+                Assert.Matches("^http(s)?://(cdn77-pic|img-l3|img-hw|img-cf|img-egc|gcore-pic)[.]xvideos-cdn[.]com/videos(_new)*/thumbs[^\\s.]*?[.][0-9]+[.]jpg$",
                                smallThumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
@@ -151,7 +151,7 @@ public static class PornVideoAssert
                                pageUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^https://www[.]xvideos[.]com/video[0-9]{4,8}/[^\\s]+$", pageUrl);
+                Assert.Matches("^https://www[.]xvideos[.]com/video[.][a-z0-9]{7,11}/[^\\s]+$", pageUrl);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^https://www[.]youporn[.]com/watch/[0-9]{7,9}/($|[^\\s]*$)", pageUrl);
@@ -168,7 +168,7 @@ public static class PornVideoAssert
                 Assert.Matches("^https://www[.]pornhub[.]com/embed/(ph[0-9a-f]{13}|[0-9]{5,10}|[a-f0-9]{20}|[0-9a-f]{13})$", videoEmbedUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.Matches("^https://www[.]xvideos[.]com/embedframe/[0-9]{4,8}$", videoEmbedUrl);
+                Assert.Matches("^https://www[.]xvideos[.]com/embedframe/[a-z0-9]{7,11}$", videoEmbedUrl);
                 break;
             case PornWebsite.YouPorn:
                 Assert.Matches("^https://www[.]youporn[.]com/embed/[0-9]{7,9}/($|[^\\s]+$)", videoEmbedUrl);
@@ -407,7 +407,7 @@ public static class PornVideoAssert
                 Assert.Equal($"https://www.pornhub.com/view_video.php?viewkey={id}", pageUrl);
                 break;
             case PornWebsite.XVideos:
-                Assert.StartsWith($"https://www.xvideos.com/video{id}/", pageUrl);
+                Assert.StartsWith($"https://www.xvideos.com/video.{id}/", pageUrl);
                 break;
             case PornWebsite.YouPorn:
                 Assert.StartsWith($"https://www.youporn.com/watch/{id}/", pageUrl);
@@ -675,7 +675,7 @@ public static class PornVideoAssert
                 break;
             case PornWebsite.XVideos:
                 // End of url can change value
-                const string pattern = "^https://www.xvideos.com/video([0-9]+)/.*$";
+                const string pattern = "^https://www.xvideos.com/video[.]([a-z0-9]{7,11})/.*$";
                 Assert.Equal(Regex.Replace(video1.PageUrl, pattern, "$1"), Regex.Replace(videoThumb.PageUrl, pattern, "$1"));
                 break;
             case PornWebsite.YouPorn:
@@ -774,8 +774,10 @@ public static class PornVideoAssert
             Assert.Equal(video1.RelatedVideos.Count, video2.RelatedVideos.Count);
             switch (video1.Website) {
                 case PornWebsite.Pornhub: {
-                    for (int i = 0; i < video1.RelatedVideos.Count; i++)
-                        PornVideoThumbAssert.Equal(video1.RelatedVideos[i], video2.RelatedVideos[i]);
+                    var relatedVideos1 = video1.RelatedVideos.Where(r1 => video2.RelatedVideos.Any(r2 => r1.Id == r2.Id)).ToList();
+                    Assert.True(relatedVideos1.Count >= 36, relatedVideos1.Count.ToString());
+                    foreach (PornVideoThumb videoThumb in relatedVideos1)
+                        PornVideoThumbAssert.Equal(videoThumb, video2.RelatedVideos.First(r => r.Id == videoThumb.Id));
                     break;
                 }
                 case PornWebsite.XVideos: {
@@ -867,9 +869,10 @@ public static class PornVideoAssert
     private static string CleanChannelId(string channelId, PornWebsite website) {
         if (website == PornWebsite.XVideos)
             switch (channelId) {
-                case "/illico-porno": return "/porno_baguette";
-                case "/sansaint":     return "/duncan_saint_official";
-                case "/katty-west":   return "/katty_west_official";
+                case "/illico-porno":                return "/porno_baguette";
+                case "/sansaint":                    return "/duncan_saint_official";
+                case "/katty-west":                  return "/katty_west_official";
+                case "/novinha_insaciavel_official": return "/novinha_insaciavel_official";
             }
         if (website == PornWebsite.YouPorn) {
             channelId = channelId.Replace("/gay/", "/");

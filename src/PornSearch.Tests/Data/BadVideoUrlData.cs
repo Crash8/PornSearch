@@ -56,6 +56,8 @@ public class BadVideoUrlData : IEnumerable<object[]>
             "https://www.xvideos.com/new/12",
             "https://www.xvideos.com/video64117055",
             "https://www.xvideos.com/video64117056/",
+            "https://www.xvideos.com/video.ucvbalk64cd",
+            "https://www.xvideos.com/video.ucvbalk64cd/",
             "https://www.xvideos.com/video/",
             "https://www.xvideos.com/video/test",
             "https://www.xvideos.red/video71164191/a" // XVideos RED
