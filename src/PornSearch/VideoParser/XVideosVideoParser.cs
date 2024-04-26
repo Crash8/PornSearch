@@ -38,9 +38,8 @@ namespace PornSearch
         }
 
         public string Id() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:url']");
-            string url = element?.Content ?? "";
-            Match match = Regex.Match(url, "/video([0-9]+)/");
+            string url = VideoEmbedUrl();
+            Match match = Regex.Match(url, "/embedframe/(.+)$");
             return match.Success ? match.Groups[1].Value : null;
         }
 
@@ -54,7 +53,7 @@ namespace PornSearch
             string url = element?.GetAttribute("href") ?? "/";
             int index = url.IndexOf("/", 1, StringComparison.Ordinal);
             return new PornIdName {
-                Id = index == -1 ? "" : url.Substring(index),
+                Id = index == -1 ? url : url.Substring(index),
                 Name = element?.QuerySelector("span.name")?.Text().ToHtmlDecode() ?? ""
             };
         }
@@ -130,7 +129,6 @@ namespace PornSearch
             return element?.Text().TransformToInt() ?? 0;
         }
 
-        // unreliable data
         public DateTime Date() {
             const string searchTerm = "\"uploadDate\":";
             const string pattern = "\"uploadDate\": \"([^T]*)";

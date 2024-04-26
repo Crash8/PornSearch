@@ -19,9 +19,10 @@ namespace PornSearch
 
         public bool IsAvailable() {
             IElement geoBlocked = _document.QuerySelector("div.geoBlocked");
+            IElement videoGeoUnavailable = _document.QuerySelector("div.videoGeoUnavailable");
             IElement noVideo = _document.QuerySelector("section.noVideo");
             IElement removed = _document.QuerySelector("div.removed");
-            return geoBlocked == null && noVideo == null && removed == null;
+            return geoBlocked == null && videoGeoUnavailable  == null && noVideo == null && removed == null;
         }
 
         public PornWebsite Website() {
@@ -109,7 +110,7 @@ namespace PornSearch
         }
 
         public List<PornIdName> Actors() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.pornstarsWrapper > a[data-label='Pornstar']");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.pornstarsWrapper > a[data-label='pornstar']");
             return elements.OfType<IHtmlAnchorElement>()
                            .Select(anchor => new PornIdName {
                                        Id = anchor.GetAttribute("href"),

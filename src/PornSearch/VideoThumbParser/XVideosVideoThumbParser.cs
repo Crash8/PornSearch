@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using PornSearch.Extensions;
@@ -9,6 +10,7 @@ namespace PornSearch
     {
         private readonly XVideosJsonRelatedVideos _jsonRoot;
         private readonly IHtmlDivElement _divRoot;
+        private string _url;
 
         public XVideosVideoThumbParser(XVideosJsonRelatedVideos root) {
             _jsonRoot = root;
@@ -27,14 +29,16 @@ namespace PornSearch
         }
 
         public string Id() {
-            return _jsonRoot != null ? _jsonRoot.id.ToString() : _divRoot.Dataset["id"];
+            string url = PageUrl();
+            Match match = Regex.Match(url, "/video[.]?([^/]*)/");
+            return match.Success ? match.Groups[1].Value : _divRoot.Dataset["id"];
         }
 
         public string Title() {
             if (_jsonRoot != null)
-                return _jsonRoot.tf.ToHtmlDecode();
+                return _jsonRoot.tf.ToHtmlDecode() ?? "";
             IHtmlAnchorElement element = _divRoot.QuerySelector<IHtmlAnchorElement>("p.title > a");
-            return element?.Title?.ToHtmlDecode();
+            return element?.Title?.ToHtmlDecode() ?? "";
         }
 
         public PornIdName Channel() {
@@ -51,7 +55,7 @@ namespace PornSearch
             }
             int index = channelId.IndexOf("/", 1, StringComparison.Ordinal);
             return new PornIdName {
-                Id = index == -1 ? "" : channelId.Substring(index),
+                Id = index == -1 ? channelId : channelId.Substring(index),
                 Name = channelName.ToHtmlDecode() ?? ""
             };
         }
@@ -64,13 +68,22 @@ namespace PornSearch
         }
 
         public string PageUrl() {
-            if (_jsonRoot != null)
-                return $"https://www.xvideos.com{_jsonRoot.u}";
-            IHtmlAnchorElement element = _divRoot.QuerySelector<IHtmlAnchorElement>("a");
-            string pageUrl = element?.GetAttribute("href")?.Replace("/THUMBNUM", "") ?? "";
-            if (pageUrl == "" || pageUrl.StartsWith("/search-video/"))
-                pageUrl = $"/video{Id()}/_";
-            return $"https://www.xvideos.com{pageUrl}";
+            if (_url == null) {
+                if (_jsonRoot != null) {
+                    _url = $"https://www.xvideos.com{_jsonRoot.u}";
+                }
+                else {
+                    IHtmlAnchorElement element = _divRoot.QuerySelector<IHtmlAnchorElement>("a");
+                    string pageUrl = element?.GetAttribute("href")?.Replace("/THUMBNUM", "") ?? "";
+                    if (pageUrl.StartsWith("/search-video/")) {
+                        PornHttpClient httpClient = new PornHttpClient();
+                        httpClient.SetResult(PornHttpClientResult.LocationFrom301);
+                        pageUrl = httpClient.SendAsync($"https://www.xvideos.com{pageUrl}").Result;
+                    }
+                    _url = $"https://www.xvideos.com{pageUrl}";
+                }
+            }
+            return _url;
         }
     }
 }

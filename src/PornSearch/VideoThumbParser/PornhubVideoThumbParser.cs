@@ -14,9 +14,13 @@ namespace PornSearch
 
         public bool IsAvailable() {
             // Channel Id may be empty if the video is not available in your country
-            return !string.IsNullOrWhiteSpace(Channel()?.Id)
+            bool ok = !string.IsNullOrWhiteSpace(Channel()?.Id)
+                   // thumbnail equal "https://ei.phncdn.com/www-static/images/private-video-big-premium.png?cache=2024041801"
+                   // if the video is not available in your country
+                   && !ThumbnailUrl().Contains("private-video-big-premium.png")
                    // Spicevids
                    && PathRelativeUrl() != "javascript:void(0)";
+            return ok;
         }
 
         public PornWebsite Website() {
@@ -33,7 +37,7 @@ namespace PornSearch
         }
 
         public PornIdName Channel() {
-            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("div.usernameWrap > a");
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("div.usernameWrap a");
             return element == null
                 ? null
                 : new PornIdName {

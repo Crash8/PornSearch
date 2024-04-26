@@ -64,18 +64,20 @@ namespace PornSearch
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
-            const string pattern = "^https://www[.]xvideos[.]com/video([0-9]+)/[^\\s]+$";
+            const string pattern = "^https://[a-z]{2,3}[.]xvideos(53)?[.](com|es)/video[.]?([^/]+)/[^\\s]+$";
             Match match = Regex.Match(url, pattern);
             return !match.Success
                 ? null
                 : new PornSourceVideo {
-                    Id = match.Groups[1].Value,
+                    Id = match.Groups[3].Value,
                     Website = PornWebsite.XVideos
                 };
         }
 
         protected override string MakeUrlVideo(string videoId) {
-            return $"https://www.xvideos.com/video{videoId}/a";
+            return Regex.IsMatch(videoId, "^[0-9]+$")
+                ? $"https://www.xvideos.com/video{videoId}/a"
+                : $"https://www.xvideos.com/video.{videoId}/a";
         }
 
         protected override IPornVideoParser GetVideoParser(IDocument document) {

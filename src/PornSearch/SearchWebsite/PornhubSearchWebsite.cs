@@ -50,7 +50,7 @@ namespace PornSearch
             content = content.Substring(content.IndexOf("function leastFactor", StringComparison.Ordinal));
             content = content.Substring(0, content.IndexOf("//-->", StringComparison.Ordinal));
             content = content.Replace("document.cookie=", "return ");
-            return new Engine().Execute(content).GetValue("go").Invoke() + "; accessAgeDisclaimerPH=1";
+            return new Engine().Execute(content).Invoke("go") + "accessAgeDisclaimerPH=1";
         }
 
         protected override IPornSearchParser GetSearchParser(IDocument document) {
