@@ -25,7 +25,7 @@ namespace PornSearch
         }
 
         public bool IsAvailableNextButton() {
-            return _pagination?.QuerySelector("div#next div.desactive") == null;
+            return _pagination?.QuerySelector("div#next div.inactive") == null;
         }
 
         public int? GetCurrentPageNumber() {
