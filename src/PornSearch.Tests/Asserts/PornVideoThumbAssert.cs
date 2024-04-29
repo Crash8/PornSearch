@@ -47,7 +47,8 @@ public static class PornVideoThumbAssert
             PornWebsite.Pornhub when pageSearch == PageSearch.Channel && page == 1 => new[] { 30, 30 },
             PornWebsite.Pornhub => page == 1 ? new[] { 31, 32 } : new[] { 43, 44 },
             PornWebsite.XVideos => string.IsNullOrWhiteSpace(filter) && page == 1 ? new[] { 47, 48 } : new[] { 26, 27 },
-            PornWebsite.YouPorn => string.IsNullOrWhiteSpace(filter) ? new[] { 36, 36 } : new[] { 32, 32 },
+            PornWebsite.YouPorn when string.IsNullOrWhiteSpace(filter) => page == 1 ? new[] { 34, 34 } : new[] { 36, 36 },
+            PornWebsite.YouPorn => new[] { 32, 32 },
             _ => throw new NotImplementedException()
         };
     }
@@ -262,8 +263,8 @@ public static class PornVideoThumbAssert
         Assert.Equal(videoThumb1.Id, videoThumb2.Id);
         Assert.Equal(videoThumb1.Title, videoThumb2.Title);
 
-            Assert.Equal(videoThumb1.Channel.Id, videoThumb2.Channel.Id);
-            Assert.Equal(videoThumb1.Channel.Name, videoThumb2.Channel.Name);
+        Assert.Equal(videoThumb1.Channel.Id, videoThumb2.Channel.Id);
+        Assert.Equal(videoThumb1.Channel.Name, videoThumb2.Channel.Name);
         switch (videoThumb1.Website) {
             case PornWebsite.Pornhub: {
                 // The 9th character can change value
@@ -275,17 +276,16 @@ public static class PornVideoThumbAssert
             case PornWebsite.XVideos: {
                 // The first subdomain and end of url can change value
                 const string pattern = "^http(s)?://[^.]*[.](.*?)[.][0-9]+[.]jpg$";
-                Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", "")
-                                  .Replace("thumbs169ll", "thumbs169"),
-                             Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", "")
+                Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$2").Replace("-1", "").Replace("-2", "").Replace("thumbs169ll", "thumbs169"),
+                             Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$2")
+                                  .Replace("-1", "")
+                                  .Replace("-2", "")
                                   .Replace("thumbs169ll", "thumbs169"));
                 break;
             }
             case PornWebsite.YouPorn: {
                 // The first subdomain of url can change value
                 const string pattern = "^https://[^.]*(.*)$";
-                Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$1"),
-                             Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$1"));
                 Assert.Equal(Regex.Replace(videoThumb1.ThumbnailUrl, pattern, "$1"),
                              Regex.Replace(videoThumb2.ThumbnailUrl, pattern, "$1"));
                 break;

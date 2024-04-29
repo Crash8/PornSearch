@@ -675,11 +675,13 @@ public static class PornVideoAssert
                 break;
             case PornWebsite.XVideos:
                 // End of url can change value
-                const string pattern = "^https://www.xvideos.com/video[.]([a-z0-9]{7,11})/.*$";
-                Assert.Equal(Regex.Replace(video1.PageUrl, pattern, "$1"), Regex.Replace(videoThumb.PageUrl, pattern, "$1"));
+                const string patternXv = "^https://www.xvideos.com/video[.]([a-z0-9]{7,11})/.*$";
+                Assert.Equal(Regex.Replace(video1.PageUrl, patternXv, "$1"), Regex.Replace(videoThumb.PageUrl, patternXv, "$1"));
                 break;
             case PornWebsite.YouPorn:
-                Assert.Equal(video1.PageUrl, videoThumb.PageUrl);
+                // End of url can change value
+                const string patternYp = "^(https://www.youporn.com/watch/[0-9]+/).*$";
+                Assert.Equal(Regex.Replace(video1.PageUrl, patternYp, "$1"), Regex.Replace(videoThumb.PageUrl, patternYp, "$1"));
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(video1.Website), video1.Website, null);
         }
@@ -722,8 +724,32 @@ public static class PornVideoAssert
             }
             default: throw new ArgumentOutOfRangeException();
         }
-        Assert.Equal(video1.PageUrl, video2.PageUrl);
-        Assert.Equal(video1.VideoEmbedUrl, video2.VideoEmbedUrl);
+        switch (video1.Website) {
+            case PornWebsite.Pornhub:
+            case PornWebsite.XVideos:
+                Assert.Equal(video1.PageUrl, video2.PageUrl);
+                break;
+            case PornWebsite.YouPorn: {
+                // End of url can change value
+                const string patternYp = "^(https://www.youporn.com/watch/[0-9]+/).*$";
+                Assert.Equal(Regex.Replace(video1.PageUrl, patternYp, "$1"), Regex.Replace(video2.PageUrl, patternYp, "$1"));
+                break;
+            }
+            default: throw new ArgumentOutOfRangeException();
+        }
+        switch (video1.Website) {
+            case PornWebsite.Pornhub:
+            case PornWebsite.XVideos:
+                Assert.Equal(video1.VideoEmbedUrl, video2.VideoEmbedUrl);
+                break;
+            case PornWebsite.YouPorn: {
+                // End of url can change value
+                const string patternYp = "^(https://www.youporn.com/embed/[0-9]+/).*$";
+                Assert.Equal(Regex.Replace(video1.VideoEmbedUrl, patternYp, "$1"), Regex.Replace(video2.VideoEmbedUrl, patternYp, "$1"));
+                break;
+            }
+            default: throw new ArgumentOutOfRangeException();
+        }
         Assert.Equal(video1.Duration, video2.Duration);
         if (video1.Categories == null) {
             Assert.Null(video2.Categories);

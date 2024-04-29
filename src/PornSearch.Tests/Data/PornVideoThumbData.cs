@@ -337,7 +337,7 @@ public class PornVideoThumbData : IEnumerable<object[]>
                     Id = "/channel/true-anal/",
                     Name = "True Anal"
                 },
-                ThumbnailUrl = "https://fi1.ypncdn.com/201805/02/14545647/original/100(m=e8KSagaaaa).jpg",
+                ThumbnailUrl = "https://di1.ypncdn.com/m=eafT8f/201805/02/14545647/original/100.jpg",
                 PageUrl = "https://www.youporn.com/watch/14545647/true-anal-megan-rain-gets-her-butt-stuffed/"
             },
             new() {
@@ -349,33 +349,33 @@ public class PornVideoThumbData : IEnumerable<object[]>
                     Id = "/channel/holed/",
                     Name = "Holed"
                 },
-                ThumbnailUrl =
-                    "https://fi1.ypncdn.com/201701/24/13449035/original/8/holed-cute-brunette-aidra-fox-enjoys-an-anal-fuckfest-8(m=e8KSKgaaaa).jpg",
+                ThumbnailUrl = "https://di1.ypncdn.com/m=eafT8f/201701/24/13449035/original/15.jpg",
                 PageUrl = "https://www.youporn.com/watch/13449035/holed-cute-brunette-aidra-fox-enjoys-an-anal-fuckfest/"
             },
             new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Straight,
                 Id = "16066894",
-                Title = "Twistys - Amazing Girls Molly Stewart Desiree Dulce Enjoyed Each Other",
+                Title = "Twistys - Super Hot Babes Molly Stewart & Desiree Dulce Had Sex",
                 Channel = new PornIdName {
                     Id = "/channel/twistys/",
                     Name = "Twistys"
                 },
-                ThumbnailUrl = "https://fi1-ph.ypncdn.com/videos/202007/10/331751472/original/8(m=e8KSKgaaaa)(mh=K8b1gDyUSXb-kqIG).jpg",
-                PageUrl = "https://www.youporn.com/watch/16066894/twistys-amazing-girls-molly-stewart-desiree-dulce-enjoyed-each-other/",
+                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202007/10/331751472/original/(m=eafT8f)(mh=4PKOMDO0khBc3hcu)0.jpg",
+                PageUrl = "https://www.youporn.com/watch/16066894/",
             },
             new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Straight,
-                Id = "17065083",
-                Title = "Je la baise et elle me suce en guise de remerciement",
+                Id = "16621610",
+                Title = "TRIO AVEC ESCORTE À L'HÔTEL MA FEMME GOÛTE À LA CHATTE POUR LA PREMIÈRE FOIS FFM",
                 Channel = new PornIdName {
                     Id = "",
                     Name = ""
                 },
-                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202211/15/419589841/original/8(m=e8KSKgaaaa)(mh=W2JoGKObF_6XzMWX).jpg",
-                PageUrl = "https://www.youporn.com/watch/17065083/je-la-baise-et-elle-me-suce-en-guise-de-remerciement/"
+                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202010/28/364664191/original/(m=eafT8f)(mh=rHFkT539TbUf95RC)8.jpg",
+                PageUrl =
+                    "https://www.youporn.com/watch/16621610/"
             }
         };
         return videoThumbs.Select(i => new object[] { i });
@@ -387,25 +387,25 @@ public class PornVideoThumbData : IEnumerable<object[]>
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Gay,
                 Id = "16063976",
-                Title = "FalconStudios - Ashley Ryder Gets Dominated & DP'd",
+                Title = "Ashley Ryder Picked Up By 2 Hunks, Gets Dominated & DP'd",
                 Channel = new PornIdName {
                     Id = "/gay/channel/falcon-studios/",
                     Name = "Falcon Studios"
                 },
-                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202007/07/330899932/original/15(m=e8KSKgaaaa)(mh=mAYRFlcD1oPcipYv).jpg",
-                PageUrl = "https://www.youporn.com/watch/16063976/falconstudios-ashley-ryder-gets-dominated-dpd/"
+                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202007/07/330899932/original/(m=eafT8f)(mh=z04kIFWNEkC9euHo)15.jpg",
+                PageUrl = "https://www.youporn.com/watch/16063976/"
             },
             new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Gay,
                 Id = "15787014",
-                Title = "Austin Wolf Stacks 2 Jocks And Plows Them Both FalconStudios",
+                Title = "FalconStudios Austin Wolf Stacks 2 Jocks And Plows Them Both",
                 Channel = new PornIdName {
                     Id = "/gay/channel/falcon-studios/",
                     Name = "Falcon Studios"
                 },
-                ThumbnailUrl = "https://fi1-ph.ypncdn.com/videos/202001/06/274412661/original/8(m=e8KSKgaaaa)(mh=AQ3eCF6YCCTE7qbV).jpg",
-                PageUrl = "https://www.youporn.com/watch/15787014/austin-wolf-stacks-2-jocks-and-plows-them-both-falconstudios/"
+                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202001/06/274412661/original/(m=eafT8f)(mh=b8RIvHPaqxlUz8hl)9.jpg",
+                PageUrl = "https://www.youporn.com/watch/15787014/"
             },
             new() {
                 Website = PornWebsite.YouPorn,
@@ -416,8 +416,7 @@ public class PornVideoThumbData : IEnumerable<object[]>
                     Id = "/gay/channel/next-door-raw/",
                     Name = "Next Door Raw"
                 },
-                ThumbnailUrl =
-                    "https://fi1.ypncdn.com/201802/08/14357193/original/8/nextdoorraw-cheating-raw-style-in-the-next-room-sorry-8(m=e8KSKgaaaa).jpg",
+                ThumbnailUrl = "https://di1.ypncdn.com/m=eafT8f/201802/08/14357193/original/14.jpg",
                 PageUrl = "https://www.youporn.com/watch/14357193/nextdoorraw-cheating-raw-style-in-the-next-room-sorry/"
             },
             new() {
@@ -429,7 +428,7 @@ public class PornVideoThumbData : IEnumerable<object[]>
                     Id = "",
                     Name = ""
                 },
-                ThumbnailUrl = "https://fi1-ph.ypncdn.com/videos/202009/06/349439741/original/8(m=e8KSKgaaaa)(mh=dgNW6CCXdLHGcPqD).jpg",
+                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202009/06/349439741/original/(m=eafT8f)(mh=HGJLh-5TaFy4er3C)0.jpg",
                 PageUrl =
                     "https://www.youporn.com/watch/16391424/rencontre-avec-le-minet-bien-monte-snauwflake-au-parc-qui-finit-avec-une-baise-sans-capote/"
             }

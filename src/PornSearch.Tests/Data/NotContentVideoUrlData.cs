@@ -53,6 +53,7 @@ public class NotContentVideoUrlData : IEnumerable<object[]>
         List<string> urls = new List<string> {
             "https://www.youporn.com/watch/16325190/",  // This page is not available in your country
             "https://www.youporn.com/watch/17150251/",  // This video has been deactivated.
+            "https://www.youporn.com/watch/17065083/",  // This page is not available in your location
             "https://www.youporn.com/watch/16492415/",
             "https://www.youporn.com/watch/XXXX/"
         };
