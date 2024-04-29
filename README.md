@@ -14,8 +14,8 @@ Simple library to search adult content.
 
 Add the following Nuget packages:
 
- - ```AngleSharp``` >= ```1.0.1```
- - ```Jint``` >= ```2.11.58```
+ - ```AngleSharp``` >= ```1.1.2```
+ - ```Jint``` >= ```3.1.0```
  - ```Newtonsoft.Json``` >= ```13.0.2```
 
 ## Starting point
