@@ -135,7 +135,7 @@ public static class PornVideoAssert
                                smallThumbnailUrl);
                 break;
             case PornWebsite.YouPorn:
-                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph)[.]ypncdn[.]com/(videos/|m=(.*)/)?[0-9]{6}/[0-9]{2}/[0-9]{7,9}/[^\\s.]*[.]jpg$",
+                Assert.Matches("^https://(fi1|fi1-ph|di1|di1-ph|eb-ph)[.]ypncdn[.]com/(videos/|m=(.*)/)?[0-9]{6}/[0-9]{2}/[0-9]{7,9}/[^\\s.]*[.]jpg$",
                                smallThumbnailUrl);
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(website), website, null);

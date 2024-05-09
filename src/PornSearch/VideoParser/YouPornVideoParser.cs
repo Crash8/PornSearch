@@ -63,7 +63,7 @@ namespace PornSearch
 
         public string SmallThumbnailUrl() {
             IHtmlVideoElement element = _document.QuerySelector<IHtmlVideoElement>("div#videoContainer video");
-            return element?.Source ?? "";
+            return element?.Poster ?? "";
         }
 
         public string PageUrl() {
@@ -112,7 +112,7 @@ namespace PornSearch
         public int NbViews() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("interactionCount", StringComparison.Ordinal) > 0);
-            Match match = Regex.Match(element?.TextContent ?? "", ",\"interactionCount\":([^}]*)");
+            Match match = Regex.Match(element?.TextContent ?? "", ",\"interactionCount\":([^},]*)");
             return match.Success ? match.Groups[1].Value.TransformToInt() : 0;
         }
 
