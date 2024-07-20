@@ -45,15 +45,15 @@ namespace PornSearch
             string channelId;
             string channelName;
             if (_jsonRoot != null) {
-                channelId = _jsonRoot.pu ?? "/";
+                channelId = _jsonRoot.pu ?? "";
                 channelName = _jsonRoot.pn;
             }
             else {
                 IHtmlAnchorElement element = _divRoot.QuerySelector<IHtmlAnchorElement>("p.metadata a");
-                channelId = element?.GetAttribute("href") ?? "/";
+                channelId = element?.GetAttribute("href") ?? "";
                 channelName = element?.QuerySelector("span.name")?.Text();
             }
-            int index = channelId.IndexOf("/", 1, StringComparison.Ordinal);
+            int index = string.IsNullOrEmpty(channelId) ? -1 : channelId.IndexOf("/", 1, StringComparison.Ordinal);
             return new PornIdName {
                 Id = index == -1 ? channelId : channelId.Substring(index),
                 Name = channelName.ToHtmlDecode() ?? ""

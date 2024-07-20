@@ -50,8 +50,8 @@ namespace PornSearch
 
         public PornIdName Channel() {
             IHtmlAnchorElement element = _document.QuerySelector<IHtmlAnchorElement>("li.main-uploader > a");
-            string url = element?.GetAttribute("href") ?? "/";
-            int index = url.IndexOf("/", 1, StringComparison.Ordinal);
+            string url = element?.GetAttribute("href") ?? "";
+            int index = string.IsNullOrEmpty(url) ? -1 : url.IndexOf("/", 1, StringComparison.Ordinal);
             return new PornIdName {
                 Id = index == -1 ? url : url.Substring(index),
                 Name = element?.QuerySelector("span.name")?.Text().ToHtmlDecode() ?? ""
