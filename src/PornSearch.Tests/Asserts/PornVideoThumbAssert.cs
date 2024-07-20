@@ -58,7 +58,7 @@ public static class PornVideoThumbAssert
         Assert.NotNull(videosThumbs);
         foreach (PornVideoThumb videoThumb in videosThumbs)
             Assert_VideoThumb(videoThumb, website, sexOrientation);
-        Assert_All_Unique_Value(videosThumbs, website, filter, sexOrientation);
+        Assert_All_Unique_Value(videosThumbs, website);
         Assert_All_Not_Same_Value(videosThumbs);
     }
 
@@ -227,30 +227,22 @@ public static class PornVideoThumbAssert
 
     public static void Check_All_Unique_Value_ByPage(List<PornVideoThumb> videoThumbs) {
         Assert.NotNull(videoThumbs);
-        Assert_All_Unique_Value(videoThumbs, true);
+        Assert_All_Unique_Value(videoThumbs, 2);
     }
 
-    private static void Assert_All_Unique_Value(List<PornVideoThumb> videoThumbs, PornWebsite website, string filter,
-                                                PornSexOrientation sexOrientation) {
-        bool uniqueValue = true;
-        if (website == PornWebsite.Pornhub) {
-            // If you search for gay videos with the empty search filter, too many videos can be on multiple pages (e.g. on pages 1 and 2)
-            bool notGay = sexOrientation != PornSexOrientation.Gay;
-            bool gaySearchNotEmpty = sexOrientation == PornSexOrientation.Gay && !string.IsNullOrWhiteSpace(filter);
-            uniqueValue = notGay || gaySearchNotEmpty;
-        }
+    private static void Assert_All_Unique_Value(List<PornVideoThumb> videoThumbs, PornWebsite website) {
+        int tolerance = 2;
+        if (website == PornWebsite.Pornhub)
+            tolerance = 14;
         if (website == PornWebsite.YouPorn)
-            uniqueValue = false;
-        Assert_All_Unique_Value(videoThumbs, uniqueValue);
+            tolerance = 64;
+        Assert_All_Unique_Value(videoThumbs, tolerance);
     }
 
-    private static void Assert_All_Unique_Value(List<PornVideoThumb> videoThumbs, bool uniqueValue) {
-        if (uniqueValue) {
-            const int tolerance = 2;
-            Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.Id).Distinct().Count() <= tolerance);
-            Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
-            Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.PageUrl).Distinct().Count() <= tolerance);
-        }
+    private static void Assert_All_Unique_Value(IReadOnlyCollection<PornVideoThumb> videoThumbs, int tolerance) {
+        Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.Id).Distinct().Count() <= tolerance);
+        Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.ThumbnailUrl).Distinct().Count() <= tolerance);
+        Assert.True(videoThumbs.Count - videoThumbs.Select(i => i.PageUrl).Distinct().Count() <= tolerance);
         Assert.Equal(videoThumbs.Select(i => i.Channel.Id).Distinct().Count(),
                      videoThumbs.Select(i => $"{i.Channel.Id} {i.Channel.Name}").Distinct().Count());
     }

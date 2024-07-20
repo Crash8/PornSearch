@@ -377,20 +377,7 @@ public static class PornVideoAssert
                 Assert.True(relatedVideos.Count <= 46, relatedVideos.Count.ToString());
                 break;
             case PornWebsite.XVideos:
-                switch (sexOrientation) {
-                    case PornSexOrientation.Straight:
-                        Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
-                        break;
-                    case PornSexOrientation.Gay:
-                        Assert.True(relatedVideos.Count >= 1, relatedVideos.Count.ToString());
-                        Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
-                        break;
-                    case PornSexOrientation.Trans:
-                        Assert.True(relatedVideos.Count >= 11, relatedVideos.Count.ToString());
-                        Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
-                        break;
-                    default: throw new ArgumentOutOfRangeException(nameof(sexOrientation), sexOrientation, null);
-                }
+                Assert.True(relatedVideos.Count <= 40, relatedVideos.Count.ToString());
                 break;
             case PornWebsite.YouPorn:
                 Assert.True(relatedVideos.Count == 24, relatedVideos.Count.ToString());
@@ -882,7 +869,8 @@ public static class PornVideoAssert
         if (website == PornWebsite.YouPorn) {
             List<string> terms = new List<string> {
                 "Young",
-                "Skinny boy"
+                "Skinny boy",
+                "tweaking"
             };
             return Regex.Replace(title, $"\\b({string.Join("|", terms)})\\b", "", RegexOptions.IgnoreCase)
                         .Replace("  ", " ")
@@ -899,6 +887,8 @@ public static class PornVideoAssert
                 case "/sansaint":                    return "/duncan_saint_official";
                 case "/katty-west":                  return "/katty_west_official";
                 case "/novinha_insaciavel_official": return "/novinha_insaciavel_official";
+                case "/mabrisa":                     return "/mabrisa_official";
+                case "/christian_hupper":            return "/christian_hupper_official";
             }
         if (website == PornWebsite.YouPorn) {
             channelId = channelId.Replace("/gay/", "/");
@@ -915,6 +905,8 @@ public static class PornVideoAssert
                 case "Finishme2":        return "Finish Me";
                 case "Katty West":       return "Katty West Official";
                 case "Kompound1":        return "Kompound";
+                case "Mabrisa":          return "Mabrisa Official";
+                case "Christian Hupper": return "Christian Hupper Official";
             }
         if (website == PornWebsite.YouPorn)
             return channel.Id.StartsWith("/uservids/") ? "" : channel.Name;

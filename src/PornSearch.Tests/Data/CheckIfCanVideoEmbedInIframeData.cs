@@ -61,7 +61,7 @@ public class CheckIfCanVideoEmbedInIframeData : IEnumerable<object[]>
             new object[] { "https://www.youporn.com/watch/15227485", false },
             // Gay
             new object[] { "https://www.youporn.com/watch/16063976/", true },
-            new object[] { "https://www.youporn.com/watch/15787014/", true }
+            new object[] { "https://www.youporn.com/watch/102982751/", true }
         };
     }
 

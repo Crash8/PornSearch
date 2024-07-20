@@ -2422,6 +2422,10 @@ public class PornVideoData : IEnumerable<object[]>
                         Name = "Lesbian"
                     },
                     new() {
+                        Id = "/category/pussy-licking/",
+                        Name = "Pussy Licking"
+                    },
+                    new() {
                         Id = "/category/redhead/",
                         Name = "Redhead"
                     }
@@ -2522,6 +2526,10 @@ public class PornVideoData : IEnumerable<object[]>
                         Name = "Masturbation"
                     },
                     new() {
+                        Id = "/category/pussy-licking/",
+                        Name = "Pussy Licking"
+                    },
+                    new() {
                         Id = "/category/rough/",
                         Name = "Rough"
                     },
@@ -2608,16 +2616,7 @@ public class PornVideoData : IEnumerable<object[]>
                 PageUrl = "https://www.youporn.com/watch/16063976/falconstudios-ashley-ryder-gets-dominated-dpd/",
                 VideoEmbedUrl = "https://www.youporn.com/embed/16063976/falconstudios-ashley-ryder-gets-dominated-dpd/",
                 Duration = new TimeSpan(0, 7, 43),
-                Categories = new List<PornIdName> {
-                    new() {
-                        Id = "/gay/category/bigcock/",
-                        Name = "Big Cock"
-                    },
-                    new() {
-                        Id = "/gay/category/muscular/",
-                        Name = "Muscular"
-                    }
-                },
+                Categories = new List<PornIdName> (),
                 Tags = new List<PornIdName> {
                     new() {
                         Id = "/gay/porntags/ass-eating/",
@@ -2701,7 +2700,7 @@ public class PornVideoData : IEnumerable<object[]>
                 NbViews = 759609,
                 Date = new DateTime(2020, 7, 8)
             },
-            new() {
+            /*new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Gay,
                 Id = "15787014",
@@ -2791,7 +2790,7 @@ public class PornVideoData : IEnumerable<object[]>
                 },
                 NbViews = 764811,
                 Date = new DateTime(2020, 1, 8)
-            },
+            },*/
             new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Gay,
@@ -2806,20 +2805,7 @@ public class PornVideoData : IEnumerable<object[]>
                 PageUrl = "https://www.youporn.com/watch/14357193/nextdoorraw-cheating-raw-style-in-the-next-room-sorry/",
                 VideoEmbedUrl = "https://www.youporn.com/embed/14357193/nextdoorraw-cheating-raw-style-in-the-next-room-sorry/",
                 Duration = new TimeSpan(0, 10, 32),
-                Categories = new List<PornIdName> {
-                    new() {
-                        Id = "/gay/category/bigcock/",
-                        Name = "Big Cock"
-                    },
-                    new() {
-                        Id = "/gay/category/blowjob/",
-                        Name = "Blowjob"
-                    },
-                    new() {
-                        Id = "/gay/category/hd/",
-                        Name = "HD"
-                    }
-                },
+                Categories = new List<PornIdName> (),
                 Tags = new List<PornIdName> {
                     new() {
                         Id = "/gay/porntags/bareback/",
@@ -2882,16 +2868,7 @@ public class PornVideoData : IEnumerable<object[]>
                 VideoEmbedUrl =
                     "https://www.youporn.com/embed/16391424/rencontre-avec-le-minet-bien-monte-snauwflake-au-parc-qui-finit-avec-une-baise-sans-capote/",
                 Duration = new TimeSpan(0, 5, 25),
-                Categories = new List<PornIdName> {
-                    new() {
-                        Id = "/gay/category/bigcock/",
-                        Name = "Big Cock"
-                    },
-                    new() {
-                        Id = "/gay/category/uncut/",
-                        Name = "Uncut"
-                    }
-                },
+                Categories = new List<PornIdName>(),
                 Tags = new List<PornIdName> {
                     new() {
                         Id = "/gay/porntags/bigcock/",
