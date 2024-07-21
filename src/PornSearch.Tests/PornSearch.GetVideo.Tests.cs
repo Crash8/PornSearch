@@ -187,6 +187,8 @@ public class PornSearch_GetVideo_Tests
         });
         Assert.Null(video);
 
+        var check = await pornSearch.CheckIfCanVideoEmbedInIframeAsync(video);
+
         var test = await pornSearch.SearchAsync(new PornSearchFilter {
             //Filter = "PLEASE CUM IN ME IN THE ASS! Stella_vegas",
             Filter = "Emmanuelle Worley",

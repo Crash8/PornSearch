@@ -160,34 +160,20 @@ public class PornVideoThumbData : IEnumerable<object[]>
                     "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/25/12/97/25129756a8d056392608ce2a33f1cf03/25129756a8d056392608ce2a33f1cf03.4.jpg",
                 PageUrl = "https://www.xvideos.com/video.kdttlbff98e/why_is_this_pussy_wet_vol_72"
             },
-            // Fix no NbViews
-            /*new() {
-                Website = PornWebsite.XVideos,
-                SexOrientation = PornSexOrientation.Straight,
-                Id = "64398615",
-                Title = "E-girl saborosa, apetitosa na manteiga",
-                Channel = new PornIdName {
-                    Id = "/wasler",
-                    Name = "Wasler"
-                },
-                ThumbnailUrl =
-                    "http://img-cf.xvideos-cdn.com/videos/thumbs169ll/14/c7/14/14c714f1daf14b1859dbd9e1c8b5c4e3-1/14c714f1daf14b1859dbd9e1c8b5c4e3.27.jpg",
-                PageUrl = "https://www.xvideos.com/video64398615/e-girl_saborosa_apetitosa_na_manteiga"
-            },*/
             // Fix verified profile tag
-            /*new() {
+            new() {
                 Website = PornWebsite.XVideos,
                 SexOrientation = PornSexOrientation.Straight,
-                Id = "51984073",
-                Title = "Hot Blonde and a Lucky *** My Free ChatRoom www.siswetlive.com/siswet19",
+                Id = "udmuhcfcdb7",
+                Title = "Verification video",
                 Channel = new PornIdName {
-                    Id = "/siswet",
-                    Name = "Siswet Official"
+                    Id = "/harnikandreea",
+                    Name = "Harnikandreea"
                 },
                 ThumbnailUrl =
-                    "https://img-l3.xvideos-cdn.com/videos/thumbs169ll/8d/60/f4/8d60f41d9d89d9d7f3777bd0c8c1d37e/8d60f41d9d89d9d7f3777bd0c8c1d37e.3.jpg",
-                PageUrl = "https://www.xvideos.com/video51984073/hot_blonde_and_a_lucky_my_free_chatroom_www.siswetlive.com_siswet19"
-            },*/
+                    "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/94/d1/08/94d10842ae8992b4834be50ea6017510/94d10842ae8992b4834be50ea6017510.15.jpg",
+                PageUrl = "https://www.xvideos.com/video.udmuhcfcdb7/video_de_verification"
+            },
             new() {
                 Website = PornWebsite.XVideos,
                 SexOrientation = PornSexOrientation.Straight,
@@ -395,18 +381,6 @@ public class PornVideoThumbData : IEnumerable<object[]>
                 ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202007/07/330899932/original/(m=eafT8f)(mh=z04kIFWNEkC9euHo)15.jpg",
                 PageUrl = "https://www.youporn.com/watch/16063976/"
             },
-            /*new() {
-                Website = PornWebsite.YouPorn,
-                SexOrientation = PornSexOrientation.Gay,
-                Id = "15787014",
-                Title = "FalconStudios Austin Wolf Stacks 2 Jocks And Plows Them Both",
-                Channel = new PornIdName {
-                    Id = "/gay/channel/falcon-studios/",
-                    Name = "Falcon Studios"
-                },
-                ThumbnailUrl = "https://di1-ph.ypncdn.com/videos/202001/06/274412661/original/(m=eafT8f)(mh=b8RIvHPaqxlUz8hl)9.jpg",
-                PageUrl = "https://www.youporn.com/watch/15787014/"
-            },*/
             new() {
                 Website = PornWebsite.YouPorn,
                 SexOrientation = PornSexOrientation.Gay,
