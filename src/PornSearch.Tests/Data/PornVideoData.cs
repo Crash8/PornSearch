@@ -1278,7 +1278,7 @@ public class PornVideoData : IEnumerable<object[]>
                     "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/94/d1/08/94d10842ae8992b4834be50ea6017510/94d10842ae8992b4834be50ea6017510.15.jpg",
                 SmallThumbnailUrl =
                     "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/94/d1/08/94d10842ae8992b4834be50ea6017510/94d10842ae8992b4834be50ea6017510.15.jpg",
-                PageUrl = "https://www.xvideos.com/video.udmuhcfcdb7/video_de_verification",
+                PageUrl = "https://www.xvideos.com/video.udmuhcfcdb7/verification_video",
                 VideoEmbedUrl = "https://www.xvideos.com/embedframe/udmuhcfcdb7",
                 Duration = new TimeSpan(0, 2, 2),
                 Tags = new List<PornIdName> {
