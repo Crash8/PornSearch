@@ -140,13 +140,13 @@ namespace PornSearch
 
         public DateTime Date() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
-            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("'dimension14'", StringComparison.Ordinal) > 0);
-            Match match = Regex.Match(element?.TextContent ?? "", "'dimension14', '([^']*)");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("'video_date_published'", StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", "'video_date_published' : '([^']*)");
             return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture) : DateTime.MinValue;
         }
 
         public List<PornVideoThumb> RelatedVideos() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("ul#recommendedVideos > li, ul#relatedVideosCenter > li");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("ul[class='videos'] > li, ul#relatedVideosListing > li");
             return elements.OfType<IHtmlListItemElement>()
                            .Select(li => new PornhubVideoThumbParser(li))
                            .Where(p => p.IsAvailable())
