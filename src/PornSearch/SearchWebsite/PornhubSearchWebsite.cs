@@ -85,7 +85,9 @@ namespace PornSearch
             if (string.IsNullOrEmpty(url))
                 return false;
             PornHttpClient httpClient = new PornHttpClient();
-            string content = await httpClient.SendAsync(url);
+            string content = await httpClient.SendAsync(url) ?? await httpClient.SendAsync(url);
+            if (content == null)
+                return false;
             IConfiguration config = Configuration.Default;
             IBrowsingContext context = BrowsingContext.New(config);
             IDocument documentVideoEmbed = await context.OpenAsync(req => req.Content(content));
