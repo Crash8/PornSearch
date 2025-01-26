@@ -98,7 +98,7 @@ public partial class PornSearch_Search_Tests
     [Theory]
     [ClassData(typeof(PornWebsiteData))]
     public async Task Search_OK_Amateur(PornWebsite website) {
-        await CheckSearchOn3PagesAsync(website, "Amateur", 1, PageSearch.Complete);
+        await CheckSearchOn3PagesAsync(website, "Amateur", 1, website == PornWebsite.Pornhub ? PageSearch.Channel : PageSearch.Complete);
     }
 
     [Theory]

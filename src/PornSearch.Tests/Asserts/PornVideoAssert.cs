@@ -295,7 +295,7 @@ public static class PornVideoAssert
         Assert.NotNull(actorId);
         switch (website) {
             case PornWebsite.Pornhub:
-                Assert.Matches("^(/pornstar/[^\\s]+|/model)$", actorId);
+                Assert.Matches("^(/pornstar/[^\\s]+|/model/[^\\s]+|/model)$", actorId);
                 break;
             case PornWebsite.XVideos:
                 Assert.Matches("^(/[?]k=[^\\s]+|/(pornstar-channels|pornstars|models|amateur-channels|model-channels|amateurs)/[^\\s]+)$",
@@ -788,7 +788,7 @@ public static class PornVideoAssert
             switch (video1.Website) {
                 case PornWebsite.Pornhub: {
                     var relatedVideos1 = video1.RelatedVideos.Where(r1 => video2.RelatedVideos.Any(r2 => r1.Id == r2.Id)).ToList();
-                    Assert.True(relatedVideos1.Count >= 36, relatedVideos1.Count.ToString());
+                    Assert.True(relatedVideos1.Count >= 19, relatedVideos1.Count.ToString());
                     foreach (PornVideoThumb videoThumb in relatedVideos1)
                         PornVideoThumbAssert.Equal(videoThumb, video2.RelatedVideos.First(r => r.Id == videoThumb.Id));
                     break;

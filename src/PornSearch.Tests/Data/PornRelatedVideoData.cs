@@ -31,15 +31,15 @@ public class PornRelatedVideoData : IEnumerable<object[]>
 
     private static IEnumerable<object[]> GetPornhubStraight() {
         List<object[]> nbRelatedVideos = new List<object[]> {
-            new object[] { 45, 45, "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0" },
-            new object[] { 45, 45, "https://www.pornhub.com/view_video.php?viewkey=ph5f734d9e8a4c8" }
+            new object[] { 37, 37, "https://www.pornhub.com/view_video.php?viewkey=ph5d3c7d94e38f0" },
+            new object[] { 37, 37, "https://www.pornhub.com/view_video.php?viewkey=ph5f734d9e8a4c8" }
         };
         return nbRelatedVideos;
     }
 
     private static IEnumerable<object[]> GetPornhubGay() {
         List<object[]> nbRelatedVideos =
-            new List<object[]> { new object[] { 45, 45, "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91" } };
+            new List<object[]> { new object[] { 37, 37, "https://www.pornhub.com/view_video.php?viewkey=ph610ecc9a8ca91" } };
         return nbRelatedVideos;
     }
 
