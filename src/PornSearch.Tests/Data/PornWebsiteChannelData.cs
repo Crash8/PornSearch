@@ -44,8 +44,8 @@ public class PornWebsiteChannelData : IEnumerable<object[]>
         Dictionary<string, PornSexOrientation> channels = new Dictionary<string, PornSexOrientation> {
             // Pornstars
             { "Mia Khalifa", PornSexOrientation.Straight },
-            { "PIGBOY", PornSexOrientation.Gay },
-            { "Lola Spais", PornSexOrientation.Trans },
+            { "Allen King", PornSexOrientation.Gay },
+            { "Rosy Pinheiro", PornSexOrientation.Trans },
             // Channels
             { "Team Skeet", PornSexOrientation.Straight },
             { "Gaywire", PornSexOrientation.Gay },
