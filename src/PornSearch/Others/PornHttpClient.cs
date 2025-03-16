@@ -65,8 +65,12 @@ namespace PornSearch
                 if (!string.IsNullOrEmpty(_acceptLanguage))
                     request.Headers.Add("Accept-Language", _acceptLanguage);
                 using (HttpResponseMessage response = await HttpClientSendAsync(request, _result)) {
-                    if (response.IsSuccessStatusCode)
-                        return await response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode) {
+                        string content = await response.Content.ReadAsStringAsync();
+                        if (string.IsNullOrEmpty(content) || content.Length < 100)
+                            throw new TrySendException(GetHttpRequestException("Content too small", response.StatusCode), delay: 10000);
+                        return content;
+                    }
                     if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
                         return null;
                     if ((int)response.StatusCode == 429)
@@ -117,7 +121,7 @@ namespace PornSearch
                 switch (result) {
                     case PornHttpClientResult.LocationFrom301: return await HttpClientNoRedirect.SendAsync(request);
                     case PornHttpClientResult.Content:
-                    default:                                   return await HttpClient.SendAsync(request);
+                    default: return await HttpClient.SendAsync(request);
                 }
             }
             catch (Exception ex) {
