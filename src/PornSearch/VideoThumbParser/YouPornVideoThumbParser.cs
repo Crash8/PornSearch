@@ -14,7 +14,8 @@ namespace PornSearch
         }
 
         public bool IsAvailable() {
-            return _root.QuerySelector("i.icon-lock") == null && _root.QuerySelector("i.icon-lock-foreground") == null;
+            return _root.QuerySelector("i.icon-lock") == null && _root.QuerySelector("i.icon-lock-foreground") == null
+                && _root.QuerySelector("ins") == null;
         }
 
         public PornWebsite Website() {
@@ -29,7 +30,7 @@ namespace PornSearch
         }
 
         public string Title() {
-            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.video-title");
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.video-title-text");
             return element?.TextContent.ToHtmlDecode();
         }
 
