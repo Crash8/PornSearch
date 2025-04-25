@@ -137,7 +137,7 @@ namespace PornSearch
         }
 
         public List<PornVideoThumb> RelatedVideos() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div#relatedVideosWrapper div.video-box");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div#relatedVideosWrapper div.video-box, div#show-next div.video-box");
             return elements.OfType<IHtmlDivElement>()
                            .Select(div => new YouPornVideoThumbParser(div))
                            .Where(p => p.IsAvailable())
