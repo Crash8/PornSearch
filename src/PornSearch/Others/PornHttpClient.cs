@@ -28,6 +28,11 @@ namespace PornSearch
             public int DelayBeforeTry { get; }
         }
 
+        private class TrySendEmptyException : TrySendException
+        {
+            public TrySendEmptyException(int delay) : base(innerException: null, delay) { }
+        }
+
         public void SetHeaderCookie(string cookie) {
             _cookie = cookie;
         }
@@ -48,8 +53,11 @@ namespace PornSearch
                 }
                 catch (TrySendException ex) {
                     tryCount++;
-                    if (tryCount >= 3)
+                    if (tryCount >= 3) {
+                        if (ex is TrySendEmptyException)
+                            return null;
                         throw ex.InnerException ?? new Exception("Http Error");
+                    }
                     await WaitDelayFromUrlAsync(url, ex.DelayBeforeTry);
                 }
             }
@@ -71,8 +79,10 @@ namespace PornSearch
                             throw new TrySendException(GetHttpRequestException("Content too small", response.StatusCode), delay: 10000);
                         return content;
                     }
-                    if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Forbidden)
+                    if (response.StatusCode == HttpStatusCode.NotFound)
                         return null;
+                    if (response.StatusCode == HttpStatusCode.Forbidden)
+                        throw new TrySendEmptyException(delay: 1000);
                     if ((int)response.StatusCode == 429)
                         throw new TrySendException(GetHttpRequestException(response.ReasonPhrase, response.StatusCode), delay: 30000);
                     if (response.StatusCode == HttpStatusCode.MovedPermanently && _result == PornHttpClientResult.LocationFrom301)
