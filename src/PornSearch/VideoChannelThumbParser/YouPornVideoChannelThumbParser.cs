@@ -35,7 +35,7 @@ namespace PornSearch
         }
 
         public PornIdName Channel() {
-            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.author-title-text"); // TODO span.channel-title > a
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.author-title-text");
             return new PornIdName {
                 Id = (element?.GetAttribute("href") ?? "").Replace("https://www.youporn.com", ""),
                 Name = element?.Text.ToHtmlDecode() ?? ""

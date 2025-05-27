@@ -53,9 +53,8 @@ namespace PornSearch
                 channelId = element?.GetAttribute("href") ?? "";
                 channelName = element?.QuerySelector("span.name")?.Text();
             }
-            int index = string.IsNullOrEmpty(channelId) ? -1 : channelId.IndexOf("/", 1, StringComparison.Ordinal); // TODO
             return new PornIdName {
-                Id = index == -1 ? channelId : channelId.Substring(index),
+                Id = channelId,
                 Name = channelName.ToHtmlDecode() ?? ""
             };
         }
