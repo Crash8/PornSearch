@@ -74,6 +74,13 @@ namespace PornSearch
             }
         }
 
+        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter) {
+            if (searchChannelFilter == null)
+                throw new ArgumentNullException(nameof(searchChannelFilter));
+            IPornSearchWebsite searchWebsite = GetSearchWebsite(searchChannelFilter.Website);
+            return await searchWebsite.SearchChannelAsync(searchChannelFilter);
+        }
+
         public async Task<PornVideo> GetVideoAsync(string url) {
             PornSourceVideo sourceVideo = GetSourceVideo(url);
             if (sourceVideo != null) {
@@ -104,6 +111,13 @@ namespace PornSearch
                 throw new ArgumentNullException(nameof(video));
             IPornSearchWebsite searchWebsite = GetSearchWebsite(video.Website);
             return await searchWebsite.CheckIfCanVideoEmbedInIframeAsync(video);
+        }
+
+        public string GetPageUrl(PornSourceVideo sourceVideo) {
+            if (sourceVideo == null)
+                throw new ArgumentNullException(nameof(sourceVideo));
+            IPornSearchWebsite searchWebsite = GetSearchWebsite(sourceVideo.Website);
+            return searchWebsite.MakeUrlVideo(sourceVideo.Id);
         }
     }
 }

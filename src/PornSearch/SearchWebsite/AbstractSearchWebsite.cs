@@ -36,7 +36,35 @@ namespace PornSearch
                               .ToList();
         }
 
+        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter) {
+            if (searchChannelFilter.Page <= 0)
+                throw new ArgumentException("Value greater than zero", nameof(searchChannelFilter.Page));
+            if (string.IsNullOrEmpty(searchChannelFilter.ChannelId))
+                throw new ArgumentNullException(nameof(searchChannelFilter.ChannelId));
+            string url = MakeUrlSearchChannel(searchChannelFilter);
+            string content = await GetPageContentAsync(url);
+            IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
+            IPornSearchChannelParser searchChannelParser = document != null ? GetSearchChannelParser(document) : null;
+            if (searchChannelParser == null || !searchChannelParser.IsAvailableContent())
+                return null;
+            return IsBeyondLastPageContent(searchChannelParser, searchChannelFilter)
+                ? new List<PornVideoChannelThumb>()
+                : searchChannelParser.GetVideoThumbs()
+                                     .Where(p => p.IsAvailable())
+                                     .Select(p => new PornVideoChannelThumb {
+                                                 Website = p.Website(),
+                                                 Id = p.Id(),
+                                                 Title = p.Title(),
+                                                 Channel = p.Channel(),
+                                                 ThumbnailUrl = p.ThumbnailUrl(),
+                                                 PageUrl = p.PageUrl()
+                                             })
+                                     .ToList();
+        }
+
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
+
+        protected abstract string MakeUrlSearchChannel(PornSearchChannelFilter searchChannelFilter);
 
         protected virtual async Task<string> GetPageContentAsync(string url) {
             return await GetHtmlContentWithCookieAsync(url, null);
@@ -44,7 +72,19 @@ namespace PornSearch
 
         protected abstract IPornSearchParser GetSearchParser(IDocument document);
 
+        protected abstract IPornSearchChannelParser GetSearchChannelParser(IDocument document);
+
         private static bool IsBeyondLastPageContent(IPornSearchParser searchParser, PornSearchFilter searchFilter) {
+            if (searchParser.IsAvailablePagination()) {
+                if (searchParser.IsAvailableNextButton())
+                    return false;
+                int? pageActive = searchParser.GetCurrentPageNumber();
+                return pageActive == null || searchFilter.Page > pageActive.Value;
+            }
+            return searchFilter.Page > 1;
+        }
+
+        private static bool IsBeyondLastPageContent(IPornSearchChannelParser searchParser, PornSearchChannelFilter searchFilter) {
             if (searchParser.IsAvailablePagination()) {
                 if (searchParser.IsAvailableNextButton())
                     return false;
@@ -105,8 +145,8 @@ namespace PornSearch
 
         protected abstract IPornVideoParser GetVideoParser(IDocument document);
 
-        protected abstract string MakeUrlVideo(string videoId);
-        
+        public abstract string MakeUrlVideo(string videoId);
+
         public abstract Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video);
     }
 }

@@ -36,6 +36,17 @@ namespace PornSearch
             return url;
         }
 
+        protected override string MakeUrlSearchChannel(PornSearchChannelFilter searchChannelFilter) {
+            if (!searchChannelFilter.ChannelId.StartsWith("/") || searchChannelFilter.ChannelId.Length <= 2)
+                throw new ArgumentException("ChannelId invalid format", nameof(searchChannelFilter.ChannelId));
+
+            if (searchChannelFilter.ChannelId.StartsWith("/channels/"))
+                return $"https://www.pornhub.com{searchChannelFilter.ChannelId}/videos?page={searchChannelFilter.Page}";
+            return searchChannelFilter.ChannelId.StartsWith("/users/")
+                ? $"https://www.pornhub.com{searchChannelFilter.ChannelId}/videos/public?page={searchChannelFilter.Page}"
+                : $"https://www.pornhub.com{searchChannelFilter.ChannelId}/videos/upload?o=mr&page={searchChannelFilter.Page}";
+        }
+
         protected override async Task<string> GetPageContentAsync(string url) {
             string content = await GetHtmlContentWithCookieAsync(url, _cookie);
             bool hasNeedCookie = content != null && Regex.IsMatch(content, "Loading[.]{3}");
@@ -57,6 +68,10 @@ namespace PornSearch
             return new PornhubSearchParser(document);
         }
 
+        protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
+            return new PornhubSearchChannelParser(document);
+        }
+
         protected override string GetHttpHeaderAcceptLanguage() {
             return "en";
         }
@@ -72,7 +87,7 @@ namespace PornSearch
                 };
         }
 
-        protected override string MakeUrlVideo(string videoId) {
+        public override string MakeUrlVideo(string videoId) {
             return $"https://www.pornhub.com/view_video.php?viewkey={videoId}";
         }
 

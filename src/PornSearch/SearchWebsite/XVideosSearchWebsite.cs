@@ -59,8 +59,20 @@ namespace PornSearch
             return url;
         }
 
+        protected override string MakeUrlSearchChannel(PornSearchChannelFilter searchChannelFilter) {
+            if (!searchChannelFilter.ChannelId.StartsWith("/") || searchChannelFilter.ChannelId.Length <= 2)
+                throw new ArgumentException("ChannelId invalid format", nameof(searchChannelFilter.ChannelId));
+            return searchChannelFilter.ChannelId.StartsWith("/profiles/")
+                ? $"https://www.xvideos.com{searchChannelFilter.ChannelId}/videos/new/{searchChannelFilter.Page - 1}"
+                : $"https://www.xvideos.com/channels{searchChannelFilter.ChannelId}/videos/new/{searchChannelFilter.Page - 1}";
+        }
+
         protected override IPornSearchParser GetSearchParser(IDocument document) {
             return new XVideosSearchParser(document);
+        }
+
+        protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
+            return new XVideosSearchChannelParser(document);
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
@@ -74,7 +86,7 @@ namespace PornSearch
                 };
         }
 
-        protected override string MakeUrlVideo(string videoId) {
+        public override string MakeUrlVideo(string videoId) {
             return Regex.IsMatch(videoId, "^[0-9]+$")
                 ? $"https://www.xvideos.com/video{videoId}/a"
                 : $"https://www.xvideos.com/video.{videoId}/a";

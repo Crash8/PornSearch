@@ -7,9 +7,11 @@ namespace PornSearch
     {
         List<PornSource> GetSources();
         Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter);
+        Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter);
         Task<PornVideo> GetVideoAsync(string url);
         Task<PornVideo> GetVideoAsync(PornSourceVideo sourceVideo);
         PornSourceVideo GetSourceVideo(string url);
         Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video);
+        string GetPageUrl(PornSourceVideo sourceVideo);
     }
 }

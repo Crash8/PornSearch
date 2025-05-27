@@ -75,7 +75,7 @@ namespace PornSearch
                 using (HttpResponseMessage response = await HttpClientSendAsync(request, _result)) {
                     if (response.IsSuccessStatusCode) {
                         string content = await response.Content.ReadAsStringAsync();
-                        if (string.IsNullOrEmpty(content) || content.Length < 100)
+                        if (string.IsNullOrEmpty(content) || (content.Length < 100 && !content.StartsWith("{")))
                             throw new TrySendException(GetHttpRequestException("Content too small", response.StatusCode), delay: 10000);
                         return content;
                     }
