@@ -36,6 +36,12 @@ namespace PornSearch
             return $"https://www.youporn.com{searchChannelFilter.ChannelId}?page={searchChannelFilter.Page}";
         }
 
+        protected override string MakeUrlSearchActor(PornSearchActorFilter searchActorFilter) {
+            if (!searchActorFilter.ActorId.StartsWith("/") || searchActorFilter.ActorId.Length <= 2)
+                throw new ArgumentException("ActorId invalid format", nameof(searchActorFilter.ActorId));
+            return $"https://www.youporn.com{searchActorFilter.ActorId}?page={searchActorFilter.Page}";
+        }
+
         protected override async Task<string> GetPageContentAsync(string url) {
             return await GetHtmlContentWithCookieAsync(url, "age_verified=1");
         }
@@ -46,6 +52,10 @@ namespace PornSearch
 
         protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
             return new YouPornSearchChannelParser(document);
+        }
+
+        protected override IPornSearchActorParser GetSearchActorParser(IDocument document) {
+            return new YouPornSearchActorParser(document);
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {

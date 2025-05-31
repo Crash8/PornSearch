@@ -81,6 +81,13 @@ namespace PornSearch
             return await searchWebsite.SearchChannelAsync(searchChannelFilter);
         }
 
+        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter) {
+            if (searchActorFilter == null)
+                throw new ArgumentNullException(nameof(searchActorFilter));
+            IPornSearchWebsite searchWebsite = GetSearchWebsite(searchActorFilter.Website);
+            return await searchWebsite.SearchActorAsync(searchActorFilter);
+        }
+
         public async Task<PornVideo> GetVideoAsync(string url) {
             PornSourceVideo sourceVideo = GetSourceVideo(url);
             if (sourceVideo != null) {

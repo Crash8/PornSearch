@@ -62,9 +62,37 @@ namespace PornSearch
                                      .ToList();
         }
 
+        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter) {
+            if (searchActorFilter.Page <= 0)
+                throw new ArgumentException("Value greater than zero", nameof(searchActorFilter.Page));
+            if (string.IsNullOrEmpty(searchActorFilter.ActorId))
+                throw new ArgumentNullException(nameof(searchActorFilter.ActorId));
+            string url = MakeUrlSearchActor(searchActorFilter);
+            string content = await GetPageContentAsync(url);
+            IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
+            IPornSearchActorParser searchActorParser = document != null ? GetSearchActorParser(document) : null;
+            if (searchActorParser == null || !searchActorParser.IsAvailableContent())
+                return null;
+            return IsBeyondLastPageContent(searchActorParser, searchActorFilter)
+                ? new List<PornVideoActorThumb>()
+                : searchActorParser.GetVideoThumbs()
+                                     .Where(p => p.IsAvailable())
+                                     .Select(p => new PornVideoActorThumb {
+                                                 Website = p.Website(),
+                                                 Id = p.Id(),
+                                                 Title = p.Title(),
+                                                 Channel = p.Channel(),
+                                                 ThumbnailUrl = p.ThumbnailUrl(),
+                                                 PageUrl = p.PageUrl()
+                                             })
+                                     .ToList();
+        }
+
         protected abstract string MakeUrl(PornSearchFilter searchFilter);
 
         protected abstract string MakeUrlSearchChannel(PornSearchChannelFilter searchChannelFilter);
+
+        protected abstract string MakeUrlSearchActor(PornSearchActorFilter searchActorFilter);
 
         protected virtual async Task<string> GetPageContentAsync(string url) {
             return await GetHtmlContentWithCookieAsync(url, null);
@@ -73,6 +101,8 @@ namespace PornSearch
         protected abstract IPornSearchParser GetSearchParser(IDocument document);
 
         protected abstract IPornSearchChannelParser GetSearchChannelParser(IDocument document);
+
+        protected abstract IPornSearchActorParser GetSearchActorParser(IDocument document);
 
         private static bool IsBeyondLastPageContent(IPornSearchParser searchParser, PornSearchFilter searchFilter) {
             if (searchParser.IsAvailablePagination()) {
@@ -85,6 +115,16 @@ namespace PornSearch
         }
 
         private static bool IsBeyondLastPageContent(IPornSearchChannelParser searchParser, PornSearchChannelFilter searchFilter) {
+            if (searchParser.IsAvailablePagination()) {
+                if (searchParser.IsAvailableNextButton())
+                    return false;
+                int? pageActive = searchParser.GetCurrentPageNumber();
+                return pageActive == null || searchFilter.Page > pageActive.Value;
+            }
+            return searchFilter.Page > 1;
+        }
+
+        private static bool IsBeyondLastPageContent(IPornSearchActorParser searchParser, PornSearchActorFilter searchFilter) {
             if (searchParser.IsAvailablePagination()) {
                 if (searchParser.IsAvailableNextButton())
                     return false;

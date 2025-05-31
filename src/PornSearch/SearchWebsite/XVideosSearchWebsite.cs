@@ -67,12 +67,22 @@ namespace PornSearch
                 : $"https://www.xvideos.com/channels{searchChannelFilter.ChannelId}/videos/new/{searchChannelFilter.Page - 1}";
         }
 
+        protected override string MakeUrlSearchActor(PornSearchActorFilter searchActorFilter) {
+            if (!searchActorFilter.ActorId.StartsWith("/") || searchActorFilter.ActorId.Length <= 2)
+                throw new ArgumentException("ActorId invalid format", nameof(searchActorFilter.ActorId));
+            return $"https://www.xvideos.com{searchActorFilter.ActorId}/videos/new/{searchActorFilter.Page - 1}";
+        }
+
         protected override IPornSearchParser GetSearchParser(IDocument document) {
             return new XVideosSearchParser(document);
         }
 
         protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
             return new XVideosSearchChannelParser(document);
+        }
+
+        protected override IPornSearchActorParser GetSearchActorParser(IDocument document) {
+            return new XVideosSearchActorParser(document);
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {

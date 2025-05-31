@@ -47,6 +47,12 @@ namespace PornSearch
                 : $"https://www.pornhub.com{searchChannelFilter.ChannelId}/videos/upload?o=mr&page={searchChannelFilter.Page}";
         }
 
+        protected override string MakeUrlSearchActor(PornSearchActorFilter searchActorFilter) {
+            if (!searchActorFilter.ActorId.StartsWith("/") || searchActorFilter.ActorId.Length <= 2)
+                throw new ArgumentException("ActorId invalid format", nameof(searchActorFilter.ActorId));
+            return $"https://www.pornhub.com{searchActorFilter.ActorId}/videos?page={searchActorFilter.Page}";
+        }
+
         protected override async Task<string> GetPageContentAsync(string url) {
             string content = await GetHtmlContentWithCookieAsync(url, _cookie);
             bool hasNeedCookie = content != null && Regex.IsMatch(content, "Loading[.]{3}");
@@ -70,6 +76,10 @@ namespace PornSearch
 
         protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
             return new PornhubSearchChannelParser(document);
+        }
+
+        protected override IPornSearchActorParser GetSearchActorParser(IDocument document) {
+            return new PornhubSearchActorParser(document);
         }
 
         protected override string GetHttpHeaderAcceptLanguage() {
