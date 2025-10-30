@@ -42,11 +42,11 @@ namespace PornSearch
             return $"https://www.youporn.com{searchActorFilter.ActorId}?page={searchActorFilter.Page}";
         }
 
-        protected override async Task<string> GetPageContentAsync(string url) {
-            return await GetHtmlContentWithCookieAsync(url, "age_verified=1");
+        protected override async Task<string> GetPageContentAsync(string url, bool useWebProxy) {
+            return await GetHtmlContentWithCookieAsync(url, "age_verified=1", useWebProxy);
         }
 
-        protected override IPornSearchParser GetSearchParser(IDocument document) {
+        protected override IPornSearchParser GetSearchParser(IDocument document, bool useWebProxy) {
             return new YouPornSearchParser(document);
         }
 
@@ -77,7 +77,7 @@ namespace PornSearch
             return new YouPornVideoParser(document);
         }
 
-        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy) {
             bool ok = !(video.Title?.Contains('"') ?? false);
             return Task.FromResult(ok);
         }

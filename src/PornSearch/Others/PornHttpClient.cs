@@ -14,10 +14,13 @@ namespace PornSearch
         private static readonly HttpClientHandler HttpClientHandler = new HttpClientHandler { AllowAutoRedirect = false };
         private static readonly HttpClient HttpClient = new HttpClient();
         private static readonly HttpClient HttpClientNoRedirect = new HttpClient(HttpClientHandler);
+        private static HttpClient _httpClientProxy;
+        private static HttpClient _httpClientNoRedirectProxy;
         private static readonly ConcurrentDictionary<string, SemaphoreSlim> Semaphore = new ConcurrentDictionary<string, SemaphoreSlim>();
         private string _cookie;
         private string _acceptLanguage;
         private PornHttpClientResult _result;
+        private static readonly object Lock = new object();
 
         private class TrySendException : Exception
         {
@@ -33,6 +36,20 @@ namespace PornSearch
             public TrySendEmptyException(int delay) : base(innerException: null, delay) { }
         }
 
+        public static void SetHttpClientWebProxy(IWebProxy webProxy) {
+            lock (Lock) {
+                _httpClientProxy?.Dispose();
+                _httpClientNoRedirectProxy?.Dispose();
+                HttpClientHandler httpClientHandler = new HttpClientHandler { Proxy = webProxy };
+                HttpClientHandler httpClientHandlerNoRedirect = new HttpClientHandler {
+                    AllowAutoRedirect = false,
+                    Proxy = webProxy
+                };
+                _httpClientProxy = new HttpClient(httpClientHandler);
+                _httpClientNoRedirectProxy = new HttpClient(httpClientHandlerNoRedirect);
+            }
+        }
+
         public void SetHeaderCookie(string cookie) {
             _cookie = cookie;
         }
@@ -45,11 +62,11 @@ namespace PornSearch
             _result = result;
         }
 
-        public async Task<string> SendAsync(string url) {
+        public async Task<string> SendAsync(string url, bool useWebProxy) {
             int tryCount = 0;
             while (true) {
                 try {
-                    return await TrySendAsync(url);
+                    return await TrySendAsync(url, useWebProxy);
                 }
                 catch (TrySendException ex) {
                     tryCount++;
@@ -63,7 +80,7 @@ namespace PornSearch
             }
         }
 
-        private async Task<string> TrySendAsync(string url) {
+        private async Task<string> TrySendAsync(string url, bool useWebProxy) {
             await WaitIfError429FromUrlAsync(url);
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url)) {
                 request.Headers.Add("User-Agent", GetHttpHeaderUserAgent());
@@ -72,7 +89,7 @@ namespace PornSearch
                     request.Headers.Add("Cookie", _cookie);
                 if (!string.IsNullOrEmpty(_acceptLanguage))
                     request.Headers.Add("Accept-Language", _acceptLanguage);
-                using (HttpResponseMessage response = await HttpClientSendAsync(request, _result)) {
+                using (HttpResponseMessage response = await HttpClientSendAsync(request, _result, useWebProxy)) {
                     if (response.IsSuccessStatusCode) {
                         string content = await response.Content.ReadAsStringAsync();
                         if (string.IsNullOrEmpty(content) || (content.Length < 100 && !content.StartsWith("{")))
@@ -126,17 +143,32 @@ namespace PornSearch
             return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:109.0) Gecko/20100101 Firefox/115.0";
         }
 
-        private static async Task<HttpResponseMessage> HttpClientSendAsync(HttpRequestMessage request, PornHttpClientResult result) {
+        private static async Task<HttpResponseMessage> HttpClientSendAsync(HttpRequestMessage request, PornHttpClientResult result,
+                                                                           bool useWebProxy) {
             try {
                 switch (result) {
-                    case PornHttpClientResult.LocationFrom301: return await HttpClientNoRedirect.SendAsync(request);
+                    case PornHttpClientResult.LocationFrom301: return await GetHttpClientNoRedirect(useWebProxy).SendAsync(request);
                     case PornHttpClientResult.Content:
-                    default: return await HttpClient.SendAsync(request);
+                    default: return await GetHttpClient(useWebProxy).SendAsync(request);
                 }
             }
             catch (Exception ex) {
                 throw new TrySendException(ex, delay: 10000);
             }
+        }
+
+        private static HttpClient GetHttpClient(bool useWebProxy) {
+            if (useWebProxy && _httpClientProxy != null)
+                lock (Lock)
+                    return _httpClientProxy;
+            return HttpClient;
+        }
+
+        private static HttpClient GetHttpClientNoRedirect(bool useWebProxy) {
+            if (useWebProxy && _httpClientNoRedirectProxy != null)
+                lock (Lock)
+                    return _httpClientNoRedirectProxy;
+            return HttpClientNoRedirect;
         }
     }
 

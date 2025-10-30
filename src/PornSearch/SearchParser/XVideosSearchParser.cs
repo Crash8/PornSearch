@@ -10,10 +10,12 @@ namespace PornSearch
     {
         private readonly IDocument _document;
         private readonly IElement _pagination;
+        private readonly bool _useWebProxy;
 
-        public XVideosSearchParser(IDocument document) {
+        public XVideosSearchParser(IDocument document, bool useWebProxy) {
             _document = document;
             _pagination = _document.QuerySelector("div.pagination");
+            _useWebProxy = useWebProxy;
         }
 
         public bool IsAvailableContent() {
@@ -35,7 +37,7 @@ namespace PornSearch
         public IEnumerable<IPornVideoThumbParser> GetVideoThumbs() {
             const string selector = "div.mozaique > div[data-id]";
             IEnumerable<IHtmlDivElement> elements = _document.QuerySelectorAll<IHtmlDivElement>(selector);
-            return elements.Select(div => new XVideosVideoThumbParser(div));
+            return elements.Select(div => new XVideosVideoThumbParser(div, _useWebProxy));
         }
     }
 }

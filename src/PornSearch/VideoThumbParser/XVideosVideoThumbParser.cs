@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
@@ -10,14 +9,16 @@ namespace PornSearch
     {
         private readonly XVideosJsonRelatedVideos _jsonRoot;
         private readonly IHtmlDivElement _divRoot;
+        private readonly bool _useWebProxy;
         private string _url;
 
         public XVideosVideoThumbParser(XVideosJsonRelatedVideos root) {
             _jsonRoot = root;
         }
 
-        public XVideosVideoThumbParser(IHtmlDivElement root) {
+        public XVideosVideoThumbParser(IHtmlDivElement root, bool useWebProxy) {
             _divRoot = root;
+            _useWebProxy = useWebProxy;
         }
 
         public bool IsAvailable() {
@@ -77,7 +78,7 @@ namespace PornSearch
                     if (pageUrl.StartsWith("/search-video/")) {
                         PornHttpClient httpClient = new PornHttpClient();
                         httpClient.SetResult(PornHttpClientResult.LocationFrom301);
-                        pageUrl = httpClient.SendAsync($"https://www.xvideos.com{pageUrl}").Result;
+                        pageUrl = httpClient.SendAsync($"https://www.xvideos.com{pageUrl}", _useWebProxy).Result;
                     }
                     _url = $"https://www.xvideos.com{pageUrl}";
                 }

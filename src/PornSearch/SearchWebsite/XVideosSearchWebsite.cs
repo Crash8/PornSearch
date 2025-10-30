@@ -73,8 +73,8 @@ namespace PornSearch
             return $"https://www.xvideos.com{searchActorFilter.ActorId}/videos/new/{searchActorFilter.Page - 1}";
         }
 
-        protected override IPornSearchParser GetSearchParser(IDocument document) {
-            return new XVideosSearchParser(document);
+        protected override IPornSearchParser GetSearchParser(IDocument document, bool useWebProxy) {
+            return new XVideosSearchParser(document, useWebProxy);
         }
 
         protected override IPornSearchChannelParser GetSearchChannelParser(IDocument document) {
@@ -106,7 +106,7 @@ namespace PornSearch
             return new XVideosVideoParser(document);
         }
 
-        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy) {
             return Task.FromResult(true);
         }
     }

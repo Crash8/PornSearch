@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,10 @@ namespace PornSearch
 
         public PornSearchEngine() {
             _searchWebsites = new ConcurrentDictionary<PornWebsite, IPornSearchWebsite>();
+        }
+
+        public void SetHttpClientWebProxy(IWebProxy webProxy) {
+            PornHttpClient.SetHttpClientWebProxy(webProxy);
         }
 
         public List<PornSource> GetSources() {
@@ -40,12 +45,12 @@ namespace PornSearch
             });
         }
 
-        public async Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter) {
+        public async Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter, bool useWebProxy = false) {
             if (searchFilter == null)
                 throw new ArgumentNullException(nameof(searchFilter));
             CleanSearchFilter(searchFilter);
             IPornSearchWebsite searchWebsite = GetSearchWebsite(searchFilter.Website);
-            return await searchWebsite.SearchAsync(searchFilter);
+            return await searchWebsite.SearchAsync(searchFilter, useWebProxy);
         }
 
         private static void CleanSearchFilter(PornSearchFilter searchFilter) {
@@ -74,34 +79,35 @@ namespace PornSearch
             }
         }
 
-        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter) {
+        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter,
+                                                                          bool useWebProxy = false) {
             if (searchChannelFilter == null)
                 throw new ArgumentNullException(nameof(searchChannelFilter));
             IPornSearchWebsite searchWebsite = GetSearchWebsite(searchChannelFilter.Website);
-            return await searchWebsite.SearchChannelAsync(searchChannelFilter);
+            return await searchWebsite.SearchChannelAsync(searchChannelFilter, useWebProxy);
         }
 
-        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter) {
+        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter, bool useWebProxy = false) {
             if (searchActorFilter == null)
                 throw new ArgumentNullException(nameof(searchActorFilter));
             IPornSearchWebsite searchWebsite = GetSearchWebsite(searchActorFilter.Website);
-            return await searchWebsite.SearchActorAsync(searchActorFilter);
+            return await searchWebsite.SearchActorAsync(searchActorFilter, useWebProxy);
         }
 
-        public async Task<PornVideo> GetVideoAsync(string url) {
+        public async Task<PornVideo> GetVideoAsync(string url, bool useWebProxy = false) {
             PornSourceVideo sourceVideo = GetSourceVideo(url);
             if (sourceVideo != null) {
                 IPornSearchWebsite searchWebsite = GetSearchWebsite(sourceVideo.Website);
-                return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id);
+                return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id, useWebProxy);
             }
             return null;
         }
 
-        public async Task<PornVideo> GetVideoAsync(PornSourceVideo sourceVideo) {
+        public async Task<PornVideo> GetVideoAsync(PornSourceVideo sourceVideo, bool useWebProxy = false) {
             if (sourceVideo == null)
                 throw new ArgumentNullException(nameof(sourceVideo));
             IPornSearchWebsite searchWebsite = GetSearchWebsite(sourceVideo.Website);
-            return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id);
+            return await searchWebsite.GetVideoByIdAsync(sourceVideo.Id, useWebProxy);
         }
 
         public PornSourceVideo GetSourceVideo(string url) {
@@ -113,11 +119,11 @@ namespace PornSearch
                     select searchWebsite.GetSourceVideo(url)).FirstOrDefault(sourceVideo => sourceVideo != null);
         }
 
-        public async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+        public async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy = false) {
             if (video == null)
                 throw new ArgumentNullException(nameof(video));
             IPornSearchWebsite searchWebsite = GetSearchWebsite(video.Website);
-            return await searchWebsite.CheckIfCanVideoEmbedInIframeAsync(video);
+            return await searchWebsite.CheckIfCanVideoEmbedInIframeAsync(video, useWebProxy);
         }
 
         public string GetPageUrl(PornSourceVideo sourceVideo) {

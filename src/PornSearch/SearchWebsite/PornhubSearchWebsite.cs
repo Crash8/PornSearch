@@ -53,12 +53,12 @@ namespace PornSearch
             return $"https://www.pornhub.com{searchActorFilter.ActorId}/videos?page={searchActorFilter.Page}";
         }
 
-        protected override async Task<string> GetPageContentAsync(string url) {
-            string content = await GetHtmlContentWithCookieAsync(url, _cookie);
+        protected override async Task<string> GetPageContentAsync(string url, bool useWebProxy) {
+            string content = await GetHtmlContentWithCookieAsync(url, _cookie, useWebProxy);
             bool hasNeedCookie = content != null && Regex.IsMatch(content, "Loading[.]{3}");
             if (hasNeedCookie) {
                 _cookie = GetCookie(content);
-                content = await GetPageContentAsync(url);
+                content = await GetPageContentAsync(url, useWebProxy);
             }
             return content;
         }
@@ -70,7 +70,7 @@ namespace PornSearch
             return new Engine().Execute(content).Invoke("go") + "accessAgeDisclaimerPH=1";
         }
 
-        protected override IPornSearchParser GetSearchParser(IDocument document) {
+        protected override IPornSearchParser GetSearchParser(IDocument document, bool useWebProxy) {
             return new PornhubSearchParser(document);
         }
 
@@ -105,12 +105,12 @@ namespace PornSearch
             return new PornhubVideoParser(document);
         }
 
-        public override async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video) {
+        public override async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy) {
             string url = video.VideoEmbedUrl;
             if (string.IsNullOrEmpty(url))
                 return false;
             PornHttpClient httpClient = new PornHttpClient();
-            string content = await httpClient.SendAsync(url) ?? await httpClient.SendAsync(url);
+            string content = await httpClient.SendAsync(url, useWebProxy) ?? await httpClient.SendAsync(url, useWebProxy);
             if (content == null)
                 return false;
             IConfiguration config = Configuration.Default;

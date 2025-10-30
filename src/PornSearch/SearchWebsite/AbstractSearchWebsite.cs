@@ -11,15 +11,15 @@ namespace PornSearch
     {
         public abstract List<PornSexOrientation> GetSexOrientations();
 
-        public async Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter) {
+        public async Task<List<PornVideoThumb>> SearchAsync(PornSearchFilter searchFilter, bool useWebProxy) {
             if (searchFilter.Page <= 0)
                 throw new ArgumentException("Value greater than zero", nameof(searchFilter.Page));
             if (!GetSexOrientations().Contains(searchFilter.SexOrientation))
                 return null;
             string url = MakeUrl(searchFilter);
-            string content = await GetPageContentAsync(url);
+            string content = await GetPageContentAsync(url, useWebProxy);
             IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
-            IPornSearchParser searchParser = document != null ? GetSearchParser(document) : null;
+            IPornSearchParser searchParser = document != null ? GetSearchParser(document, useWebProxy) : null;
             return searchParser == null || !searchParser.IsAvailableContent() || IsBeyondLastPageContent(searchParser, searchFilter)
                 ? new List<PornVideoThumb>()
                 : searchParser.GetVideoThumbs()
@@ -36,13 +36,13 @@ namespace PornSearch
                               .ToList();
         }
 
-        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter) {
+        public async Task<List<PornVideoChannelThumb>> SearchChannelAsync(PornSearchChannelFilter searchChannelFilter, bool useWebProxy) {
             if (searchChannelFilter.Page <= 0)
                 throw new ArgumentException("Value greater than zero", nameof(searchChannelFilter.Page));
             if (string.IsNullOrEmpty(searchChannelFilter.ChannelId))
                 throw new ArgumentNullException(nameof(searchChannelFilter.ChannelId));
             string url = MakeUrlSearchChannel(searchChannelFilter);
-            string content = await GetPageContentAsync(url);
+            string content = await GetPageContentAsync(url, useWebProxy);
             IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
             IPornSearchChannelParser searchChannelParser = document != null ? GetSearchChannelParser(document) : null;
             if (searchChannelParser == null || !searchChannelParser.IsAvailableContent())
@@ -62,13 +62,13 @@ namespace PornSearch
                                      .ToList();
         }
 
-        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter) {
+        public async Task<List<PornVideoActorThumb>> SearchActorAsync(PornSearchActorFilter searchActorFilter, bool useWebProxy) {
             if (searchActorFilter.Page <= 0)
                 throw new ArgumentException("Value greater than zero", nameof(searchActorFilter.Page));
             if (string.IsNullOrEmpty(searchActorFilter.ActorId))
                 throw new ArgumentNullException(nameof(searchActorFilter.ActorId));
             string url = MakeUrlSearchActor(searchActorFilter);
-            string content = await GetPageContentAsync(url);
+            string content = await GetPageContentAsync(url, useWebProxy);
             IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
             IPornSearchActorParser searchActorParser = document != null ? GetSearchActorParser(document) : null;
             if (searchActorParser == null || !searchActorParser.IsAvailableContent())
@@ -94,11 +94,11 @@ namespace PornSearch
 
         protected abstract string MakeUrlSearchActor(PornSearchActorFilter searchActorFilter);
 
-        protected virtual async Task<string> GetPageContentAsync(string url) {
-            return await GetHtmlContentWithCookieAsync(url, null);
+        protected virtual async Task<string> GetPageContentAsync(string url, bool useWebProxy) {
+            return await GetHtmlContentWithCookieAsync(url, null, useWebProxy);
         }
 
-        protected abstract IPornSearchParser GetSearchParser(IDocument document);
+        protected abstract IPornSearchParser GetSearchParser(IDocument document, bool useWebProxy);
 
         protected abstract IPornSearchChannelParser GetSearchChannelParser(IDocument document);
 
@@ -134,11 +134,11 @@ namespace PornSearch
             return searchFilter.Page > 1;
         }
 
-        protected async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie) {
+        protected async Task<string> GetHtmlContentWithCookieAsync(string url, string cookie, bool useWebProxy) {
             PornHttpClient httpClient = new PornHttpClient();
             httpClient.SetHeaderCookie(cookie);
             httpClient.SetHeaderAcceptLanguage(GetHttpHeaderAcceptLanguage());
-            return await httpClient.SendAsync(url);
+            return await httpClient.SendAsync(url, useWebProxy);
         }
 
         protected virtual string GetHttpHeaderAcceptLanguage() {
@@ -147,9 +147,9 @@ namespace PornSearch
 
         public abstract PornSourceVideo GetSourceVideo(string url);
 
-        public async Task<PornVideo> GetVideoByIdAsync(string videoId) {
+        public async Task<PornVideo> GetVideoByIdAsync(string videoId, bool useWebProxy) {
             string url = MakeUrlVideo(videoId);
-            string content = await GetPageContentAsync(url);
+            string content = await GetPageContentAsync(url, useWebProxy);
             IDocument document = content != null ? await ConvertToDocumentAsync(content) : null;
             IPornVideoParser videoParser = document != null ? GetVideoParser(document) : null;
             PornVideo video = !videoParser?.IsAvailable() ?? true
@@ -187,6 +187,6 @@ namespace PornSearch
 
         public abstract string MakeUrlVideo(string videoId);
 
-        public abstract Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video);
+        public abstract Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy);
     }
 }
