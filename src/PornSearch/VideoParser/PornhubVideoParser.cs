@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
@@ -30,7 +29,7 @@ namespace PornSearch
         }
 
         public PornSexOrientation SexOrientation() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("phOrientationSegment", StringComparison.Ordinal) > 0);
             Match match = Regex.Match(element?.TextContent ?? "", "phOrientationSegment.*?= \"([^\"]*)");
             string sexOrientation = match.Success ? match.Groups[1].Value : "straight";
@@ -39,7 +38,7 @@ namespace PornSearch
 
         public string Id() {
             string id = null;
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:url']");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:url']");
             if (element?.Content != null) {
                 int index = element.Content.IndexOf("=", StringComparison.Ordinal);
                 if (index > 0)
@@ -49,7 +48,7 @@ namespace PornSearch
         }
 
         public string Title() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:title']");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:title']");
             return element?.Content?.ToHtmlDecode();
         }
 
@@ -64,27 +63,33 @@ namespace PornSearch
         }
 
         public string ThumbnailUrl() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:image']");
-            return element?.Content.RemoveUrlQuery();
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:image']");
+            string url = element?.Content;
+            if (!string.IsNullOrEmpty(url) && url.Contains(".jpg?cache="))
+                return url.RemoveUrlQuery();
+            return url;
         }
 
         public string SmallThumbnailUrl() {
-            IHtmlImageElement element = _document.QuerySelector<IHtmlImageElement>("img#videoElementPoster");
-            return element?.Source.RemoveUrlQuery();
+            IHtmlImageElement element = _document.QuerySelector<IHtmlImageElement>("img.videoElementPoster");
+            string url = element?.Source;
+            if (!string.IsNullOrEmpty(url) && url.Contains(".jpg?cache="))
+                return url.RemoveUrlQuery();
+            return url;
         }
 
         public string PageUrl() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:url']");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:url']");
             return element?.Content;
         }
 
         public string VideoEmbedUrl() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='og:video:url']");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:video:url']");
             return element?.Content;
         }
 
         public TimeSpan Duration() {
-            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("head > meta[property='video:duration']");
+            IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='video:duration']");
             string duration = element?.Content;
             return TimeSpan.FromSeconds(duration.TransformToInt());
         }
@@ -122,7 +127,7 @@ namespace PornSearch
         public int NbViews() {
             const string searchTerm = "http://schema.org/WatchAction";
             const string pattern = "\"http://schema.org/WatchAction\",[\\s\\S]*?\"userInteractionCount\": \"([^\"]*)";
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
             Match match = Regex.Match(element?.TextContent ?? "", pattern);
             return match.Success ? match.Groups[1].Value.TransformToInt() : 0;
@@ -134,15 +139,14 @@ namespace PornSearch
         }
 
         public int? NbDislikes() {
-            IHtmlSpanElement element = _document.QuerySelector<IHtmlSpanElement>("span.votesDown");
-            return element?.Dataset["rating"].TransformToInt() ?? 0;
+            return null;
         }
 
         public DateTime Date() {
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("head > script");
-            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("'video_date_published'", StringComparison.Ordinal) > 0);
-            Match match = Regex.Match(element?.TextContent ?? "", "'video_date_published' : '([^']*)");
-            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture) : DateTime.MinValue;
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("script");
+            IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf("\"uploadDate\"", StringComparison.Ordinal) > 0);
+            Match match = Regex.Match(element?.TextContent ?? "", "\"uploadDate\": \"([^\"]*)");
+            return match.Success ? DateTimeOffset.Parse(match.Groups[1].Value).LocalDateTime.Date : DateTime.MinValue;
         }
 
         public List<PornVideoThumb> RelatedVideos() {
