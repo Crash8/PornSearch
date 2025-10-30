@@ -15,7 +15,8 @@ namespace PornSearch
 
         public bool IsAvailable() {
             return _root.QuerySelector("i.icon-lock") == null && _root.QuerySelector("i.icon-lock-foreground") == null
-                && _root.QuerySelector("ins") == null;
+                && _root.QuerySelector("ins") == null
+                && Channel()?.Name != "Unknown";
         }
 
         public PornWebsite Website() {
@@ -33,11 +34,11 @@ namespace PornSearch
             IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.video-title-text");
             return element?.TextContent.ToHtmlDecode();
         }
-
+        
         public PornIdName Channel() {
-            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("span.channel-title > a");
+            IHtmlAnchorElement element = _root.QuerySelector<IHtmlAnchorElement>("a.author-title-text");
             return new PornIdName {
-                Id = element?.GetAttribute("href") ?? "",
+                Id = (element?.GetAttribute("href") ?? "").Replace("https://www.youporn.com", ""),
                 Name = element?.Text.ToHtmlDecode() ?? ""
             };
         }
