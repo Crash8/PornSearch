@@ -10,9 +10,9 @@ Simple library to search adult content.
 - [How to search videos from a channel ?](#how-to-search-videos-from-a-channel-)
 - [How to search videos from a actor ?](#how-to-search-videos-from-a-actor-)
 - [Get information about a video](#get-information-about-a-video)
-- [How to check if can video embed in iframe ?](#how-to-check-if-can-video-embed-in iframe-)
+- [How to check if can video embed in iframe ?](#how-to-check-if-can-video-embed-in-iframe-)
 - [How to check that the URL of the video is correct ?](#how-to-check-that-the-url-of-the-video-is-correct-)
-- [How to use a web proxy ?](#how-to-use-web-proxy-)
+- [How to use a web proxy ?](#how-to-use-a-web-proxy-)
 
 ## Installation
 
@@ -347,7 +347,7 @@ pornSearch.SetHttpClientWebProxy(new HttpToSocks5Proxy("127.0.0.1", 9050));
 ```
 
 ```cs
-// if you need to change the Tor circuit
+// If you need to change the Tor circuit
 pornSearch.SetHttpClientWebProxy(new HttpToSocks5Proxy("127.0.0.1", 9050, Guid.NewGuid().ToString(), "x"));
 ```
 
