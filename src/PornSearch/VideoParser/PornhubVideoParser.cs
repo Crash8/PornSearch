@@ -156,12 +156,9 @@ namespace PornSearch
                 match = Regex.Match(element.TextContent, "\"uploadDate\": \"([^\"]*)");
                 return match.Success ? DateTimeOffset.Parse(match.Groups[1].Value).LocalDateTime.Date : DateTime.MinValue;
             }
-            element = elements.FirstOrDefault(e => e.TextContent.IndexOf("video_date_published", StringComparison.Ordinal) > 0);
+            element = elements.FirstOrDefault(e => e.TextContent.IndexOf("'video_date_published'", StringComparison.Ordinal) > 0);
             match = Regex.Match(element?.TextContent ?? "", "'video_date_published' : '([^']*)");
-            DateTime date = DateTime.MinValue;
-            if (match.Success)
-                date = DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture);
-            return date;
+            return match.Success ? DateTime.ParseExact(match.Groups[1].Value, "yyyyMMdd", CultureInfo.InvariantCulture) : DateTime.MinValue;
         }
 
         public List<PornVideoThumb> RelatedVideos() {
