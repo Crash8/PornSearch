@@ -21,7 +21,7 @@ namespace PornSearch
             IElement videoGeoUnavailable = _document.QuerySelector("div.videoGeoUnavailable");
             IElement noVideo = _document.QuerySelector("section.noVideo");
             IElement removed = _document.QuerySelector("div.removed");
-            return geoBlocked == null && videoGeoUnavailable  == null && noVideo == null && removed == null;
+            return geoBlocked == null && videoGeoUnavailable == null && noVideo == null && removed == null;
         }
 
         public PornWebsite Website() {
@@ -40,9 +40,14 @@ namespace PornSearch
             string id = null;
             IHtmlMetaElement element = _document.QuerySelector<IHtmlMetaElement>("meta[property='og:url']");
             if (element?.Content != null) {
+                int offset = 1;
                 int index = element.Content.IndexOf("=", StringComparison.Ordinal);
+                if (index == -1) {
+                    index = element.Content.IndexOf("/shorties/", StringComparison.Ordinal);
+                    offset = 10;
+                }
                 if (index > 0)
-                    id = element.Content.Substring(index + 1);
+                    id = element.Content.Substring(index + offset);
             }
             return id;
         }
