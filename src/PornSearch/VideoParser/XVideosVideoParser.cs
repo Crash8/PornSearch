@@ -59,11 +59,17 @@ namespace PornSearch
 
         public string ThumbnailUrl() {
             const string searchTerm = "html5player.setThumbUrl169";
-            const string pattern = "html5player[.]setThumbUrl169[(]'([^']*)";
-            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div > script");
+            const string searchTerm2 = "\"sfwthumb\":\"";
+            string pattern = "html5player[.]setThumbUrl169[(]'([^']*)";
+            const string pattern2 = "\"sfwthumb\":\"([^\"]*)";
+            IHtmlCollection<IElement> elements = _document.QuerySelectorAll("script");
             IElement element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm, StringComparison.Ordinal) > 0);
+            if (element == null) {
+                element = elements.FirstOrDefault(e => e.TextContent.IndexOf(searchTerm2, StringComparison.Ordinal) > 0);
+                pattern = pattern2;
+            }
             Match match = Regex.Match(element?.TextContent ?? "", pattern);
-            return match.Success ? match.Groups[1].Value : null;
+            return match.Success ? match.Groups[1].Value.CleanUrlSeparator() : null;
         }
 
         public string SmallThumbnailUrl() {

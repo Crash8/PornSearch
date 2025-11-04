@@ -29,5 +29,9 @@ namespace PornSearch.Extensions
             int index = url.IndexOf("?", StringComparison.Ordinal);
             return index == -1 ? url : url.Substring(0, index);
         }
+
+        public static string CleanUrlSeparator(this string url) {
+            return string.IsNullOrEmpty(url) ? url : url.Replace("\\/", "/");
+        }
     }
 }
