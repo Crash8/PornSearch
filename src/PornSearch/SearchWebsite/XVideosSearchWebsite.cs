@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AngleSharp;
 using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 
 namespace PornSearch
 {
@@ -106,8 +108,19 @@ namespace PornSearch
             return new XVideosVideoParser(document);
         }
 
-        public override Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy) {
-            return Task.FromResult(true);
+        public override async Task<bool> CheckIfCanVideoEmbedInIframeAsync(PornVideo video, bool useWebProxy) {
+            string url = video.PageUrl;
+            if (string.IsNullOrEmpty(url))
+                return false;
+            PornHttpClient httpClient = new PornHttpClient();
+            string content = await httpClient.SendAsync(url, useWebProxy);
+            if (content == null)
+                return false;
+            IConfiguration config = Configuration.Default;
+            IBrowsingContext context = BrowsingContext.New(config);
+            IDocument documentVideoEmbed = await context.OpenAsync(req => req.Content(content));
+            var span = documentVideoEmbed.QuerySelector<IHtmlSpanElement>("span.video-interactive-mark");
+            return span == null;
         }
     }
 }
