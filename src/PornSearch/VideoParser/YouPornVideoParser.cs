@@ -92,7 +92,7 @@ namespace PornSearch
         }
 
         public List<PornIdName> Tags() {
-            return _document.QuerySelectorAll<IHtmlAnchorElement>("a.pink-border.tm_carousel_tag")
+            return _document.QuerySelectorAll<IHtmlAnchorElement>("a.tm_carousel_tag")
                             .Select(anchor => new PornIdName {
                                         Id = anchor.GetAttribute("href"),
                                         Name = anchor.Text.ToHtmlDecode()
