@@ -87,8 +87,14 @@ namespace PornSearch
         }
 
         public override PornSourceVideo GetSourceVideo(string url) {
-            const string pattern = "^https://[a-z]{2,3}[.]pornhub[.]com/view_video[.]php[?]viewkey=([^\\s]+)$";
+            string pattern = "^https://[a-z]{2,3}[.]pornhub[.]com/view_video[.]php[?]viewkey=([^\\s]+)$";
             Match match = Regex.Match(url, pattern);
+            if (!match.Success) {
+                // https://www.pornhub.com/shorties/685bb8593498f
+                // https://www.pornhub.com/gay/shorties/6893c7bba7061
+                pattern = "^https://[a-z]{2,3}[.]pornhub[.]com/(?:gay/)?shorties/([^\\s]+)$";
+                match = Regex.Match(url, pattern);
+            }
             return !match.Success
                 ? null
                 : new PornSourceVideo {
