@@ -17,9 +17,9 @@ namespace PornSearch.Extensions
             if (string.IsNullOrEmpty(text))
                 return 0;
             if (text.EndsWith("k", StringComparison.OrdinalIgnoreCase))
-                return (int)(Convert.ToSingle(text.Substring(0, text.Length - 1)) * 1000);
+                return (int)(Convert.ToSingle(text.Substring(0, text.Length - 1).Replace(".", ",")) * 1000);
             if (text.EndsWith("m", StringComparison.OrdinalIgnoreCase))
-                return (int)(Convert.ToSingle(text.Substring(0, text.Length - 1)) * 1000 * 1000);
+                return (int)(Convert.ToSingle(text.Substring(0, text.Length - 1).Replace(".", ",")) * 1000 * 1000);
             return Convert.ToInt32(text.Replace(",", "").Replace(".", "").Replace(" ", ""));
         }
 
