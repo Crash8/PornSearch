@@ -100,6 +100,7 @@ namespace PornSearch
             return TimeSpan.FromSeconds(duration.TransformToInt());
         }
 
+        // Array.from(document.querySelectorAll('div.categoriesWrapper > a')).map(e=>`new() { Id = "${e.getAttribute('href')}", Name = "${e.textContent}"}`).join(',')
         public List<PornIdName> Categories() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.categoriesWrapper > a");
             return elements.OfType<IHtmlAnchorElement>()
@@ -110,6 +111,7 @@ namespace PornSearch
                            .ToList();
         }
 
+        // Array.from(document.querySelectorAll('div.tagsWrapper > a')).map(e=>`new() { Id = "${e.getAttribute('href')}", Name = "${e.textContent}"}`).join(',')
         public List<PornIdName> Tags() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.tagsWrapper > a");
             return elements.OfType<IHtmlAnchorElement>()
@@ -120,6 +122,7 @@ namespace PornSearch
                            .ToList();
         }
 
+        // Array.from(document.querySelectorAll("div.pornstarsWrapper > a[data-label='pornstar']")).map(e=>`new() { Id = "${e.getAttribute('href')}", Name = "${e.textContent.replaceAll('\t', '').replaceAll('\n', '')}"}`).join(',')
         public List<PornIdName> Actors() {
             IHtmlCollection<IElement> elements = _document.QuerySelectorAll("div.pornstarsWrapper > a[data-label='pornstar']");
             return elements.OfType<IHtmlAnchorElement>()
